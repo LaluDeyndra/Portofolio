@@ -13,11 +13,34 @@
       html {
         scroll-behavior: smooth;
       }
+
+      /* Navbar Mobile Styles */
+      .mobile-menu {
+        transform: translateX(100%);
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .mobile-menu.open {
+        transform: translateX(0);
+      }
+
+      .menu-overlay {
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.3s ease-in-out;
+      }
+
+      .menu-overlay.active {
+        opacity: 1;
+        visibility: visible;
+      }
+
       /* Hover efek pada proyek */
       .project-card:hover {
         transform: translateY(-10px);
         box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
       }
+
       /* Animasi fade-in untuk sections */
       .fade-in {
         opacity: 0;
@@ -28,6 +51,7 @@
         opacity: 1;
         transform: translateY(0);
       }
+
       /* Animasi stagger untuk project cards */
       .project-card {
         opacity: 0;
@@ -47,6 +71,7 @@
       .project-card:nth-child(3).visible {
         transition-delay: 0.3s;
       }
+
       /* Animasi pulse untuk tombol hero */
       .hero-button {
         animation: pulse 2s infinite;
@@ -60,6 +85,7 @@
           transform: scale(1.05);
         }
       }
+
       /* Animasi slide-in untuk ikon sosial di footer */
       .social-icon {
         opacity: 0;
@@ -79,6 +105,7 @@
       .social-icon:nth-child(3).visible {
         transition-delay: 0.3s;
       }
+
       /* Preloader Styles */
       #preloader {
         position: fixed;
@@ -189,6 +216,7 @@
         color: #e5e7eb;
         font-weight: 500;
       }
+
       /* Sembunyikan body sampai loading selesai */
       body.loading {
         overflow: hidden;
@@ -531,10 +559,12 @@
     </div>
 
     <!-- Header -->
-    <header class="fixed top-0 w-full bg-gray-800 bg-opacity-90 backdrop-blur-md z-10">
+    <header class="fixed top-0 w-full bg-gray-800 bg-opacity-90 backdrop-blur-md z-50">
       <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-blue-400">Lalu Deyndra</h1>
-        <div class="flex items-center space-x-6">
+
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex items-center space-x-6">
           <ul class="flex space-x-6">
             <li><a href="#hero" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Beranda</a></li>
             <li><a href="#about" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Tentang Saya</a></li>
@@ -548,7 +578,64 @@
             </div>
           </div>
         </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="flex items-center md:hidden">
+          <!-- Theme Toggle for Mobile -->
+          <div class="theme-toggle mr-4" id="themeToggleMobile">
+            <div class="theme-toggle-handle">
+              <i class="fas fa-moon text-gray-700"></i>
+            </div>
+          </div>
+          <button id="mobileMenuButton" class="text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
       </nav>
+
+      <!-- Mobile Menu - PERBAIKAN: Menghilangkan transparansi -->
+      <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-800 z-40 md:hidden">
+        <div class="flex flex-col p-6 pt-20">
+          <button id="closeMobileMenu" class="absolute top-4 right-4 text-white">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+
+          <ul class="space-y-6">
+            <li>
+              <a href="#hero" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Beranda</a>
+            </li>
+            <li>
+              <a href="#about" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Tentang Saya</a>
+            </li>
+            <li>
+              <a href="#projects" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Projek</a>
+            </li>
+            <li>
+              <a href="#contact" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Kontak</a>
+            </li>
+          </ul>
+
+          <div class="mt-8 pt-6 border-t border-gray-700">
+            <p class="text-gray-400 mb-4">Tema</p>
+            <div class="flex items-center">
+              <span class="mr-3">Gelap</span>
+              <div class="theme-toggle" id="themeToggleMobileMenu">
+                <div class="theme-toggle-handle">
+                  <i class="fas fa-moon text-gray-700"></i>
+                </div>
+              </div>
+              <span class="ml-3">Terang</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Menu Overlay -->
+      <div id="menuOverlay" class="menu-overlay fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"></div>
     </header>
 
     <!-- Hero Section -->
@@ -1042,8 +1129,37 @@
       // Observe social icons
       document.querySelectorAll('.social-icon').forEach((el) => observer.observe(el));
 
+      // Mobile Menu Functionality
+      const mobileMenuButton = document.getElementById('mobileMenuButton');
+      const closeMobileMenuButton = document.getElementById('closeMobileMenu');
+      const mobileMenu = document.getElementById('mobileMenu');
+      const menuOverlay = document.getElementById('menuOverlay');
+
+      function openMobileMenu() {
+        mobileMenu.classList.add('open');
+        menuOverlay.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeMobileMenu() {
+        mobileMenu.classList.remove('open');
+        menuOverlay.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      mobileMenuButton.addEventListener('click', openMobileMenu);
+      closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+      menuOverlay.addEventListener('click', closeMobileMenu);
+
+      // Close mobile menu when clicking on a link
+      document.querySelectorAll('#mobileMenu a').forEach((link) => {
+        link.addEventListener('click', closeMobileMenu);
+      });
+
       // Theme Toggle Functionality
       const themeToggle = document.getElementById('themeToggle');
+      const themeToggleMobile = document.getElementById('themeToggleMobile');
+      const themeToggleMobileMenu = document.getElementById('themeToggleMobileMenu');
       const body = document.body;
 
       // Check for saved theme preference or default to dark
@@ -1053,23 +1169,40 @@
       if (currentTheme === 'light') {
         body.classList.add('light-mode');
         themeToggle.classList.add('light');
+        themeToggleMobile.classList.add('light');
+        themeToggleMobileMenu.classList.add('light');
         themeToggle.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+        themeToggleMobile.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+        themeToggleMobileMenu.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
       }
 
       // Toggle theme function
-      themeToggle.addEventListener('click', () => {
+      function toggleTheme() {
         body.classList.toggle('light-mode');
         themeToggle.classList.toggle('light');
+        themeToggleMobile.classList.toggle('light');
+        themeToggleMobileMenu.classList.toggle('light');
 
         const icon = themeToggle.querySelector('.theme-toggle-handle i');
+        const iconMobile = themeToggleMobile.querySelector('.theme-toggle-handle i');
+        const iconMobileMenu = themeToggleMobileMenu.querySelector('.theme-toggle-handle i');
+
         if (body.classList.contains('light-mode')) {
           icon.className = 'fas fa-sun text-yellow-500';
+          iconMobile.className = 'fas fa-sun text-yellow-500';
+          iconMobileMenu.className = 'fas fa-sun text-yellow-500';
           localStorage.setItem('theme', 'light');
         } else {
           icon.className = 'fas fa-moon text-gray-700';
+          iconMobile.className = 'fas fa-moon text-gray-700';
+          iconMobileMenu.className = 'fas fa-moon text-gray-700';
           localStorage.setItem('theme', 'dark');
         }
-      });
+      }
+
+      themeToggle.addEventListener('click', toggleTheme);
+      themeToggleMobile.addEventListener('click', toggleTheme);
+      themeToggleMobileMenu.addEventListener('click', toggleTheme);
     </script>
   </body>
 </html>
