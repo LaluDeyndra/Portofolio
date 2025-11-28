@@ -281,6 +281,235 @@
         margin: 0 auto 16px;
         font-size: 24px;
       }
+
+      /* Theme Toggle Styles */
+      .theme-toggle {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        background: #4b5563;
+        border-radius: 15px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+      }
+
+      .theme-toggle.light {
+        background: #93c5fd;
+      }
+
+      .theme-toggle-handle {
+        position: absolute;
+        width: 22px;
+        height: 22px;
+        background: white;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 12px;
+      }
+
+      .theme-toggle.light .theme-toggle-handle {
+        transform: translateX(30px);
+      }
+
+      /* Light Mode Styles */
+      body.light-mode {
+        background-color: #f9fafb;
+        color: #1f2937;
+      }
+
+      body.light-mode .bg-gray-800 {
+        background-color: #e5e7eb;
+      }
+
+      body.light-mode .bg-gray-900 {
+        background-color: #f3f4f6;
+      }
+
+      body.light-mode .bg-gray-700 {
+        background-color: #d1d5db;
+      }
+
+      body.light-mode .text-white {
+        color: #1f2937;
+      }
+
+      body.light-mode .text-gray-300 {
+        color: #4b5563;
+      }
+
+      body.light-mode .text-gray-400 {
+        color: #6b7280;
+      }
+
+      body.light-mode .border-gray-700 {
+        border-color: #d1d5db;
+      }
+
+      body.light-mode header {
+        background-color: rgba(229, 231, 235, 0.9);
+      }
+
+      body.light-mode .bg-gradient-to-r.from-gray-800.to-gray-900 {
+        background: linear-gradient(to right, #e5e7eb, #f9fafb);
+      }
+
+      body.light-mode .bg-gradient-to-br.from-gray-800.to-gray-900 {
+        background: linear-gradient(to bottom right, #e5e7eb, #f9fafb);
+      }
+
+      body.light-mode .bg-gradient-to-br.from-gray-900.to-gray-800 {
+        background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
+      }
+
+      body.light-mode .project-overlay {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      body.light-mode input,
+      body.light-mode textarea {
+        background-color: #f9fafb;
+        color: #1f2937;
+        border: 1px solid #d1d5db;
+      }
+
+      body.light-mode input:focus,
+      body.light-mode textarea:focus {
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+      }
+
+      /* Perbaikan untuk warna-warna khusus di light mode */
+      body.light-mode .text-blue-400 {
+        color: #3b82f6;
+      }
+
+      body.light-mode .text-purple-400 {
+        color: #8b5cf6;
+      }
+
+      body.light-mode .text-green-400 {
+        color: #10b981;
+      }
+
+      body.light-mode .text-yellow-400 {
+        color: #f59e0b;
+      }
+
+      body.light-mode .text-red-500 {
+        color: #ef4444;
+      }
+
+      body.light-mode .bg-blue-500 {
+        background-color: #3b82f6;
+      }
+
+      body.light-mode .bg-blue-900 {
+        background-color: #1e40af;
+      }
+
+      body.light-mode .bg-green-900 {
+        background-color: #065f46;
+      }
+
+      body.light-mode .bg-purple-900 {
+        background-color: #5b21b6;
+      }
+
+      body.light-mode .bg-yellow-900 {
+        background-color: #92400e;
+      }
+
+      body.light-mode .bg-blue-400 {
+        background-color: #60a5fa;
+      }
+
+      body.light-mode .text-blue-300 {
+        color: #93c5fd;
+      }
+
+      body.light-mode .text-green-300 {
+        color: #6ee7b7;
+      }
+
+      body.light-mode .text-purple-300 {
+        color: #c4b5fd;
+      }
+
+      body.light-mode .text-yellow-300 {
+        color: #fcd34d;
+      }
+
+      /* Perbaikan untuk project tech tags di light mode */
+      body.light-mode .project-tech {
+        background: rgba(59, 130, 246, 0.15);
+        color: #1e40af;
+      }
+
+      /* Perbaikan untuk contact icons di light mode */
+      body.light-mode .contact-icon.bg-blue-900 {
+        background-color: #dbeafe;
+      }
+
+      body.light-mode .contact-icon.bg-green-900 {
+        background-color: #d1fae5;
+      }
+
+      body.light-mode .contact-icon.bg-purple-900 {
+        background-color: #e9d5ff;
+      }
+
+      body.light-mode .contact-icon.text-blue-400 {
+        color: #3b82f6;
+      }
+
+      body.light-mode .contact-icon.text-green-400 {
+        color: #10b981;
+      }
+
+      body.light-mode .contact-icon.text-purple-400 {
+        color: #8b5cf6;
+      }
+
+      /* Perbaikan untuk social icons di light mode */
+      body.light-mode .w-10.h-10.rounded-full.bg-gray-700 {
+        background-color: #d1d5db;
+      }
+
+      /* Perbaikan untuk skill bars di light mode */
+      body.light-mode .skill-bar {
+        background: #e5e7eb;
+      }
+
+      /* Perbaikan untuk tech icons di light mode */
+      body.light-mode .tech-icon.bg-gray-700 {
+        background-color: #d1d5db;
+      }
+
+      body.light-mode .tech-icon .text-xs {
+        color: #4b5563;
+      }
+
+      /* Perbaikan untuk profile badge di light mode */
+      body.light-mode .absolute.-bottom-2.-right-2.bg-blue-500 {
+        background-color: #3b82f6;
+        color: white;
+      }
+
+      /* Perbaikan untuk progress bar di preloader di light mode */
+      body.light-mode .progress-bar {
+        background: rgba(0, 0, 0, 0.1);
+      }
+
+      /* Perbaikan untuk loading text di light mode */
+      body.light-mode .loading-text {
+        color: #4b5563;
+      }
     </style>
   </head>
   <body class="bg-gray-900 text-white font-sans loading">
@@ -305,12 +534,20 @@
     <header class="fixed top-0 w-full bg-gray-800 bg-opacity-90 backdrop-blur-md z-10">
       <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
         <h1 class="text-2xl font-bold text-blue-400">Lalu Deyndra</h1>
-        <ul class="flex space-x-6">
-          <li><a href="#hero" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Beranda</a></li>
-          <li><a href="#about" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Tentang Saya</a></li>
-          <li><a href="#projects" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Projek</a></li>
-          <li><a href="#contact" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Kontak</a></li>
-        </ul>
+        <div class="flex items-center space-x-6">
+          <ul class="flex space-x-6">
+            <li><a href="#hero" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Beranda</a></li>
+            <li><a href="#about" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Tentang Saya</a></li>
+            <li><a href="#projects" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Projek</a></li>
+            <li><a href="#contact" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Kontak</a></li>
+          </ul>
+          <!-- Theme Toggle -->
+          <div class="theme-toggle ml-4" id="themeToggle">
+            <div class="theme-toggle-handle">
+              <i class="fas fa-moon text-gray-700"></i>
+            </div>
+          </div>
+        </div>
       </nav>
     </header>
 
@@ -371,7 +608,7 @@
           <!-- About Content -->
           <div class="lg:w-3/5">
             <div class="bg-gray-800 rounded-2xl p-8 card-hover">
-              <h4 class="text-2xl font-bold mb-6 text-blue-400">Profil</h4>
+              <h4 class="text-2xl font-bold mb-6 text-blue-400">Profil Profesional</h4>
               <p class="text-lg mb-6 leading-relaxed">
                 Saya seorang <span class="text-blue-400 font-medium">Back-End Developer</span> yang bersemangat dalam menciptakan solusi <span class="text-purple-400 font-medium">IoT yang cerdas</span>,
                 <span class="text-green-400 font-medium">API yang powerful</span>, dan <span class="text-yellow-400 font-medium">sistem otomatisasi server</span> yang efisien.
@@ -804,6 +1041,35 @@
       document.querySelectorAll('.project-card').forEach((el) => observer.observe(el));
       // Observe social icons
       document.querySelectorAll('.social-icon').forEach((el) => observer.observe(el));
+
+      // Theme Toggle Functionality
+      const themeToggle = document.getElementById('themeToggle');
+      const body = document.body;
+
+      // Check for saved theme preference or default to dark
+      const currentTheme = localStorage.getItem('theme') || 'dark';
+
+      // Apply the saved theme
+      if (currentTheme === 'light') {
+        body.classList.add('light-mode');
+        themeToggle.classList.add('light');
+        themeToggle.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+      }
+
+      // Toggle theme function
+      themeToggle.addEventListener('click', () => {
+        body.classList.toggle('light-mode');
+        themeToggle.classList.toggle('light');
+
+        const icon = themeToggle.querySelector('.theme-toggle-handle i');
+        if (body.classList.contains('light-mode')) {
+          icon.className = 'fas fa-sun text-yellow-500';
+          localStorage.setItem('theme', 'light');
+        } else {
+          icon.className = 'fas fa-moon text-gray-700';
+          localStorage.setItem('theme', 'dark');
+        }
+      });
     </script>
   </body>
 </html>
