@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portofolio Saya</title>
+    <title>Portofolio Lalu Deyndra</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome untuk ikon -->
@@ -12,27 +12,6 @@
       /* Custom animasi untuk smooth scroll */
       html {
         scroll-behavior: smooth;
-      }
-
-      /* Navbar Mobile Styles */
-      .mobile-menu {
-        transform: translateX(100%);
-        transition: transform 0.3s ease-in-out;
-      }
-
-      .mobile-menu.open {
-        transform: translateX(0);
-      }
-
-      .menu-overlay {
-        opacity: 0;
-        visibility: hidden;
-        transition: opacity 0.3s ease-in-out;
-      }
-
-      .menu-overlay.active {
-        opacity: 1;
-        visibility: visible;
       }
 
       /* Hover efek pada proyek */
@@ -412,6 +391,69 @@
         box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
       }
 
+      /* PERBAIKAN: Hover effects untuk light mode */
+      body.light-mode .hover\\:text-blue-400:hover {
+        color: #3b82f6 !important;
+      }
+
+      body.light-mode .hover\\:bg-blue-600:hover {
+        background-color: #2563eb !important;
+      }
+
+      body.light-mode .hover\\:bg-blue-500:hover {
+        background-color: #3b82f6 !important;
+      }
+
+      body.light-mode .hover\\:bg-gray-600:hover {
+        background-color: #9ca3af !important;
+      }
+
+      body.light-mode .hover\\:bg-gray-700:hover {
+        background-color: #d1d5db !important;
+      }
+
+      body.light-mode .hover\\:bg-red-500:hover {
+        background-color: #ef4444 !important;
+      }
+
+      body.light-mode .hover\\:text-blue-300:hover {
+        color: #93c5fd !important;
+      }
+
+      /* PERBAIKAN: Mobile menu hover untuk light mode */
+      body.light-mode #mobileMenu a:hover {
+        background-color: #e5e7eb !important;
+        color: #3b82f6 !important;
+      }
+
+      body.light-mode #mobileMenu button:hover {
+        background-color: #e5e7eb !important;
+        color: #1f2937 !important;
+      }
+
+      /* PERBAIKAN: Button hover untuk light mode */
+      body.light-mode .hero-button:hover {
+        background-color: #2563eb !important;
+      }
+
+      body.light-mode .project-overlay a:hover {
+        background-color: #2563eb !important;
+      }
+
+      body.light-mode .project-overlay .bg-gray-700:hover {
+        background-color: #9ca3af !important;
+      }
+
+      /* PERBAIKAN: Hover tombol menu mobile di light mode */
+      body.light-mode #mobileMenuButton:hover {
+        background-color: #d1d5db !important;
+      }
+
+      /* PERBAIKAN: Overlay mobile menu di light mode */
+      body.light-mode #menuOverlay {
+        background: rgba(0, 0, 0, 0.5) !important;
+      }
+
       /* Perbaikan untuk warna-warna khusus di light mode */
       body.light-mode .text-blue-400 {
         color: #3b82f6;
@@ -538,6 +580,31 @@
       body.light-mode .loading-text {
         color: #4b5563;
       }
+
+      /* PERBAIKAN: Light mode untuk mobile menu */
+      body.light-mode #mobileMenu {
+        background: rgba(255, 255, 255, 0.98);
+      }
+
+      body.light-mode #mobileMenu .bg-gray-800 {
+        background-color: #f9fafb;
+      }
+
+      body.light-mode #mobileMenu .border-gray-700 {
+        border-color: #d1d5db;
+      }
+
+      body.light-mode #mobileMenu .text-gray-300 {
+        color: #6b7280;
+      }
+
+      body.light-mode #mobileMenu .text-gray-400 {
+        color: #9ca3af;
+      }
+
+      body.light-mode #mobileMenu .text-white {
+        color: #1f2937;
+      }
     </style>
   </head>
   <body class="bg-gray-900 text-white font-sans loading">
@@ -554,7 +621,7 @@
         <div class="progress-bar">
           <div class="progress-fill" id="progress-fill"></div>
         </div>
-        <div class="loading-text" id="loading-text">Memuat Gambar...</div>
+        <div class="loading-text" id="loading-text">Memuat...</div>
       </div>
     </div>
 
@@ -568,7 +635,7 @@
           <ul class="flex space-x-6">
             <li><a href="#hero" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Beranda</a></li>
             <li><a href="#about" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Tentang Saya</a></li>
-            <li><a href="#projects" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Projek</a></li>
+            <li><a href="#projects" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Proyek</a></li>
             <li><a href="#contact" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Kontak</a></li>
           </ul>
           <!-- Theme Toggle -->
@@ -587,62 +654,81 @@
               <i class="fas fa-moon text-gray-700"></i>
             </div>
           </div>
-          <button id="mobileMenuButton" class="text-white focus:outline-none">
+          <!-- PERBAIKAN: Hover tombol menu mobile lebih terang -->
+          <button id="mobileMenuButton" class="text-white focus:outline-none hover:bg-gray-700 p-2 rounded-lg transition">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
         </div>
       </nav>
+    </header>
 
-      <!-- Mobile Menu - PERBAIKAN: Menghilangkan transparansi -->
-      <div id="mobileMenu" class="mobile-menu fixed top-0 right-0 h-full w-64 bg-gray-800 z-40 md:hidden">
-        <div class="flex flex-col p-6 pt-20">
-          <button id="closeMobileMenu" class="absolute top-4 right-4 text-white">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
+    <!-- PERBAIKAN: Offcanvas Mobile Menu - awalnya tersembunyi -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 hidden md:hidden">
+      <!-- PERBAIKAN: Overlay mobile menu di light mode -->
+      <div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
 
-          <ul class="space-y-6">
-            <li>
-              <a href="#hero" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Beranda</a>
-            </li>
-            <li>
-              <a href="#about" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Tentang Saya</a>
-            </li>
-            <li>
-              <a href="#projects" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Projek</a>
-            </li>
-            <li>
-              <a href="#contact" class="block py-2 text-lg hover:text-blue-400 transition" onclick="closeMobileMenu()">Kontak</a>
-            </li>
-          </ul>
+      <!-- Menu Panel -->
+      <div class="relative ml-auto w-full max-w-xs h-full bg-gray-800 shadow-xl transform transition-transform duration-300 ease-in-out translate-x-full">
+        <div class="flex flex-col h-full">
+          <!-- Header Menu -->
+          <div class="flex items-center justify-between p-4 border-b border-gray-700">
+            <h2 class="text-lg font-semibold text-white">Menu</h2>
+            <button id="closeMobileMenu" class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+              </svg>
+            </button>
+          </div>
 
-          <div class="mt-8 pt-6 border-t border-gray-700">
-            <p class="text-gray-400 mb-4">Tema</p>
-            <div class="flex items-center">
-              <span class="mr-3">Gelap</span>
+          <!-- Navigation Links -->
+          <div class="flex-1 px-4 py-6 space-y-2">
+            <a href="#hero" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+              <i class="fas fa-home mr-3 w-5 text-center"></i>
+              Beranda
+            </a>
+            <a href="#about" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+              <i class="fas fa-user mr-3 w-5 text-center"></i>
+              Tentang Saya
+            </a>
+            <a href="#projects" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+              <i class="fas fa-code mr-3 w-5 text-center"></i>
+              Proyek
+            </a>
+            <a href="#contact" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+              <i class="fas fa-envelope mr-3 w-5 text-center"></i>
+              Kontak
+            </a>
+          </div>
+
+          <!-- Theme Toggle Section -->
+          <div class="p-4 border-t border-gray-700">
+            <p class="text-gray-400 mb-3 text-sm font-medium">Tema</p>
+            <div class="flex items-center justify-between">
+              <span class="text-gray-300">Gelap</span>
               <div class="theme-toggle" id="themeToggleMobileMenu">
                 <div class="theme-toggle-handle">
                   <i class="fas fa-moon text-gray-700"></i>
                 </div>
               </div>
-              <span class="ml-3">Terang</span>
+              <span class="text-gray-300">Terang</span>
             </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="p-4 border-t border-gray-700">
+            <p class="text-gray-400 text-sm text-center">&copy; 2025 Lalu Deyndra</p>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Mobile Menu Overlay -->
-      <div id="menuOverlay" class="menu-overlay fixed inset-0 bg-black bg-opacity-50 z-30 md:hidden"></div>
-    </header>
-
-    <!-- Hero Section -->
+    <!-- PERBAIKAN: Hero Section dengan ukuran font responsive untuk mobile -->
     <section id="hero" class="h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-900 fade-in">
-      <div class="text-center">
-        <h2 class="text-5xl font-bold mb-4 animate-fade-in-up">Halo, Saya Lalu Deyndra</h2>
-        <p class="text-xl mb-8 animate-fade-in-up animation-delay-200">Web Developer | Back-End Specialist | Gamer | Enthusiast</p>
+      <div class="text-center px-4">
+        <h2 class="text-3xl md:text-5xl font-bold mb-4">Halo, Saya Lalu Deyndra</h2>
+        <p class="text-lg md:text-xl mb-8">Web Developer | Back-End Specialist | Gamer | Enthusiast</p>
         <a href="#projects" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg transition hero-button">Lihat Proyek Saya</a>
       </div>
     </section>
@@ -844,7 +930,9 @@
           <!-- Proyek 1 -->
           <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
             <div class="project-image">
-              <img src="/assets/img/senvada.png" alt="Website PKL" class="w-full h-48 object-cover" />
+              <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
+                <i class="fas fa-laptop-code text-white text-6xl"></i>
+              </div>
               <div class="project-overlay">
                 <div class="flex space-x-4">
                   <a href="https://pkl.senvada.id/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
@@ -873,7 +961,9 @@
           <!-- Proyek 2 -->
           <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
             <div class="project-image">
-              <img src="/assets/img/waifuGacha.png" alt="E-Commerce API" class="w-full h-48 object-cover" />
+              <div class="w-full h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center">
+                <i class="fab fa-discord text-white text-6xl"></i>
+              </div>
               <div class="project-overlay">
                 <div class="flex space-x-4">
                   <a href="https://laludeyndra.github.io/PageInviteGachaBot/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
@@ -903,7 +993,9 @@
           <!-- Proyek 3 -->
           <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
             <div class="project-image">
-              <img src="/assets/img/GaleriPrestasi.png" alt="Server Dashboard" class="w-full h-48 object-cover" />
+              <div class="w-full h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
+                <i class="fas fa-trophy text-white text-6xl"></i>
+              </div>
               <div class="project-overlay">
                 <div class="flex space-x-4">
                   <a href="https://galeri-prestasi.vercel.app/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
@@ -1018,7 +1110,7 @@
                 </div>
 
                 <div>
-                  <label for="subject" class="block mb-2 font-medium">Subjek</label>
+                  <label for="subject" class="block mb-2 font-medium">Perihal</label>
                   <input type="text" id="subject" class="w-full p-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="Subjek pesan Anda" />
                 </div>
 
@@ -1070,7 +1162,7 @@
             loaded++;
             const percent = (loaded / total) * 100;
             progressFill.style.width = percent + '%';
-            loadingText.textContent = `Memuat Gambar... ${loaded}/${total}`;
+            loadingText.textContent = `Memuat... ${loaded}/${total}`;
             if (loaded === total) {
               setTimeout(callback, 500); // Delay sedikit untuk efek
             }
@@ -1079,7 +1171,7 @@
             loaded++;
             const percent = (loaded / total) * 100;
             progressFill.style.width = percent + '%';
-            loadingText.textContent = `Memuat Gambar... ${loaded}/${total}`;
+            loadingText.textContent = `Memuat... ${loaded}/${total}`;
             if (loaded === total) {
               setTimeout(callback, 500);
             }
@@ -1088,11 +1180,8 @@
         });
       }
 
-      // Ambil semua src gambar dari halaman
-      const images = Array.from(document.querySelectorAll('img')).map((img) => img.src);
-
       // Jalankan preloader
-      preloadImages(images, () => {
+      preloadImages([], () => {
         const preloader = document.getElementById('preloader');
         preloader.classList.add('hidden');
         document.body.classList.remove('loading');
@@ -1134,17 +1223,24 @@
       const closeMobileMenuButton = document.getElementById('closeMobileMenu');
       const mobileMenu = document.getElementById('mobileMenu');
       const menuOverlay = document.getElementById('menuOverlay');
+      const menuPanel = mobileMenu.querySelector('.transform');
 
       function openMobileMenu() {
-        mobileMenu.classList.add('open');
-        menuOverlay.classList.add('active');
+        mobileMenu.classList.remove('hidden');
+        setTimeout(() => {
+          menuOverlay.classList.remove('opacity-0');
+          menuPanel.classList.remove('translate-x-full');
+        }, 10);
         document.body.style.overflow = 'hidden';
       }
 
       function closeMobileMenu() {
-        mobileMenu.classList.remove('open');
-        menuOverlay.classList.remove('active');
-        document.body.style.overflow = '';
+        menuOverlay.classList.add('opacity-0');
+        menuPanel.classList.add('translate-x-full');
+        setTimeout(() => {
+          mobileMenu.classList.add('hidden');
+          document.body.style.overflow = '';
+        }, 300);
       }
 
       mobileMenuButton.addEventListener('click', openMobileMenu);
