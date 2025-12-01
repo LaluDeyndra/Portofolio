@@ -6,10 +6,13 @@
     <meta name="description" content="Portofolio Lalu Deyndra - Web Developer, Back-End Specialist, Prompt Engineer, dan Enthusiast" />
     <link rel="icon" href="assets/img/logo 2.png" type="image/png" />
     <title>Portofolio Lalu Deyndra</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind CSS -->
+    <link rel="stylesheet" href="/src/output.css" />
+    <link rel="stylesheet" href="style.css" />
     <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <style>
       /* Custom animasi untuk smooth scroll */
       html {
@@ -364,15 +367,15 @@
         background-color: rgba(229, 231, 235, 0.9);
       }
 
-      body.light-mode .bg-gradient-to-r.from-gray-800.to-gray-900 {
+      body.light-mode .from-gray-800.to-gray-900 {
         background: linear-gradient(to right, #e5e7eb, #f9fafb);
       }
 
-      body.light-mode .bg-gradient-to-br.from-gray-800.to-gray-900 {
+      body.light-mode .from-gray-800.to-gray-900.br {
         background: linear-gradient(to bottom right, #e5e7eb, #f9fafb);
       }
 
-      body.light-mode .bg-gradient-to-br.from-gray-900.to-gray-800 {
+      body.light-mode .from-gray-900.to-gray-800.br {
         background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
       }
 
@@ -607,38 +610,144 @@
       body.light-mode #mobileMenu .text-white {
         color: #1f2937;
       }
+
       /* Light Mode Styles untuk Footer */
       body.light-mode footer {
         background: linear-gradient(to bottom right, #e5e7eb, #f9fafb);
       }
 
-      body.light-mode .text-gray-300 {
-        color: #6b7280;
+      /* ====== PERBAIKAN KHUSUS UNTUK SECTION PROJECTS DI LIGHT MODE ====== */
+      body.light-mode #projects {
+        background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb) !important;
       }
 
-      body.light-mode .border-gray-700 {
-        border-color: #d1d5db;
+      /* Project cards background */
+      body.light-mode .project-card.bg-gray-800 {
+        background-color: #f9fafb !important;
+        border: 1px solid #e5e7eb;
       }
 
-      body.light-mode .bg-gray-700 {
-        background-color: #d1d5db;
+      /* Text colors in project cards */
+      body.light-mode .project-card .text-gray-300 {
+        color: #6b7280 !important;
       }
 
-      /* Hover effects untuk light mode di footer */
-      body.light-mode .hover\\:bg-blue-500:hover {
+      body.light-mode .project-card .text-gray-400 {
+        color: #9ca3af !important;
+      }
+
+      /* Project badges/tags */
+      body.light-mode .project-card .bg-blue-900 {
+        background-color: #dbeafe !important;
+      }
+
+      body.light-mode .project-card .text-blue-300 {
+        color: #1e40af !important;
+      }
+
+      body.light-mode .project-card .bg-green-900 {
+        background-color: #d1fae5 !important;
+      }
+
+      body.light-mode .project-card .text-green-300 {
+        color: #065f46 !important;
+      }
+
+      body.light-mode .project-card .bg-purple-900 {
+        background-color: #e9d5ff !important;
+      }
+
+      body.light-mode .project-card .text-purple-300 {
+        color: #5b21b6 !important;
+      }
+
+      /* Project overlay buttons */
+      body.light-mode .project-overlay .bg-gray-700 {
+        background-color: #9ca3af !important;
+      }
+
+      body.light-mode .project-overlay .bg-gray-700:hover {
+        background-color: #6b7280 !important;
+      }
+
+      /* Project tech tags styling */
+      body.light-mode .project-tech {
+        background: rgba(59, 130, 246, 0.1) !important;
+        color: #1e40af !important;
+        border: 1px solid rgba(59, 130, 246, 0.2);
+      }
+
+      /* Hover effects for project cards in light mode */
+      body.light-mode .project-card:hover {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        transform: translateY(-10px);
+      }
+
+      /* View all projects button */
+      body.light-mode #projects .bg-blue-500 {
         background-color: #3b82f6 !important;
       }
 
-      body.light-mode .hover\\:bg-red-500:hover {
-        background-color: #ef4444 !important;
+      body.light-mode #projects .bg-blue-500:hover {
+        background-color: #2563eb !important;
       }
 
-      body.light-mode .hover\\:bg-pink-500:hover {
-        background-color: #ec4899 !important;
+      /* Notification Styles */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 16px 24px;
+        border-radius: 8px;
+        color: white;
+        font-weight: 500;
+        z-index: 10000;
+        opacity: 0;
+        transform: translateX(100%);
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
 
-      body.light-mode .hover\\:text-blue-400:hover {
-        color: #3b82f6 !important;
+      .notification.show {
+        opacity: 1;
+        transform: translateX(0);
+      }
+
+      .notification.success {
+        background-color: #10b981;
+      }
+
+      .notification.error {
+        background-color: #ef4444;
+      }
+
+      .notification.info {
+        background-color: #3b82f6;
+      }
+
+      .notification .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        margin-left: 12px;
+        font-size: 18px;
+      }
+
+      /* PERBAIKAN: Tambahan outline untuk tech icons */
+      .tech-icon {
+        border: 1px solid transparent;
+        outline: 2px solid transparent;
+      }
+
+      body.light-mode .tech-icon {
+        border: 1px solid #e5e7eb;
+        outline: 2px solid #f3f4f6;
+      }
+
+      body:not(.light-mode) .tech-icon {
+        border: 1px solid #4b5563;
+        outline: 2px solid #374151;
       }
     </style>
   </head>
@@ -660,18 +769,24 @@
       </div>
     </div>
 
+    <!-- Notification -->
+    <div id="notification" class="notification hidden">
+      <span id="notification-message"></span>
+      <button id="notification-close" class="close-btn">&times;</button>
+    </div>
+
     <!-- Header -->
     <header class="fixed top-0 w-full bg-gray-800 bg-opacity-90 backdrop-blur-md z-50">
-      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-400">Lalu Deyndra</h1>
+      <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
+        <h1 class="text-xl sm:text-2xl font-bold text-blue-400">Lalu Deyndra</h1>
 
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-6">
           <ul class="flex space-x-6">
-            <li><a href="#hero" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Beranda</a></li>
-            <li><a href="#about" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Tentang Saya</a></li>
-            <li><a href="#projects" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Proyek</a></li>
-            <li><a href="#contact" class="hover:text-blue-400 transition hover:scale-110 transform duration-200">Kontak</a></li>
+            <li><a href="#hero" class="hover:text-blue-400 transition duration-200">Beranda</a></li>
+            <li><a href="#about" class="hover:text-blue-400 transition duration-200">Tentang Saya</a></li>
+            <li><a href="#projects" class="hover:text-blue-400 transition duration-200">Proyek</a></li>
+            <li><a href="#contact" class="hover:text-blue-400 transition duration-200">Kontak</a></li>
           </ul>
           <!-- Theme Toggle -->
           <div class="theme-toggle ml-4" id="themeToggle">
@@ -689,9 +804,8 @@
               <i class="fas fa-moon text-gray-700"></i>
             </div>
           </div>
-          <!-- PERBAIKAN: Hover tombol menu mobile lebih terang -->
-          <button id="mobileMenuButton" class="text-white focus:outline-none hover:bg-gray-700 p-2 rounded-lg transition">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <button id="mobileMenuButton" class="text-white focus:outline-none p-2 rounded-lg transition hover:bg-gray-700">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
             </svg>
           </button>
@@ -699,12 +813,9 @@
       </nav>
     </header>
 
-    <!-- PERBAIKAN: Offcanvas Mobile Menu - awalnya tersembunyi -->
+    <!-- Mobile Menu -->
     <div id="mobileMenu" class="fixed inset-0 z-50 hidden md:hidden">
-      <!-- PERBAIKAN: Overlay mobile menu di light mode -->
       <div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
-
-      <!-- Menu Panel -->
       <div class="relative ml-auto w-full max-w-xs h-full bg-gray-800 shadow-xl transform transition-transform duration-300 ease-in-out translate-x-full">
         <div class="flex flex-col h-full">
           <!-- Header Menu -->
@@ -719,19 +830,19 @@
 
           <!-- Navigation Links -->
           <div class="flex-1 px-4 py-6 space-y-2">
-            <a href="#hero" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+            <a href="#hero" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
               <i class="fas fa-home mr-3 w-5 text-center"></i>
               Beranda
             </a>
-            <a href="#about" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+            <a href="#about" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
               <i class="fas fa-user mr-3 w-5 text-center"></i>
               Tentang Saya
             </a>
-            <a href="#projects" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+            <a href="#projects" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
               <i class="fas fa-code mr-3 w-5 text-center"></i>
               Proyek
             </a>
-            <a href="#contact" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200" onclick="closeMobileMenu()">
+            <a href="#contact" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
               <i class="fas fa-envelope mr-3 w-5 text-center"></i>
               Kontak
             </a>
@@ -759,54 +870,54 @@
       </div>
     </div>
 
-    <!-- PERBAIKAN: Hero Section dengan ukuran font responsive untuk mobile -->
-    <section id="hero" class="h-screen flex items-center justify-center bg-gradient-to-r from-gray-800 to-gray-900 fade-in">
+    <!-- Hero Section -->
+    <section id="hero" class="h-screen flex items-center justify-center fade-in bg-gradient-to-r from-gray-800 to-gray-900">
       <div class="text-center px-4">
-        <h2 class="text-3xl md:text-5xl font-bold mb-4">Halo, Saya Lalu Deyndra</h2>
-        <p class="text-lg md:text-xl mb-8">Web Developer | Back-End Specialist | Prompt Engineer | Enthusiast</p>
-        <a href="#projects" class="bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg transition hero-button">Lihat Proyek Saya</a>
+        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Halo, Saya Lalu Deyndra</h2>
+        <p class="text-lg sm:text-xl md:text-2xl mb-8">Web Developer | Back-End Specialist | Prompt Engineer | Enthusiast</p>
+        <a href="#projects" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg transition hero-button">Lihat Proyek Saya</a>
       </div>
     </section>
 
     <!-- About Section -->
-    <section id="about" class="py-20 bg-gradient-to-br from-gray-800 to-gray-900 fade-in">
-      <div class="container mx-auto px-6">
-        <h3 class="text-4xl font-bold mb-4 text-center">Tentang <span class="text-blue-400">Saya</span></h3>
+    <section id="about" class="py-20 fade-in bg-gradient-to-br from-gray-800 to-gray-900">
+      <div class="container mx-auto px-4 sm:px-6">
+        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Tentang <span class="text-blue-400">Saya</span></h3>
         <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
 
-        <div class="flex flex-col lg:flex-row items-center gap-12">
+        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
           <!-- Profile Image & Tech Stack -->
           <div class="lg:w-2/5 flex flex-col items-center">
             <div class="relative mb-8">
-              <div class="w-64 h-64 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
+              <div class="w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
                 <div class="w-full h-full rounded-full bg-gray-800 flex items-center justify-center">
-                  <i class="fas fa-user-tie text-6xl text-blue-400"></i>
+                  <i class="fas fa-user-tie text-4xl sm:text-6xl text-blue-400"></i>
                 </div>
               </div>
-              <div class="absolute -bottom-2 -right-2 bg-blue-500 text-white px-4 py-2 rounded-full font-medium">Back-End Developer</div>
+              <div class="absolute -bottom-2 -right-2 bg-blue-500 text-white px-4 py-2 rounded-full font-medium text-sm sm:text-base">Back-End Developer</div>
             </div>
 
             <div class="bg-gray-800 rounded-xl p-6 w-full max-w-md">
               <h4 class="text-xl font-bold mb-4 text-center">Tech Stack</h4>
-              <div class="flex flex-wrap justify-center gap-4">
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-20">
-                  <i class="fab fa-laravel text-red-500 text-2xl mb-2"></i>
+              <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
+                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
+                  <i class="fab fa-laravel text-red-500 text-xl sm:text-2xl mb-2"></i>
                   <span class="text-xs">Laravel</span>
                 </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-20">
-                  <i class="fas fa-database text-blue-400 text-2xl mb-2"></i>
+                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
+                  <i class="fas fa-database text-blue-400 text-xl sm:text-2xl mb-2"></i>
                   <span class="text-xs">MySQL</span>
                 </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-20">
-                  <i class="fab fa-js-square text-yellow-400 text-2xl mb-2"></i>
+                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
+                  <i class="fab fa-js-square text-yellow-400 text-xl sm:text-2xl mb-2"></i>
                   <span class="text-xs">JavaScript</span>
                 </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-20">
-                  <i class="fab fa-github text-gray-300 text-2xl mb-2"></i>
+                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
+                  <i class="fab fa-github text-gray-300 text-xl sm:text-2xl mb-2"></i>
                   <span class="text-xs">GitHub</span>
                 </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-20">
-                  <i class="fas fa-rocket text-green-500 text-2xl mb-2"></i>
+                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
+                  <i class="fas fa-rocket text-green-500 text-xl sm:text-2xl mb-2"></i>
                   <span class="text-xs">Vercel</span>
                 </div>
               </div>
@@ -815,67 +926,67 @@
 
           <!-- About Content -->
           <div class="lg:w-3/5">
-            <div class="bg-gray-800 rounded-2xl p-8 card-hover">
-              <h4 class="text-2xl font-bold mb-6 text-blue-400">Profil</h4>
-              <p class="text-lg mb-6 leading-relaxed">
+            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover">
+              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Profil</h4>
+              <p class="text-base sm:text-lg mb-6 leading-relaxed">
                 Saya seorang <span class="text-blue-400 font-medium">Back-End Developer</span> yang bersemangat dalam menciptakan solusi <span class="text-purple-400 font-medium">IoT yang cerdas</span>,
                 <span class="text-green-400 font-medium">API yang powerful</span>, dan <span class="text-yellow-400 font-medium">sistem otomatisasi server</span> yang efisien.
               </p>
 
-              <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
                 <div class="bg-gray-700 p-4 rounded-lg">
                   <div class="flex items-center mb-2">
-                    <div class="w-10 h-10 rounded-full bg-blue-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-microchip text-blue-400"></i>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-900 flex items-center justify-center mr-3">
+                      <i class="fas fa-microchip text-blue-400 text-sm sm:text-base"></i>
                     </div>
-                    <h5 class="font-bold">IoT Solutions</h5>
+                    <h5 class="font-bold text-sm sm:text-base">IoT Solutions</h5>
                   </div>
-                  <p class="text-sm text-gray-300">Membangun sistem IoT terintegrasi dengan backend yang scalable.</p>
+                  <p class="text-xs sm:text-sm text-gray-300">Membangun sistem IoT terintegrasi dengan backend yang scalable.</p>
                 </div>
 
                 <div class="bg-gray-700 p-4 rounded-lg">
                   <div class="flex items-center mb-2">
-                    <div class="w-10 h-10 rounded-full bg-green-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-code text-green-400"></i>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-900 flex items-center justify-center mr-3">
+                      <i class="fas fa-code text-green-400 text-sm sm:text-base"></i>
                     </div>
-                    <h5 class="font-bold">API Development</h5>
+                    <h5 class="font-bold text-sm sm:text-base">API Development</h5>
                   </div>
-                  <p class="text-sm text-gray-300">Membuat RESTful API yang robust dan well-documented.</p>
+                  <p class="text-xs sm:text-sm text-gray-300">Membuat RESTful API yang robust dan well-documented.</p>
                 </div>
 
                 <div class="bg-gray-700 p-4 rounded-lg">
                   <div class="flex items-center mb-2">
-                    <div class="w-10 h-10 rounded-full bg-purple-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-server text-purple-400"></i>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-900 flex items-center justify-center mr-3">
+                      <i class="fas fa-server text-purple-400 text-sm sm:text-base"></i>
                     </div>
-                    <h5 class="font-bold">Server Automation</h5>
+                    <h5 class="font-bold text-sm sm:text-base">Server Automation</h5>
                   </div>
-                  <p class="text-sm text-gray-300">Mengotomatisasi proses server untuk efisiensi maksimal.</p>
+                  <p class="text-xs sm:text-sm text-gray-300">Mengotomatisasi proses server untuk efisiensi maksimal.</p>
                 </div>
 
                 <div class="bg-gray-700 p-4 rounded-lg">
                   <div class="flex items-center mb-2">
-                    <div class="w-10 h-10 rounded-full bg-yellow-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-tachometer-alt text-yellow-400"></i>
+                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-900 flex items-center justify-center mr-3">
+                      <i class="fas fa-tachometer-alt text-yellow-400 text-sm sm:text-base"></i>
                     </div>
-                    <h5 class="font-bold">Dashboard Monitoring</h5>
+                    <h5 class="font-bold text-sm sm:text-base">Dashboard Monitoring</h5>
                   </div>
-                  <p class="text-sm text-gray-300">Membangun dashboard real-time untuk monitoring sistem.</p>
+                  <p class="text-xs sm:text-sm text-gray-300">Membangun dashboard real-time untuk monitoring sistem.</p>
                 </div>
               </div>
 
               <div class="mb-6">
                 <h5 class="font-bold text-lg mb-4">Fokus Utama:</h5>
                 <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-sm">Clean Code</span>
-                  <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-sm">Security Best Practices</span>
-                  <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-sm">Performance Optimization</span>
-                  <span class="bg-yellow-900 text-yellow-300 px-3 py-1 rounded-full text-sm">Scalable Architecture</span>
+                  <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-xs sm:text-sm">Clean Code</span>
+                  <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-xs sm:text-sm">Security Best Practices</span>
+                  <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-xs sm:text-sm">Performance Optimization</span>
+                  <span class="bg-yellow-900 text-yellow-300 px-3 py-1 rounded-full text-xs sm:text-sm">Scalable Architecture</span>
                 </div>
               </div>
 
               <div class="border-t border-gray-700 pt-6">
-                <p class="text-lg">Setiap line code tersimpan rapi di <span class="text-blue-400">GitHub</span> dan siap di-deploy via <span class="text-green-400">Vercel</span> untuk delivery yang cepat dan reliable.</p>
+                <p class="text-base sm:text-lg">Setiap line code tersimpan rapi di <span class="text-blue-400">GitHub</span> dan siap di-deploy via <span class="text-green-400">Vercel</span> untuk delivery yang cepat dan reliable.</p>
               </div>
             </div>
           </div>
@@ -884,7 +995,7 @@
         <!-- Skills Section -->
         <div class="mt-16">
           <h4 class="text-2xl font-bold mb-8 text-center">Keahlian Teknis</h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
             <div class="bg-gray-800 rounded-xl p-6 card-hover">
               <h5 class="text-xl font-bold mb-4 text-blue-400">Backend Development</h5>
               <div class="space-y-4">
@@ -956,12 +1067,12 @@
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20 bg-gradient-to-br from-gray-900 to-gray-800 fade-in">
-      <div class="container mx-auto px-6">
-        <h3 class="text-4xl font-bold mb-4 text-center">Proyek <span class="text-blue-400">Saya</span></h3>
+    <section id="projects" class="py-20 fade-in bg-gradient-to-br from-gray-900 to-gray-800">
+      <div class="container mx-auto px-4 sm:px-6">
+        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Proyek <span class="text-blue-400">Saya</span></h3>
         <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <!-- Proyek 1 -->
           <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
             <div class="project-image">
@@ -1067,17 +1178,17 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gradient-to-br from-gray-800 to-gray-900 fade-in">
-      <div class="container mx-auto px-6">
-        <h3 class="text-4xl font-bold mb-4 text-center">Hubungi <span class="text-blue-400">Saya</span></h3>
+    <section id="contact" class="py-20 fade-in bg-gradient-to-br from-gray-800 to-gray-900">
+      <div class="container mx-auto px-4 sm:px-6">
+        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Hubungi <span class="text-blue-400">Saya</span></h3>
         <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
 
-        <div class="flex flex-col lg:flex-row gap-12">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
           <!-- Contact Info -->
           <div class="lg:w-2/5">
-            <div class="bg-gray-800 rounded-2xl p-8 card-hover h-full">
-              <h4 class="text-2xl font-bold mb-6 text-blue-400">Mari Berkolaborasi!</h4>
-              <p class="text-lg mb-8">Saya terbuka untuk peluang baru dan proyek menarik. Jangan ragu untuk menghubungi saya!</p>
+            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover h-full">
+              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Mari Berkolaborasi!</h4>
+              <p class="text-base sm:text-lg mb-8">Saya terbuka untuk peluang baru dan proyek menarik. Jangan ragu untuk menghubungi saya!</p>
 
               <div class="space-y-6">
                 <div class="flex items-center">
@@ -1130,33 +1241,34 @@
 
           <!-- Contact Form -->
           <div class="lg:w-3/5">
-            <div class="bg-gray-800 rounded-2xl p-8 card-hover h-full">
-              <h4 class="text-2xl font-bold mb-6 text-blue-400">Kirim Pesan</h4>
-              <form class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover h-full">
+              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Kirim Pesan</h4>
+              <form id="contact-form" class="space-y-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
                   <div>
                     <label for="name" class="block mb-2 font-medium">Nama Lengkap</label>
-                    <input type="text" id="name" class="w-full p-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="Masukkan nama Anda" />
+                    <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Masukkan nama Anda" required />
                   </div>
                   <div>
                     <label for="email" class="block mb-2 font-medium">Alamat Email</label>
-                    <input type="email" id="email" class="w-full p-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="email@example.com" />
+                    <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="email@example.com" required />
                   </div>
                 </div>
 
                 <div>
                   <label for="subject" class="block mb-2 font-medium">Perihal</label>
-                  <input type="text" id="subject" class="w-full p-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="Subjek pesan Anda" />
+                  <input type="text" id="subject" name="subject" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Subjek pesan Anda" required />
                 </div>
 
                 <div>
                   <label for="message" class="block mb-2 font-medium">Pesan</label>
-                  <textarea id="message" rows="5" class="w-full p-3 bg-gray-700 rounded-lg focus:ring-2 focus:ring-blue-400 transition" placeholder="Tulis pesan Anda di sini..."></textarea>
+                  <textarea id="message" name="message" rows="5" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Tulis pesan Anda di sini..." required></textarea>
                 </div>
 
-                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 py-3 rounded-lg font-medium transition transform hover:scale-105 flex items-center justify-center">
+                <button type="submit" id="submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 py-3 rounded-lg font-medium transition flex items-center justify-center">
                   <i class="fas fa-paper-plane mr-2"></i>
-                  Kirim Pesan
+                  <span id="submit-text">Kirim Pesan</span>
+                  <i id="loading-icon" class="fas fa-spinner fa-spin ml-2 hidden"></i>
                 </button>
               </form>
             </div>
@@ -1166,24 +1278,21 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 bg-gradient-to-br from-gray-900 to-gray-800 fade-in">
-      <div class="container mx-auto px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+    <footer class="py-16 fade-in bg-gradient-to-br from-gray-900 to-gray-800">
+      <div class="container mx-auto px-4 sm:px-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
           <!-- Brand & Description -->
           <div class="lg:col-span-2">
             <h3 class="text-2xl font-bold text-blue-400 mb-4">Lalu Deyndra</h3>
             <p class="text-gray-300 mb-6 max-w-md">Back-End Developer yang bersemangat dalam menciptakan solusi IoT yang cerdas, API yang powerful, dan sistem otomatisasi server yang efisien.</p>
             <div class="flex space-x-4">
-              <a href="https://github.com/LaluDeyndra" class="social-icon w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-500 transition-all duration-300 transform hover:-translate-y-1">
+              <a href="https://github.com/LaluDeyndra" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-500 transition-all duration-300">
                 <i class="fab fa-github"></i>
               </a>
-              <a
-                href="https://www.youtube.com/@apeoplewhohaveacoolname/featured"
-                class="social-icon w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-red-500 transition-all duration-300 transform hover:-translate-y-1"
-              >
+              <a href="https://www.youtube.com/@apeoplewhohaveacoolname/featured" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-red-500 transition-all duration-300">
                 <i class="fab fa-youtube"></i>
               </a>
-              <a href="https://www.instagram.com/laludeyndrafavian" class="social-icon w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-pink-500 transition-all duration-300 transform hover:-translate-y-1">
+              <a href="https://www.instagram.com/laludeyndrafavian" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-pink-500 transition-all duration-300">
                 <i class="fab fa-instagram"></i>
               </a>
             </div>
@@ -1194,16 +1303,16 @@
             <h4 class="text-lg font-bold mb-4 text-blue-400">Navigasi</h4>
             <ul class="space-y-3">
               <li>
-                <a href="#hero" class="text-gray-300 hover:text-blue-400 transition-all duration-300 transform hover:translate-x-1 block">Beranda</a>
+                <a href="#hero" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Beranda</a>
               </li>
               <li>
-                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-all duration-300 transform hover:translate-x-1 block">Tentang Saya</a>
+                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Tentang Saya</a>
               </li>
               <li>
-                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-all duration-300 transform hover:translate-x-1 block">Proyek</a>
+                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Proyek</a>
               </li>
               <li>
-                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-all duration-300 transform hover:translate-x-1 block">Kontak</a>
+                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Kontak</a>
               </li>
             </ul>
           </div>
@@ -1231,15 +1340,15 @@
         <!-- Copyright & Tech Stack -->
         <div class="pt-8 border-t border-gray-700">
           <div class="flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-400 mb-4 md:mb-0">&copy; 2025 Lalu Deyndra. Semua hak dilindungi.</p>
+            <p class="text-gray-400 mb-4 md:mb-0 text-sm sm:text-base">&copy; 2025 Lalu Deyndra. Semua hak dilindungi.</p>
             <div class="flex items-center space-x-2">
               <span class="text-gray-400 text-sm">Dibuat dengan:</span>
               <div class="flex space-x-2">
-                <i class="fab fa-html5 text-orange-500 hover:scale-110 transition-transform duration-300"></i>
-                <i class="fab fa-css3-alt text-blue-500 hover:scale-110 transition-transform duration-300"></i>
-                <i class="fab fa-js-square text-yellow-400 hover:scale-110 transition-transform duration-300"></i>
-                <i class="fab fa-github text-gray-300 hover:scale-110 transition-transform duration-300"></i>
-                <i class="fas fa-rocket text-green-500 hover:scale-110 transition-transform duration-300"></i>
+                <i class="fab fa-html5 text-orange-500"></i>
+                <i class="fab fa-css3-alt text-blue-500"></i>
+                <i class="fab fa-js-square text-yellow-400"></i>
+                <i class="fab fa-github text-gray-300"></i>
+                <i class="fas fa-rocket text-green-500"></i>
               </div>
             </div>
           </div>
@@ -1247,163 +1356,310 @@
       </div>
     </footer>
 
-    <!-- JavaScript untuk animasi scroll-triggered dan preloader -->
+    <!-- JavaScript -->
     <script>
-      // Fungsi preload gambar
-      function preloadImages(sources, callback) {
-        let loaded = 0;
-        const total = sources.length;
-        const progressFill = document.getElementById('progress-fill');
-        const loadingText = document.getElementById('loading-text');
+      // Initialize EmailJS
+      (function () {
+        // GANTI DENGAN ID EmailJS ANDA
+        const EMAILJS_USER_ID = 'ID27XBMUYROT2P-Sy';
+        const EMAILJS_SERVICE_ID = 'service_t6gttvr';
+        const TEMPLATE_TO_YOU = 'template_en6yj23';
+        const TEMPLATE_AUTO_REPLY = 'template_2luf90z';
 
-        if (total === 0) {
-          callback();
-          return;
-        }
+        // Inisialisasi EmailJS
+        emailjs.init(EMAILJS_USER_ID);
 
-        sources.forEach((src) => {
-          const img = new Image();
-          img.onload = () => {
-            loaded++;
-            const percent = (loaded / total) * 100;
-            progressFill.style.width = percent + '%';
-            loadingText.textContent = `Memuat... ${loaded}/${total}`;
-            if (loaded === total) {
-              setTimeout(callback, 500); // Delay sedikit untuk efek
-            }
-          };
-          img.onerror = () => {
-            loaded++;
-            const percent = (loaded / total) * 100;
-            progressFill.style.width = percent + '%';
-            loadingText.textContent = `Memuat... ${loaded}/${total}`;
-            if (loaded === total) {
-              setTimeout(callback, 500);
-            }
-          };
-          img.src = src;
-        });
-      }
+        // Fungsi untuk menampilkan notifikasi
+        function showNotification(message, type = 'info') {
+          const notification = document.getElementById('notification');
+          const notificationMessage = document.getElementById('notification-message');
+          const notificationClose = document.getElementById('notification-close');
 
-      // Jalankan preloader
-      preloadImages([], () => {
-        const preloader = document.getElementById('preloader');
-        preloader.classList.add('hidden');
-        document.body.classList.remove('loading');
+          notificationMessage.textContent = message;
+          notification.className = `notification ${type} hidden`;
 
-        // Animate skill bars after page loads
-        const skillBars = document.querySelectorAll('.skill-progress');
-        skillBars.forEach((bar) => {
-          const width = bar.style.width;
-          bar.style.width = '0%';
           setTimeout(() => {
-            bar.style.width = width;
-          }, 500);
-        });
-      });
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+              notification.classList.add('show');
+            }, 10);
+          }, 100);
 
-      // Observer untuk animasi scroll-triggered
-      const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px',
-      };
+          setTimeout(() => {
+            hideNotification();
+          }, 5000);
 
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
-        });
-      }, observerOptions);
-
-      // Observe sections
-      document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
-      // Observe project cards
-      document.querySelectorAll('.project-card').forEach((el) => observer.observe(el));
-      // Observe social icons
-      document.querySelectorAll('.social-icon').forEach((el) => observer.observe(el));
-
-      // Mobile Menu Functionality
-      const mobileMenuButton = document.getElementById('mobileMenuButton');
-      const closeMobileMenuButton = document.getElementById('closeMobileMenu');
-      const mobileMenu = document.getElementById('mobileMenu');
-      const menuOverlay = document.getElementById('menuOverlay');
-      const menuPanel = mobileMenu.querySelector('.transform');
-
-      function openMobileMenu() {
-        mobileMenu.classList.remove('hidden');
-        setTimeout(() => {
-          menuOverlay.classList.remove('opacity-0');
-          menuPanel.classList.remove('translate-x-full');
-        }, 10);
-        document.body.style.overflow = 'hidden';
-      }
-
-      function closeMobileMenu() {
-        menuOverlay.classList.add('opacity-0');
-        menuPanel.classList.add('translate-x-full');
-        setTimeout(() => {
-          mobileMenu.classList.add('hidden');
-          document.body.style.overflow = '';
-        }, 300);
-      }
-
-      mobileMenuButton.addEventListener('click', openMobileMenu);
-      closeMobileMenuButton.addEventListener('click', closeMobileMenu);
-      menuOverlay.addEventListener('click', closeMobileMenu);
-
-      // Close mobile menu when clicking on a link
-      document.querySelectorAll('#mobileMenu a').forEach((link) => {
-        link.addEventListener('click', closeMobileMenu);
-      });
-
-      // Theme Toggle Functionality
-      const themeToggle = document.getElementById('themeToggle');
-      const themeToggleMobile = document.getElementById('themeToggleMobile');
-      const themeToggleMobileMenu = document.getElementById('themeToggleMobileMenu');
-      const body = document.body;
-
-      // Check for saved theme preference or default to dark
-      const currentTheme = localStorage.getItem('theme') || 'dark';
-
-      // Apply the saved theme
-      if (currentTheme === 'light') {
-        body.classList.add('light-mode');
-        themeToggle.classList.add('light');
-        themeToggleMobile.classList.add('light');
-        themeToggleMobileMenu.classList.add('light');
-        themeToggle.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
-        themeToggleMobile.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
-        themeToggleMobileMenu.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
-      }
-
-      // Toggle theme function
-      function toggleTheme() {
-        body.classList.toggle('light-mode');
-        themeToggle.classList.toggle('light');
-        themeToggleMobile.classList.toggle('light');
-        themeToggleMobileMenu.classList.toggle('light');
-
-        const icon = themeToggle.querySelector('.theme-toggle-handle i');
-        const iconMobile = themeToggleMobile.querySelector('.theme-toggle-handle i');
-        const iconMobileMenu = themeToggleMobileMenu.querySelector('.theme-toggle-handle i');
-
-        if (body.classList.contains('light-mode')) {
-          icon.className = 'fas fa-sun text-yellow-500';
-          iconMobile.className = 'fas fa-sun text-yellow-500';
-          iconMobileMenu.className = 'fas fa-sun text-yellow-500';
-          localStorage.setItem('theme', 'light');
-        } else {
-          icon.className = 'fas fa-moon text-gray-700';
-          iconMobile.className = 'fas fa-moon text-gray-700';
-          iconMobileMenu.className = 'fas fa-moon text-gray-700';
-          localStorage.setItem('theme', 'dark');
+          notificationClose.onclick = hideNotification;
         }
-      }
 
-      themeToggle.addEventListener('click', toggleTheme);
-      themeToggleMobile.addEventListener('click', toggleTheme);
-      themeToggleMobileMenu.addEventListener('click', toggleTheme);
+        function hideNotification() {
+          const notification = document.getElementById('notification');
+          notification.classList.remove('show');
+          setTimeout(() => {
+            notification.classList.add('hidden');
+          }, 300);
+        }
+
+        // FUNGSI UTAMA - DISESUAIKAN DENGAN FORMAT TEMPLATE
+        function sendEmail(event) {
+          event.preventDefault();
+
+          // Ambil data form
+          const name = document.getElementById('name').value.trim();
+          const email = document.getElementById('email').value.trim();
+          const subject = document.getElementById('subject').value.trim();
+          const message = document.getElementById('message').value.trim();
+
+          // Validasi sederhana
+          if (!name || !email || !subject || !message) {
+            showNotification('Harap isi semua field.', 'error');
+            return;
+          }
+
+          // Validasi email
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          if (!emailRegex.test(email)) {
+            showNotification('Harap masukkan alamat email yang valid.', 'error');
+            return;
+          }
+
+          // Tampilkan loading
+          const submitText = document.getElementById('submit-text');
+          const loadingIcon = document.getElementById('loading-icon');
+          submitText.textContent = 'Mengirim...';
+          loadingIcon.classList.remove('hidden');
+
+          console.log('=== MENGIRIM EMAIL ===');
+
+          // 1. EMAIL KE ANDA (template_en6yJ23)
+          const emailToYou = {
+            from_name: name,
+            from_email: email,
+            subject: subject,
+            message: message,
+            to_email: 'laludeyndrafavian@gmail.com',
+            date: new Date().toLocaleDateString('id-ID'),
+            time: new Date().toLocaleTimeString('id-ID'),
+          };
+
+          // 2. AUTO-REPLY KE PENGIRIM (template_2luf90z)
+          const autoReply = {
+            to_email: email,
+            date: new Date().toLocaleDateString('id-ID', {
+              weekday: 'long',
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            }),
+            time: new Date().toLocaleTimeString('id-ID', {
+              hour: '2-digit',
+              minute: '2-digit',
+            }),
+            from_name: 'Lalu Deyndra Favian',
+            message_id: 'MSG' + Date.now().toString().slice(-6),
+            to_name: name,
+            name: name,
+            year: new Date().getFullYear(),
+          };
+
+          console.log('📧 Email ke Anda:', emailToYou);
+          console.log('📨 Auto-reply params:', autoReply);
+
+          // Kirim email pertama (ke Anda)
+          emailjs
+            .send(EMAILJS_SERVICE_ID, TEMPLATE_TO_YOU, emailToYou)
+            .then(function (response1) {
+              console.log('✅ Email ke Anda TERKIRIM:', response1);
+              return emailjs.send(EMAILJS_SERVICE_ID, TEMPLATE_AUTO_REPLY, autoReply);
+            })
+            .then(function (response2) {
+              console.log('✅ Auto-reply TERKIRIM:', response2);
+              showNotification('Pesan berhasil dikirim! Email konfirmasi telah dikirim ke ' + email, 'success');
+              document.getElementById('contact-form').reset();
+              submitText.textContent = 'Kirim Pesan';
+              loadingIcon.classList.add('hidden');
+            })
+            .catch(function (error) {
+              console.log('❌ Error detail:', error);
+              if (error.text && error.text.includes('template ID not found')) {
+                showNotification('Template tidak ditemukan. Periksa: template_en6yJ23 (huruf besar J)', 'error');
+              } else if (error.text && error.text.includes('recipients address is empty')) {
+                showNotification('Error: Field "To Email" di template auto-reply kosong.', 'error');
+              } else if (error.status === 422) {
+                showNotification('Format email salah atau field required kosong.', 'error');
+              } else if (error.status === 400) {
+                showNotification('Email tidak valid atau quota habis.', 'error');
+              } else {
+                showNotification('Gagal mengirim. Silakan coba lagi. Error: ' + error.text, 'error');
+              }
+              submitText.textContent = 'Kirim Pesan';
+              loadingIcon.classList.add('hidden');
+            });
+        }
+
+        // Event listener untuk form
+        document.getElementById('contact-form').addEventListener('submit', sendEmail);
+
+        // Fungsi preload gambar
+        function preloadImages(sources, callback) {
+          let loaded = 0;
+          const total = sources.length;
+          const progressFill = document.getElementById('progress-fill');
+          const loadingText = document.getElementById('loading-text');
+
+          if (total === 0) {
+            callback();
+            return;
+          }
+
+          sources.forEach((src) => {
+            const img = new Image();
+            img.onload = () => {
+              loaded++;
+              const percent = (loaded / total) * 100;
+              progressFill.style.width = percent + '%';
+              loadingText.textContent = `Memuat... ${loaded}/${total}`;
+              if (loaded === total) {
+                setTimeout(callback, 500);
+              }
+            };
+            img.onerror = () => {
+              loaded++;
+              const percent = (loaded / total) * 100;
+              progressFill.style.width = percent + '%';
+              loadingText.textContent = `Memuat... ${loaded}/${total}`;
+              if (loaded === total) {
+                setTimeout(callback, 500);
+              }
+            };
+            img.src = src;
+          });
+        }
+
+        // Jalankan preloader
+        preloadImages([], () => {
+          const preloader = document.getElementById('preloader');
+          preloader.classList.add('hidden');
+          document.body.classList.remove('loading');
+
+          // Animate skill bars after page loads
+          const skillBars = document.querySelectorAll('.skill-progress');
+          skillBars.forEach((bar) => {
+            const width = bar.style.width;
+            bar.style.width = '0%';
+            setTimeout(() => {
+              bar.style.width = width;
+            }, 500);
+          });
+        });
+
+        // Observer untuk animasi scroll-triggered
+        const observerOptions = {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px',
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('visible');
+            }
+          });
+        }, observerOptions);
+
+        // Observe sections
+        document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.project-card').forEach((el) => observer.observe(el));
+        document.querySelectorAll('.social-icon').forEach((el) => observer.observe(el));
+
+        // Mobile Menu Functionality
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const closeMobileMenuButton = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const menuPanel = mobileMenu.querySelector('.transform');
+
+        function openMobileMenu() {
+          mobileMenu.classList.remove('hidden');
+          setTimeout(() => {
+            menuOverlay.classList.remove('opacity-0');
+            menuPanel.classList.remove('translate-x-full');
+          }, 10);
+          document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMenu() {
+          menuOverlay.classList.add('opacity-0');
+          menuPanel.classList.add('translate-x-full');
+          setTimeout(() => {
+            mobileMenu.classList.add('hidden');
+            document.body.style.overflow = '';
+          }, 300);
+        }
+
+        mobileMenuButton.addEventListener('click', openMobileMenu);
+        closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+        menuOverlay.addEventListener('click', closeMobileMenu);
+
+        document.querySelectorAll('#mobileMenu a').forEach((link) => {
+          link.addEventListener('click', closeMobileMenu);
+        });
+
+        // Theme Toggle Functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const themeToggleMobile = document.getElementById('themeToggleMobile');
+        const themeToggleMobileMenu = document.getElementById('themeToggleMobileMenu');
+        const body = document.body;
+
+        // Check for saved theme preference or default to dark
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Apply the saved theme
+        if (currentTheme === 'light') {
+          body.classList.add('light-mode');
+          themeToggle.classList.add('light');
+          themeToggleMobile.classList.add('light');
+          themeToggleMobileMenu.classList.add('light');
+          themeToggle.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+          themeToggleMobile.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+          themeToggleMobileMenu.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+        }
+
+        // Toggle theme function
+        function toggleTheme() {
+          body.classList.toggle('light-mode');
+          themeToggle.classList.toggle('light');
+          themeToggleMobile.classList.toggle('light');
+          themeToggleMobileMenu.classList.toggle('light');
+
+          const icon = themeToggle.querySelector('.theme-toggle-handle i');
+          const iconMobile = themeToggleMobile.querySelector('.theme-toggle-handle i');
+          const iconMobileMenu = themeToggleMobileMenu.querySelector('.theme-toggle-handle i');
+
+          if (body.classList.contains('light-mode')) {
+            icon.className = 'fas fa-sun text-yellow-500';
+            iconMobile.className = 'fas fa-sun text-yellow-500';
+            iconMobileMenu.className = 'fas fa-sun text-yellow-500';
+            localStorage.setItem('theme', 'light');
+          } else {
+            icon.className = 'fas fa-moon text-gray-700';
+            iconMobile.className = 'fas fa-moon text-gray-700';
+            iconMobileMenu.className = 'fas fa-moon text-gray-700';
+            localStorage.setItem('theme', 'dark');
+          }
+        }
+
+        themeToggle.addEventListener('click', toggleTheme);
+        themeToggleMobile.addEventListener('click', toggleTheme);
+        themeToggleMobileMenu.addEventListener('click', toggleTheme);
+
+        // Tampilkan petunjuk setup EmailJS jika belum diatur
+        if (EMAILJS_USER_ID === 'YOUR_USER_ID') {
+          setTimeout(() => {
+            showNotification('EmailJS belum dikonfigurasi. Silakan daftar di EmailJS.com dan ganti USER_ID, SERVICE_ID, dan TEMPLATE_ID di kode JavaScript.', 'info');
+          }, 2000);
+        }
+      })();
     </script>
   </body>
 </html>

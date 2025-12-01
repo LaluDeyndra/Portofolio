@@ -1,0 +1,13 @@
+#loading-icon.hidden {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Pastikan font awesome icon tidak visible */
+.fa-spinner.hidden {
+  display: none !important;
+}
