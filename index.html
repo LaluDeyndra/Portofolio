@@ -35,7 +35,7 @@
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   </head>
-  <body class="text-white font-sans loading antialiased bg-gray-950">
+  <body class="dark:text-white text-gray-900 font-sans loading antialiased dark:bg-gray-950 bg-white">
     <!-- Animated Gradient Background -->
     <div class="animated-bg">
       <div class="blob-c blob-1"></div>
@@ -45,7 +45,7 @@
     </div>
 
     <!-- Preloader -->
-    <div id="preloader" class="glass-panel z-[9999] fixed inset-0 flex flex-col justify-center items-center backdrop-blur-2xl bg-gray-900/80">
+    <div id="preloader" class="glass-panel z-[9999] fixed inset-0 flex flex-col justify-center items-center backdrop-blur-2xl dark:bg-gray-900/80 bg-white/80">
       <div class="loading-container text-center">
         <div class="loading-logo text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 mb-8 tracking-wider">DEYNDRA</div>
         <div class="relative w-20 h-20 mx-auto mb-8 flex items-center justify-center">
@@ -57,12 +57,15 @@
         <div class="progress-bar w-48 h-1.5 bg-white/10 rounded-full overflow-hidden mt-8 mx-auto">
           <div class="progress-fill h-full bg-gradient-to-r from-blue-400 to-purple-500 w-0 transition-all duration-300"></div>
         </div>
-        <div class="loading-text mt-4 text-blue-100 font-medium" data-i18n="loading">Memuat...</div>
+        <div class="loading-text mt-4 dark:text-blue-100 text-blue-900 font-medium" data-i18n="loading">Memuat...</div>
       </div>
     </div>
 
     <!-- Notification -->
-    <div id="notification" class="notification hidden fixed top-6 right-6 px-6 py-4 rounded-2xl text-white font-medium z-[10000] glass-card flex items-center gap-4 transition-all duration-300 transform translate-x-full shadow-2xl">
+    <div
+      id="notification"
+      class="notification hidden fixed top-6 right-6 px-6 py-4 rounded-2xl dark:text-white text-gray-900 font-medium z-[10000] glass-card flex items-center gap-4 transition-all duration-300 transform translate-x-full shadow-2xl"
+    >
       <span id="notification-message"></span>
       <button id="notification-close" class="close-btn hover:text-red-400 transition-colors">&times;</button>
     </div>
@@ -75,10 +78,10 @@
         <!-- Desktop Navigation -->
         <div class="hidden md:flex items-center space-x-8">
           <ul class="flex space-x-6 text-sm font-medium">
-            <li><a href="#hero" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_home">Beranda</a></li>
-            <li><a href="#about" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_about">Tentang</a></li>
-            <li><a href="#projects" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_projects">Proyek</a></li>
-            <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_contact">Kontak</a></li>
+            <li><a href="#hero" class="dark:text-gray-300 text-gray-700 hover:text-blue-500 transition-colors duration-200" data-i18n="nav_home">Beranda</a></li>
+            <li><a href="#about" class="dark:text-gray-300 text-gray-700 hover:text-blue-500 transition-colors duration-200" data-i18n="nav_about">Tentang</a></li>
+            <li><a href="#projects" class="dark:text-gray-300 text-gray-700 hover:text-blue-500 transition-colors duration-200" data-i18n="nav_projects">Proyek</a></li>
+            <li><a href="#contact" class="dark:text-gray-300 text-gray-700 hover:text-blue-500 transition-colors duration-200" data-i18n="nav_contact">Kontak</a></li>
           </ul>
 
           <div class="flex items-center space-x-4 border-l border-white/10 pl-4">
@@ -93,11 +96,11 @@
 
         <!-- Mobile Menu Button -->
         <div class="flex items-center md:hidden gap-4">
-          <button class="lang-toggle text-sm font-bold text-gray-300 focus:outline-none" id="langToggleMobile">EN</button>
+          <button class="lang-toggle text-sm font-bold dark:text-gray-300 text-gray-700 focus:outline-none" id="langToggleMobile">EN</button>
           <button class="theme-toggle p-2 rounded-full glass-btn text-yellow-400 focus:outline-none" id="themeToggleMobile">
             <i class="fas fa-moon"></i>
           </button>
-          <button id="mobileMenuButton" class="text-white p-2 rounded-lg glass-btn focus:outline-none">
+          <button id="mobileMenuButton" class="dark:text-white text-gray-900 p-2 rounded-lg glass-btn focus:outline-none">
             <i class="fas fa-bars"></i>
           </button>
         </div>
@@ -109,15 +112,15 @@
       <div id="menuOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
       <div class="relative ml-auto w-3/4 max-w-xs h-full glass-card border-l border-white/10 p-6 flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
         <div class="flex justify-end mb-8">
-          <button id="closeMobileMenu" class="p-2 glass-btn rounded-xl text-gray-300 hover:text-white">
+          <button id="closeMobileMenu" class="p-2 glass-btn rounded-xl dark:text-gray-300 text-gray-700 hover:text-blue-500">
             <i class="fas fa-times text-xl"></i>
           </button>
         </div>
         <div class="flex flex-col space-y-4 text-lg font-medium">
-          <a href="#hero" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-home w-8 text-blue-400"></i> <span data-i18n="nav_home">Beranda</span></a>
-          <a href="#about" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-user w-8 text-purple-400"></i> <span data-i18n="nav_about_full">Tentang Saya</span></a>
-          <a href="#projects" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-code w-8 text-green-400"></i> <span data-i18n="nav_projects">Proyek</span></a>
-          <a href="#contact" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-envelope w-8 text-red-400"></i> <span data-i18n="nav_contact">Kontak</span></a>
+          <a href="#hero" class="px-4 py-3 glass-btn rounded-xl dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-all"><i class="fas fa-home w-8 text-blue-400"></i> <span data-i18n="nav_home">Beranda</span></a>
+          <a href="#about" class="px-4 py-3 glass-btn rounded-xl dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-all"><i class="fas fa-user w-8 text-purple-400"></i> <span data-i18n="nav_about_full">Tentang Saya</span></a>
+          <a href="#projects" class="px-4 py-3 glass-btn rounded-xl dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-all"><i class="fas fa-code w-8 text-green-400"></i> <span data-i18n="nav_projects">Proyek</span></a>
+          <a href="#contact" class="px-4 py-3 glass-btn rounded-xl dark:text-gray-200 text-gray-800 hover:text-blue-500 transition-all"><i class="fas fa-envelope w-8 text-red-400"></i> <span data-i18n="nav_contact">Kontak</span></a>
         </div>
       </div>
     </div>
@@ -153,7 +156,7 @@
                   <img src="./assets/img/PP.png" alt="Foto Profil Lalu Deyndra" class="w-full h-full object-cover" />
                 </div>
               </div>
-              <div class="absolute -bottom-2 -right-4 bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+              <div class="absolute -bottom-2 -right-4 dark:bg-white/10 bg-gray-200/60 backdrop-blur-md dark:border dark:border-white/20 border-gray-300/30 dark:text-white text-gray-900 px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
                 <i class="fas fa-check-circle text-blue-400 mr-1"></i> Available
               </div>
             </div>
@@ -170,32 +173,38 @@
       <!-- ABOUT Section (Bento Grid) -->
       <section id="about" class="fade-in scroll-mt-32">
         <div class="flex items-center gap-4 mb-10">
-          <h3 class="text-3xl font-bold"><i class="fas fa-compass text-blue-500 mr-2"></i> <span data-i18n="abt_explore">Eksplorasi</span></h3>
-          <div class="h-px bg-white/10 flex-1"></div>
+          <h3 class="text-3xl font-bold dark:text-white text-gray-900"><i class="fas fa-compass text-blue-500 mr-2"></i> <span data-i18n="abt_explore">Eksplorasi</span></h3>
+          <div class="h-px dark:bg-white/10 bg-gray-300/20 flex-1"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
           <!-- About Description -->
           <div class="md:col-span-2 md:row-span-2 glass-card rounded-[2rem] p-8 relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <h4 class="text-2xl font-bold mb-4 text-white" data-i18n="abt_title">Tentang Perjalanan Saya</h4>
-            <p class="text-gray-300 leading-relaxed mb-6 font-light">
+            <h4 class="text-2xl font-bold mb-4 dark:text-white text-gray-900" data-i18n="abt_title">Tentang Perjalanan Saya</h4>
+            <p class="dark:text-gray-300 text-gray-700 leading-relaxed mb-6 font-light">
               <span data-i18n="abt_desc_1_pre">Saya seorang </span><span class="text-blue-400 font-medium">Web Developer</span
               ><span data-i18n="abt_desc_1_post">
                 yang sangat menikmati proses mewujudkan ide menjadi kenyataan. Fokus saya mencakup pengembangan antarmuka (Front-End) yang interaktif, pembuatan API dan sistem server (Back-End) yang tangguh, serta merancang solusi </span
               ><span class="text-purple-400 font-medium" data-i18n="abt_desc_1_iot">IoT terintegrasi</span>.
             </p>
-            <p class="text-gray-300 leading-relaxed font-light mb-8" data-i18n="abt_desc_2">Kualitas kode adalah prioritas utama. Security, scalability, dan clean design adalah fondasi dari setiap aplikasi yang saya bangun.</p>
+            <p class="dark:text-gray-300 text-gray-700 leading-relaxed font-light mb-8" data-i18n="abt_desc_2">
+              Kualitas kode adalah prioritas utama. Security, scalability, dan clean design adalah fondasi dari setiap aplikasi yang saya bangun.
+            </p>
 
             <!-- Skill Bars -->
             <div class="space-y-4">
               <div>
-                <div class="flex justify-between text-sm mb-1 font-medium text-gray-200"><span>Back-End & API</span><span>90%</span></div>
-                <div class="h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5"><div class="h-full bg-gradient-to-r from-red-500 to-orange-500 w-[90%] rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div></div>
+                <div class="flex justify-between text-sm mb-1 font-medium dark:text-gray-200 text-gray-700"><span>Back-End & API</span><span>90%</span></div>
+                <div class="h-2 w-full dark:bg-black/40 bg-gray-200/40 rounded-full overflow-hidden dark:border border-gray-300/20">
+                  <div class="h-full bg-gradient-to-r from-red-500 to-orange-500 w-[90%] rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div>
+                </div>
               </div>
               <div>
-                <div class="flex justify-between text-sm mb-1 font-medium text-gray-200"><span>Front-End & UI Design</span><span>85%</span></div>
-                <div class="h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5"><div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 w-[85%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div></div>
+                <div class="flex justify-between text-sm mb-1 font-medium dark:text-gray-200 text-gray-700"><span>Front-End & UI Design</span><span>85%</span></div>
+                <div class="h-2 w-full dark:bg-black/40 bg-gray-200/40 rounded-full overflow-hidden dark:border border-gray-300/20">
+                  <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 w-[85%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div>
+                </div>
               </div>
             </div>
           </div>
@@ -206,8 +215,8 @@
               <i class="fas fa-microchip"></i>
             </div>
             <div>
-              <h5 class="font-bold mb-1">IoT Solutions</h5>
-              <p class="text-sm text-gray-400" data-i18n="abt_iot_desc">Sistem terintegrasi dengan sensor realtime.</p>
+              <h5 class="font-bold mb-1 dark:text-white text-gray-900">IoT Solutions</h5>
+              <p class="text-sm dark:text-gray-400 text-gray-600" data-i18n="abt_iot_desc">Sistem terintegrasi dengan sensor realtime.</p>
             </div>
           </div>
 
@@ -216,43 +225,43 @@
               <i class="fas fa-server"></i>
             </div>
             <div>
-              <h5 class="font-bold mb-1" data-i18n="abt_ci_title">Server Auto</h5>
-              <p class="text-sm text-gray-400" data-i18n="abt_ci_desc">Otomatisasi proses & CI/CD deployment.</p>
+              <h5 class="font-bold mb-1 dark:text-white text-gray-900" data-i18n="abt_ci_title">Server Auto</h5>
+              <p class="text-sm dark:text-gray-400 text-gray-600" data-i18n="abt_ci_desc">Otomatisasi proses & CI/CD deployment.</p>
             </div>
           </div>
 
           <!-- Tech Stack Categories -->
           <div class="md:col-span-2 glass-card rounded-[2rem] p-6 md:p-8 flex flex-col justify-center overflow-hidden">
-            <h5 class="font-medium text-gray-300 mb-6 text-sm uppercase tracking-wider text-center md:text-left">Tech Stack</h5>
+            <h5 class="font-medium dark:text-gray-300 text-gray-700 mb-6 text-sm uppercase tracking-wider text-center md:text-left">Tech Stack</h5>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 w-full">
               <!-- Front-End -->
               <div class="flex flex-col gap-3">
-                <span class="text-xs font-bold text-blue-400 border-b border-white/10 pb-2 mb-1">FRONT-END</span>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-js text-yellow-400 w-5"></i> JavaScript</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-wind text-cyan-400 w-5"></i> Tailwind CSS</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-html5 text-orange-500 w-5"></i> HTML/CSS</div>
+                <span class="text-xs font-bold text-blue-400 dark:border-b dark:border-white/10 border-b border-gray-300/20 pb-2 mb-1">FRONT-END</span>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-js text-yellow-400 w-5"></i> JavaScript</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fas fa-wind text-cyan-400 w-5"></i> Tailwind CSS</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-html5 text-orange-500 w-5"></i> HTML/CSS</div>
               </div>
 
               <!-- Back-End -->
               <div class="flex flex-col gap-3">
-                <span class="text-xs font-bold text-red-400 border-b border-white/10 pb-2 mb-1">BACK-END</span>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-laravel text-red-500 w-5"></i> Laravel</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-node-js text-green-500 w-5"></i> Node.js</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-php text-indigo-400 w-5"></i> PHP</div>
+                <span class="text-xs font-bold text-red-400 dark:border-b dark:border-white/10 border-b border-gray-300/20 pb-2 mb-1">BACK-END</span>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-laravel text-red-500 w-5"></i> Laravel</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-node-js text-green-500 w-5"></i> Node.js</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-php text-indigo-400 w-5"></i> PHP</div>
               </div>
 
               <!-- Database -->
               <div class="flex flex-col gap-3">
-                <span class="text-xs font-bold text-purple-400 border-b border-white/10 pb-2 mb-1">DATABASE</span>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-database text-blue-400 w-5"></i> MySQL</div>
+                <span class="text-xs font-bold text-purple-400 dark:border-b dark:border-white/10 border-b border-gray-300/20 pb-2 mb-1">DATABASE</span>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fas fa-database text-blue-400 w-5"></i> MySQL</div>
               </div>
 
               <!-- Tools -->
               <div class="flex flex-col gap-3">
-                <span class="text-xs font-bold text-orange-400 border-b border-white/10 pb-2 mb-1" data-i18n="tech_tools">TOOLS & CLOUD</span>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-git-alt text-orange-600 w-5"></i> Git & GitHub</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-cloudflare text-orange-400 w-5"></i> Cloudflare</div>
-                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-terminal text-gray-400 w-5"></i> Linux / Bash</div>
+                <span class="text-xs font-bold text-orange-400 dark:border-b dark:border-white/10 border-b border-gray-300/20 pb-2 mb-1" data-i18n="tech_tools">TOOLS & CLOUD</span>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-git-alt text-orange-600 w-5"></i> Git & GitHub</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fab fa-cloudflare text-orange-400 w-5"></i> Cloudflare</div>
+                <div class="flex items-center gap-2 dark:text-gray-300 text-gray-700 text-sm hover:text-blue-500 transition-colors"><i class="fas fa-terminal text-gray-400 w-5"></i> Linux / Bash</div>
               </div>
             </div>
           </div>
@@ -262,21 +271,21 @@
       <!-- PROJECTS Section (Bento Grid) -->
       <section id="projects" class="fade-in scroll-mt-32">
         <div class="flex items-center gap-4 mb-10">
-          <h3 class="text-3xl font-bold"><i class="fas fa-layer-group text-purple-500 mr-2"></i> <span data-i18n="proj_title">Showcase Eksekusi</span></h3>
-          <div class="h-px bg-white/10 flex-1"></div>
+          <h3 class="text-3xl font-bold dark:text-white text-gray-900"><i class="fas fa-layer-group text-purple-500 mr-2"></i> <span data-i18n="proj_title">Showcase Eksekusi</span></h3>
+          <div class="h-px dark:bg-white/10 bg-gray-300/20 flex-1"></div>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           <!-- PROJECT 1: Arctic Vision (NEW) -->
           <div class="md:col-span-2 lg:col-span-2 glass-card rounded-[2rem] overflow-hidden group">
-            <div class="h-64 sm:h-80 w-full relative overflow-hidden bg-gray-900 border-b border-white/5">
+            <div class="h-64 sm:h-80 w-full relative overflow-hidden dark:bg-gray-900 bg-gray-100 dark:border-b border-b dark:border-white/5 border-gray-300/20">
               <img
                 src="./assets/img/arctic-vision.png"
                 onerror="this.src = 'https://images.unsplash.com/photo-1518104593124-ac2ea3c9edd9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'"
                 alt="Arctic Vision"
-                class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay"
+                class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 dark:mix-blend-overlay mix-blend-normal"
               />
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent"></div>
+              <div class="absolute inset-0 dark:bg-gradient-to-t dark:from-gray-950/80 dark:via-gray-900/20 dark:to-transparent bg-gradient-to-t from-white/50 via-white/15 to-transparent"></div>
 
               <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
                 <div>
@@ -284,50 +293,54 @@
                     <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md"><i class="fas fa-snowflake mr-1"></i> Arctic Guide AI</span>
                     <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">IoT Platform</span>
                   </div>
-                  <h4 class="text-3xl font-extrabold text-white drop-shadow-md">Arctic Vision</h4>
+                  <h4 class="text-3xl font-extrabold dark:text-white text-gray-900 drop-shadow-md">Arctic Vision</h4>
                 </div>
                 <a
                   href="https://www.arvi.life"
-                  class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:-rotate-45 transition-all shadow-xl"
+                  class="w-12 h-12 rounded-full dark:bg-white/10 bg-gray-200/60 backdrop-blur-md dark:border dark:border-white/20 border-gray-300/30 flex items-center justify-center dark:text-white text-gray-900 hover:bg-blue-500 hover:text-white hover:-rotate-45 transition-all shadow-xl"
                 >
                   <i class="fas fa-arrow-right"></i>
                 </a>
               </div>
             </div>
             <div class="p-6 md:p-8">
-              <p class="text-gray-300 font-light mb-6 text-sm md:text-base leading-relaxed" data-i18n="proj_arvi_desc">
+              <p class="dark:text-gray-300 text-gray-700 font-light mb-6 text-sm md:text-base leading-relaxed" data-i18n="proj_arvi_desc">
                 Platform inovatif "Bento-style" directory dan aplikasi IoT untuk memantau ekosistem Kutub Utara. Dilengkapi asisten AI responsif untuk menjelajahi ensiklopedia hewan dan pengolahan data sensor secara real-time.
               </p>
               <div class="flex gap-2 flex-wrap">
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Tailwind CSS</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Laravel / Back-End</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">IoT Framework</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">AI Integration</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Node.js</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">Tailwind CSS</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">Laravel / Back-End</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">IoT Framework</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">AI Integration</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">Node.js</span>
               </div>
             </div>
           </div>
 
           <!-- PROJECT 2: Gacha Bot -->
           <div class="glass-card rounded-[2rem] overflow-hidden group flex flex-col">
-            <div class="h-48 w-full relative bg-gray-900 border-b border-white/5 overflow-hidden">
-              <img src="./assets/img/waifuGacha.png" alt="Discord Gacha Bot" class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent mix-blend-multiply opacity-50"></div>
+            <div class="h-48 w-full relative dark:bg-gray-900 bg-gray-100 dark:border-b border-b dark:border-white/5 border-gray-300/20 overflow-hidden">
+              <img src="./assets/img/waifuGacha.png" alt="Discord Gacha Bot" class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 dark:mix-blend-overlay mix-blend-normal" />
+              <div class="absolute inset-0 dark:bg-gradient-to-t dark:from-gray-950/80 dark:via-gray-900/20 dark:to-transparent bg-gradient-to-t from-white/50 via-white/15 to-transparent"></div>
             </div>
             <div class="p-6 flex-1 flex flex-col">
               <div class="flex justify-between items-start mb-3">
-                <h4 class="text-xl font-bold">Discord Gacha Bot</h4>
+                <h4 class="text-xl font-bold dark:text-white text-gray-900">Discord Gacha Bot</h4>
                 <span class="bg-green-500/20 text-green-300 border border-green-500/30 px-2 py-1 rounded-md text-xs font-bold">BOT</span>
               </div>
-              <p class="text-sm text-gray-400 font-light mb-6 flex-1" data-i18n="proj_gacha_desc">Bot interaktif bertema Gacha untuk meramaikan server Discord dengan berbagai variasi minigames seru.</p>
+              <p class="text-sm dark:text-gray-400 text-gray-600 font-light mb-6 flex-1" data-i18n="proj_gacha_desc">Bot interaktif bertema Gacha untuk meramaikan server Discord dengan berbagai variasi minigames seru.</p>
               <div class="flex justify-between items-center mt-auto">
                 <div class="flex gap-2">
-                  <span class="text-xs text-gray-400"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
-                  <span class="text-xs text-gray-400"><i class="fab fa-node-js text-green-500"></i> Node.js</span>
-                  <span class="text-xs text-gray-400"><i class="fab fa-discord text-blue-500"></i> Discord.js</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-node-js text-green-500"></i> Node.js</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-discord text-blue-500"></i> Discord.js</span>
                 </div>
                 <div class="flex gap-2">
-                  <a href="https://laludeyndra.github.io/PageInviteGachaBot/" class="text-xs bg-white/10 hover:bg-white hover:text-black border border-white/10 px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-play mr-1"></i> Demo</a>
+                  <a
+                    href="https://laludeyndra.github.io/PageInviteGachaBot/"
+                    class="text-xs dark:bg-white/10 bg-gray-200/60 hover:bg-blue-500 hover:text-white dark:border dark:border-white/10 border-gray-300/20 px-3 py-1.5 rounded-lg transition-all"
+                    ><i class="fas fa-play mr-1"></i> Demo</a
+                  >
                 </div>
               </div>
             </div>
@@ -335,24 +348,30 @@
 
           <!-- PROJECT 3: Galeri Prestasi -->
           <div class="glass-card rounded-[2rem] overflow-hidden group flex flex-col">
-            <div class="h-48 w-full relative bg-gray-900 border-b border-white/5 overflow-hidden">
-              <img src="./assets/img/GaleriPrestasi.png" alt="Galeri Prestasi" class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
-              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent mix-blend-multiply opacity-50"></div>
+            <div class="h-48 w-full relative dark:bg-gray-900 bg-gray-100 dark:border-b border-b dark:border-white/5 border-gray-300/20 overflow-hidden">
+              <img
+                src="./assets/img/GaleriPrestasi.png"
+                alt="Galeri Prestasi"
+                class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 dark:mix-blend-overlay mix-blend-normal"
+              />
+              <div class="absolute inset-0 dark:bg-gradient-to-t dark:from-gray-950/80 dark:via-gray-900/20 dark:to-transparent bg-gradient-to-t from-white/50 via-white/15 to-transparent"></div>
             </div>
             <div class="p-6 flex-1 flex flex-col">
               <div class="flex justify-between items-start mb-3">
-                <h4 class="text-xl font-bold">Galeri Prestasi</h4>
+                <h4 class="text-xl font-bold dark:text-white text-gray-900">Galeri Prestasi</h4>
                 <span class="bg-orange-500/20 text-orange-300 border border-orange-500/30 px-2 py-1 rounded-md text-xs font-bold">Web Static</span>
               </div>
-              <p class="text-sm text-gray-400 font-light mb-6 flex-1" data-i18n="proj_galeri_desc">Platform statis elegan untuk menyorot dan mengapresiasi pencapaian prestasi dari individu tersembunyi.</p>
+              <p class="text-sm dark:text-gray-400 text-gray-600 font-light mb-6 flex-1" data-i18n="proj_galeri_desc">Platform statis elegan untuk menyorot dan mengapresiasi pencapaian prestasi dari individu tersembunyi.</p>
               <div class="flex justify-between items-center mt-auto">
                 <div class="flex gap-2">
-                  <span class="text-xs text-gray-400"><i class="fab fa-html5 text-orange-500"></i> HTML</span>
-                  <span class="text-xs text-gray-400"><i class="fab fa-css3-alt text-blue-500"></i> CSS</span>
-                  <span class="text-xs text-gray-400"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-html5 text-orange-500"></i> HTML</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-css3-alt text-blue-500"></i> CSS</span>
+                  <span class="text-xs dark:text-gray-400 text-gray-600"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
                 </div>
                 <div class="flex gap-2">
-                  <a href="https://galeri-prestasi.vercel.app/" class="text-xs bg-white/10 hover:bg-white hover:text-black border border-white/10 px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-play mr-1"></i> Demo</a>
+                  <a href="https://galeri-prestasi.vercel.app/" class="text-xs dark:bg-white/10 bg-gray-200/60 hover:bg-blue-500 hover:text-white dark:border dark:border-white/10 border-gray-300/20 px-3 py-1.5 rounded-lg transition-all"
+                    ><i class="fas fa-play mr-1"></i> Demo</a
+                  >
                 </div>
               </div>
             </div>
@@ -360,22 +379,26 @@
 
           <!-- PROJECT 4: SIM PKL -->
           <div class="md:col-span-2 glass-card rounded-[2rem] overflow-hidden group relative flex flex-col sm:flex-row">
-            <div class="h-48 sm:h-auto sm:w-1/3 bg-gray-900 border-b sm:border-b-0 sm:border-r border-white/5 flex items-center justify-center relative overflow-hidden">
-              <img src="./assets/img/senvada.png" alt="Sistem Informasi PKL Senvada" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
-              <div class="absolute inset-0 bg-gradient-to-t sm:bg-gradient-to-r from-gray-950/80 to-transparent mix-blend-multiply"></div>
+            <div class="h-48 sm:h-auto sm:w-1/3 dark:bg-gray-900 bg-gray-100 dark:border-b dark:border-white/5 border-b border-gray-300/20 sm:border-b-0 sm:border-r flex items-center justify-center relative overflow-hidden">
+              <img
+                src="./assets/img/senvada.png"
+                alt="Sistem Informasi PKL Senvada"
+                class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 dark:mix-blend-overlay mix-blend-normal"
+              />
+              <div class="absolute inset-0 dark:bg-gradient-to-t dark:from-gray-950/80 dark:via-gray-900/30 dark:to-transparent bg-gradient-to-t from-white/80 via-white/50 sm:bg-gradient-to-r to-transparent"></div>
             </div>
             <div class="flex-1 p-6 md:p-8 flex flex-col justify-center">
               <div class="flex justify-between items-start mb-2">
-                <h4 class="text-xl md:text-2xl font-bold">Sistem Informasi PKL</h4>
+                <h4 class="text-xl md:text-2xl font-bold dark:text-white text-gray-900">Sistem Informasi PKL</h4>
                 <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-1 rounded-md text-xs font-bold truncate ml-2" data-i18n="proj_pkl_badge">App / Team</span>
               </div>
-              <p class="text-sm md:text-base text-gray-300 font-light mb-4 text-justify" data-i18n="proj_pkl_desc">
+              <p class="text-sm md:text-base dark:text-gray-300 text-gray-700 font-light mb-4 text-justify" data-i18n="proj_pkl_desc">
                 Aplikasi manajemen terintegrasi untuk siswa Praktik Kerja Lapangan. Bertujuan menyederhanakan birokrasi, pemantauan realtime, dan dokumentasi aktivitas siswa.
               </p>
               <div class="flex flex-wrap gap-2 mb-6">
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Laravel</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">MySQL (JWT)</span>
-                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Tailwind UI</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">Laravel</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">MySQL (JWT)</span>
+                <span class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:bg-black/30 bg-gray-200/60 dark:border dark:border-white/5 border-gray-300/20 px-2 py-1 rounded-md">Tailwind UI</span>
               </div>
               <div>
                 <a href="https://pkl.senvada.id/" class="inline-flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl transition-all font-medium">
@@ -387,7 +410,10 @@
         </div>
 
         <div class="text-center mt-10">
-          <a href="https://github.com/LaluDeyndra?tab=repositories" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card border border-white/10 hover:bg-white hover:text-black transition-all font-medium text-sm group">
+          <a
+            href="https://github.com/LaluDeyndra?tab=repositories"
+            class="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card dark:border-white/10 border-gray-300/20 hover:bg-blue-500 hover:text-white transition-all font-medium text-sm group"
+          >
             <i class="fab fa-github text-lg"></i> <span data-i18n="proj_github_btn">Kunjungi Repositori GitHub Saya</span>
             <i class="fas fa-arrow-right opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
           </a>
@@ -402,36 +428,36 @@
           <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
             <div class="flex flex-col justify-center">
               <h3 class="text-4xl font-extrabold mb-4"><span data-i18n="cnt_title_1">Mari Bangun </span><br /><span class="text-blue-400" data-i18n="cnt_title_2">Sesuatu yang Hebat.</span></h3>
-              <p class="text-gray-300 font-light mb-8 max-w-md" data-i18n="cnt_desc">Saya selalu terbuka untuk diskusi mengenai potensi kolaborasi, pekerjaan baru, atau sekadar bertukar wawasan di bidang teknologi.</p>
+              <p class="dark:text-gray-300 text-gray-700 font-light mb-8 max-w-md" data-i18n="cnt_desc">Saya selalu terbuka untuk diskusi mengenai potensi kolaborasi, pekerjaan baru, atau sekadar bertukar wawasan di bidang teknologi.</p>
 
               <div class="space-y-4">
                 <a href="mailto:laludeyndrafavian@gmail.com" class="flex items-center gap-4 glass-btn p-4 rounded-xl hover:-translate-y-1 transition-transform w-[max-content] pr-6">
                   <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30"><i class="fas fa-envelope"></i></div>
                   <div>
-                    <p class="text-xs text-gray-400 mb-0.5" data-i18n="cnt_email">Kirim Email</p>
-                    <p class="text-sm font-medium">laludeyndrafavian@gmail.com</p>
+                    <p class="text-xs dark:text-gray-400 text-gray-600 mb-0.5" data-i18n="cnt_email">Kirim Email</p>
+                    <p class="text-sm font-medium dark:text-white text-gray-900">laludeyndrafavian@gmail.com</p>
                   </div>
                 </a>
                 <div class="flex items-center gap-4 glass-btn p-4 rounded-xl w-[max-content] pr-6">
                   <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30"><i class="fab fa-whatsapp"></i></div>
                   <div>
-                    <p class="text-xs text-gray-400 mb-0.5" data-i18n="cnt_phone">Telepon / WA</p>
-                    <p class="text-sm font-medium">+62 813-5910-8149</p>
+                    <p class="text-xs dark:text-gray-400 text-gray-600 mb-0.5" data-i18n="cnt_phone">Telepon / WA</p>
+                    <p class="text-sm font-medium dark:text-white text-gray-900">+62 813-5910-8149</p>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Form -->
-            <div class="bg-gray-900/60 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-2xl">
+            <div class="dark:bg-gray-900/60 bg-white/60 backdrop-blur-md rounded-2xl p-6 dark:border-white/5 border-gray-300/20 shadow-2xl">
               <form id="contact-form" class="space-y-5">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div class="space-y-1.5">
-                    <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_name">NAMA LENGKAP</label>
+                    <label class="text-xs font-medium pl-1 dark:text-gray-400 text-gray-600" data-i18n="form_name">NAMA LENGKAP</label>
                     <input
                       type="text"
                       id="name"
-                      class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                      class="w-full dark:bg-black/40 bg-gray-100/60 dark:border-white/10 border-gray-300/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all dark:text-white text-gray-900 dark:placeholder:text-gray-600 placeholder:text-gray-400"
                       placeholder="John Doe"
                       data-i18n-attr="placeholder"
                       data-i18n-placeholder="form_name_ph"
@@ -439,11 +465,11 @@
                     />
                   </div>
                   <div class="space-y-1.5">
-                    <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_email">EMAIL</label>
+                    <label class="text-xs font-medium pl-1 dark:text-gray-400 text-gray-600" data-i18n="form_email">EMAIL</label>
                     <input
                       type="email"
                       id="email"
-                      class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                      class="w-full dark:bg-black/40 bg-gray-100/60 dark:border-white/10 border-gray-300/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all dark:text-white text-gray-900 dark:placeholder:text-gray-600 placeholder:text-gray-400"
                       placeholder="john@example.com"
                       data-i18n-attr="placeholder"
                       data-i18n-placeholder="form_email_ph"
@@ -452,11 +478,11 @@
                   </div>
                 </div>
                 <div class="space-y-1.5">
-                  <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_sub">SUBJEK</label>
+                  <label class="text-xs font-medium pl-1 dark:text-gray-400 text-gray-600" data-i18n="form_sub">SUBJEK</label>
                   <input
                     type="text"
                     id="subject"
-                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                    class="w-full dark:bg-black/40 bg-gray-100/60 dark:border-white/10 border-gray-300/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all dark:text-white text-gray-900 dark:placeholder:text-gray-600 placeholder:text-gray-400"
                     placeholder="Hal yang ingin didiskusikan"
                     data-i18n-attr="placeholder"
                     data-i18n-placeholder="form_sub_ph"
@@ -464,11 +490,11 @@
                   />
                 </div>
                 <div class="space-y-1.5">
-                  <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_msg">PESAN</label>
+                  <label class="text-xs font-medium pl-1 dark:text-gray-400 text-gray-600" data-i18n="form_msg">PESAN</label>
                   <textarea
                     id="message"
                     rows="4"
-                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600 resize-none"
+                    class="w-full dark:bg-black/40 bg-gray-100/60 dark:border-white/10 border-gray-300/20 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all dark:text-white text-gray-900 dark:placeholder:text-gray-600 placeholder:text-gray-400 resize-none"
                     placeholder="Tuliskan pesan Anda..."
                     data-i18n-attr="placeholder"
                     data-i18n-placeholder="form_msg_ph"
@@ -492,15 +518,15 @@
     </main>
 
     <!-- Semantic Footer -->
-    <footer class="relative z-10 border-t border-white/5 bg-gray-950/80 backdrop-blur-xl mt-10">
+    <footer class="relative z-10 dark:border-t dark:border-white/5 border-t border-gray-300/20 dark:bg-gray-950/80 bg-white/80 backdrop-blur-xl mt-10">
       <div class="container mx-auto px-6 py-8">
         <div class="flex flex-col md:flex-row justify-between items-center gap-4">
           <div class="text-center md:text-left">
             <h5 class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 text-lg mb-1">Deyndra.</h5>
-            <p class="text-xs text-gray-500" data-i18n="footer_cpy">&copy; 2025. All Rights Reserved.</p>
+            <p class="text-xs dark:text-gray-500 text-gray-400" data-i18n="footer_cpy">&copy; 2025. All Rights Reserved.</p>
           </div>
           <div class="flex gap-4">
-            <div class="text-xs font-medium text-gray-400 border border-white/5 bg-white/5 rounded-full px-3 py-1 flex items-center gap-2">
+            <div class="text-xs font-medium dark:text-gray-400 text-gray-600 dark:border-white/5 border-gray-300/20 dark:bg-white/5 bg-gray-200/60 rounded-full px-3 py-1 flex items-center gap-2">
               <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
               <span data-i18n="footer_badge">Code with Passion</span>
             </div>
