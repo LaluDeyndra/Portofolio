@@ -160,58 +160,74 @@
   // Event listener untuk form
   document.getElementById('contact-form').addEventListener('submit', sendEmail);
 
-  // Fungsi preload gambar
-  function preloadImages(sources, callback) {
-    let loaded = 0;
-    const total = sources.length;
+  // Fungsi preloader melacak loading status gambar
+  function initPreloader() {
+    const images = Array.from(document.images);
+    let loadedCount = 0;
+    const totalImages = images.length;
     const progressFill = document.getElementById('progress-fill');
     const loadingText = document.getElementById('loading-text');
+    const preloader = document.getElementById('preloader');
+    const activeLang = localStorage.getItem('lang') || 'ID';
+    
+    const dismissPreloader = () => {
+      if (progressFill) progressFill.style.width = '100%';
+      if (loadingText) loadingText.textContent = activeLang === 'EN' ? 'Complete!' : 'Selesai!';
+      
+      setTimeout(() => {
+        preloader.style.transition = 'opacity 0.6s ease-out';
+        preloader.style.opacity = '0';
+        
+        setTimeout(() => {
+          preloader.classList.add('hidden');
+          document.body.classList.remove('loading');
+          
+          // Animasi skill bars setelah selesai loading
+          const skillBars = document.querySelectorAll('.skill-progress');
+          skillBars.forEach((bar) => {
+            const width = bar.style.width || '100%';
+            bar.style.width = '0%';
+            setTimeout(() => {
+              bar.style.width = width;
+            }, 300);
+          });
+        }, 600); // Tunggu masa transisi opacity selesai
+      }, 400); // Tahan sesaat setelah 100% penuh
+    };
 
-    if (total === 0) {
-      callback();
+    if (totalImages === 0) {
+      dismissPreloader();
       return;
     }
 
-    sources.forEach((src) => {
-      const img = new Image();
-      img.onload = () => {
-        loaded++;
-        const percent = (loaded / total) * 100;
-        progressFill.style.width = percent + '%';
-        loadingText.textContent = `Memuat... ${loaded}/${total}`;
-        if (loaded === total) {
-          setTimeout(callback, 500);
-        }
-      };
-      img.onerror = () => {
-        loaded++;
-        const percent = (loaded / total) * 100;
-        progressFill.style.width = percent + '%';
-        loadingText.textContent = `Memuat... ${loaded}/${total}`;
-        if (loaded === total) {
-          setTimeout(callback, 500);
-        }
-      };
-      img.src = src;
+    function imageLoaded() {
+      loadedCount++;
+      const percent = (loadedCount / totalImages) * 100;
+      if (progressFill) progressFill.style.width = percent + '%';
+      if (loadingText) loadingText.textContent = activeLang === 'EN' ? `Loading... ${loadedCount}/${totalImages}` : `Memuat... ${loadedCount}/${totalImages}`;
+
+      if (loadedCount >= totalImages) {
+        dismissPreloader();
+      }
+    }
+
+    images.forEach(img => {
+      if (img.complete) {
+        imageLoaded();
+      } else {
+        img.addEventListener('load', imageLoaded);
+        img.addEventListener('error', imageLoaded); // Hindari stuck jika gambar 404
+      }
     });
+
+    // Fallback ekstrim jika ada gambar yang freeze lebih dari 10 detik
+    setTimeout(() => {
+      if(loadedCount < totalImages) dismissPreloader();
+    }, 10000); 
   }
 
-  // Jalankan preloader
-  preloadImages([], () => {
-    const preloader = document.getElementById('preloader');
-    preloader.classList.add('hidden');
-    document.body.classList.remove('loading');
-
-    // Animate skill bars after page loads
-    const skillBars = document.querySelectorAll('.skill-progress');
-    skillBars.forEach((bar) => {
-      const width = bar.style.width;
-      bar.style.width = '0%';
-      setTimeout(() => {
-        bar.style.width = width;
-      }, 500);
-    });
-  });
+  // Gunakan DOMContentLoaded untuk melacak render sedini mungkin
+  document.addEventListener('DOMContentLoaded', initPreloader);
 
   // Observer untuk animasi scroll-triggered
   const observerOptions = {
@@ -257,13 +273,16 @@
     }, 300);
   }
 
-  mobileMenuButton.addEventListener('click', openMobileMenu);
-  closeMobileMenuButton.addEventListener('click', closeMobileMenu);
-  menuOverlay.addEventListener('click', closeMobileMenu);
+  if (mobileMenuButton) mobileMenuButton.addEventListener('click', openMobileMenu);
+  if (closeMobileMenuButton) closeMobileMenuButton.addEventListener('click', closeMobileMenu);
+  if (menuOverlay) menuOverlay.addEventListener('click', closeMobileMenu);
 
-  document.querySelectorAll('#mobileMenu a').forEach((link) => {
-    link.addEventListener('click', closeMobileMenu);
-  });
+  const mobileMenuLinks = document.querySelectorAll('#mobileMenu a');
+  if (mobileMenuLinks) {
+    mobileMenuLinks.forEach((link) => {
+      link.addEventListener('click', closeMobileMenu);
+    });
+  }
 
   // Theme Toggle Functionality
   const themeToggle = document.getElementById('themeToggle');
