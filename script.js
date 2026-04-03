@@ -15,16 +15,33 @@
     const notificationMessage = document.getElementById('notification-message');
     const notificationClose = document.getElementById('notification-close');
 
-    notificationMessage.textContent = message;
-    notification.className = `notification ${type} hidden`;
+    // Reset warna dan ikon
+    let iconClass = 'fas fa-info-circle text-blue-400';
+    let borderColor = 'rgba(59, 130, 246, 0.5)';
+    
+    if (type === 'success') {
+      iconClass = 'fas fa-check-circle text-green-400';
+      borderColor = 'rgba(34, 197, 94, 0.5)';
+    } else if (type === 'error') {
+      iconClass = 'fas fa-exclamation-circle text-red-500';
+      borderColor = 'rgba(239, 68, 68, 0.5)';
+    }
 
-    setTimeout(() => {
-      notification.classList.remove('hidden');
-      setTimeout(() => {
-        notification.classList.add('show');
-      }, 10);
-    }, 100);
+    notificationMessage.innerHTML = `<i class="${iconClass} text-xl mr-2"></i> <span>${message}</span>`;
+    notification.style.borderColor = borderColor;
+    
+    // Tampilkan elemen
+    notification.classList.remove('hidden');
 
+    // Trigger animasi masuk menggunakan requestAnimationFrame untuk kepastian
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        notification.classList.remove('translate-x-full');
+        notification.classList.add('translate-x-0');
+      });
+    });
+
+    // Sembunyikan otomatis setelah 5 detik
     setTimeout(() => {
       hideNotification();
     }, 5000);
@@ -34,10 +51,11 @@
 
   function hideNotification() {
     const notification = document.getElementById('notification');
-    notification.classList.remove('show');
+    notification.classList.remove('translate-x-0');
+    notification.classList.add('translate-x-full');
     setTimeout(() => {
       notification.classList.add('hidden');
-    }, 300);
+    }, 300); // Sesuai dengan durasi transition-all duration-300 Tailwind
   }
 
   // FUNGSI UTAMA - DISESUAIKAN DENGAN FORMAT TEMPLATE
@@ -66,7 +84,9 @@
     // Tampilkan loading
     const submitText = document.getElementById('submit-text');
     const loadingIcon = document.getElementById('loading-icon');
-    submitText.textContent = 'Mengirim...';
+    // Tampilkan loading tergantung bahasa aktif
+    const activeLang = localStorage.getItem('lang') || 'ID';
+    submitText.textContent = activeLang === 'EN' ? 'Sending...' : 'Mengirim...';
     loadingIcon.classList.remove('hidden');
 
     console.log('=== MENGIRIM EMAIL ===');
@@ -114,9 +134,9 @@
       })
       .then(function (response2) {
         console.log('✅ Auto-reply TERKIRIM:', response2);
-        showNotification('Pesan berhasil dikirim! Email konfirmasi telah dikirim ke ' + email, 'success');
+        showNotification(activeLang === 'EN' ? 'Message sent successfully! A confirmation email has been sent to ' + email : 'Pesan berhasil dikirim! Email konfirmasi telah dikirim ke ' + email, 'success');
         document.getElementById('contact-form').reset();
-        submitText.textContent = 'Kirim Pesan';
+        submitText.textContent = activeLang === 'EN' ? 'Send Message' : 'Kirim Pesan';
         loadingIcon.classList.add('hidden');
       })
       .catch(function (error) {
@@ -132,7 +152,7 @@
         } else {
           showNotification('Gagal mengirim. Silakan coba lagi. Error: ' + error.text, 'error');
         }
-        submitText.textContent = 'Kirim Pesan';
+        submitText.textContent = activeLang === 'EN' ? 'Send Message' : 'Kirim Pesan';
         loadingIcon.classList.add('hidden');
       });
   }
@@ -248,7 +268,7 @@
   // Theme Toggle Functionality
   const themeToggle = document.getElementById('themeToggle');
   const themeToggleMobile = document.getElementById('themeToggleMobile');
-  const themeToggleMobileMenu = document.getElementById('themeToggleMobileMenu');
+  const htmlEl = document.documentElement;
   const body = document.body;
 
   // Check for saved theme preference or default to dark
@@ -256,42 +276,47 @@
 
   // Apply the saved theme
   if (currentTheme === 'light') {
-    body.classList.add('light-mode');
-    themeToggle.classList.add('light');
-    themeToggleMobile.classList.add('light');
-    themeToggleMobileMenu.classList.add('light');
-    themeToggle.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
-    themeToggleMobile.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
-    themeToggleMobileMenu.querySelector('.theme-toggle-handle i').className = 'fas fa-sun text-yellow-500';
+    htmlEl.classList.remove('dark');
+    body.classList.add('light');
+    
+    if (themeToggle) {
+      themeToggle.querySelector('i').className = 'fas fa-sun';
+      themeToggle.classList.remove('text-yellow-400');
+      themeToggle.classList.add('text-orange-500');
+    }
+    if (themeToggleMobile) {
+      themeToggleMobile.querySelector('i').className = 'fas fa-sun';
+      themeToggleMobile.classList.remove('text-yellow-400');
+      themeToggleMobile.classList.add('text-orange-500');
+    }
   }
 
   // Toggle theme function
   function toggleTheme() {
-    body.classList.toggle('light-mode');
-    themeToggle.classList.toggle('light');
-    themeToggleMobile.classList.toggle('light');
-    themeToggleMobileMenu.classList.toggle('light');
+    body.classList.toggle('light');
+    htmlEl.classList.toggle('dark');
 
-    const icon = themeToggle.querySelector('.theme-toggle-handle i');
-    const iconMobile = themeToggleMobile.querySelector('.theme-toggle-handle i');
-    const iconMobileMenu = themeToggleMobileMenu.querySelector('.theme-toggle-handle i');
+    const isLight = body.classList.contains('light');
+    const newIconClass = isLight ? 'fas fa-sun' : 'fas fa-moon';
+    
+    [themeToggle, themeToggleMobile].forEach(btn => {
+      if (btn) {
+        btn.querySelector('i').className = newIconClass;
+        if (isLight) {
+          btn.classList.remove('text-yellow-400');
+          btn.classList.add('text-orange-500');
+        } else {
+          btn.classList.remove('text-orange-500');
+          btn.classList.add('text-yellow-400');
+        }
+      }
+    });
 
-    if (body.classList.contains('light-mode')) {
-      icon.className = 'fas fa-sun text-yellow-500';
-      iconMobile.className = 'fas fa-sun text-yellow-500';
-      iconMobileMenu.className = 'fas fa-sun text-yellow-500';
-      localStorage.setItem('theme', 'light');
-    } else {
-      icon.className = 'fas fa-moon text-gray-700';
-      iconMobile.className = 'fas fa-moon text-gray-700';
-      iconMobileMenu.className = 'fas fa-moon text-gray-700';
-      localStorage.setItem('theme', 'dark');
-    }
+    localStorage.setItem('theme', isLight ? 'light' : 'dark');
   }
 
-  themeToggle.addEventListener('click', toggleTheme);
-  themeToggleMobile.addEventListener('click', toggleTheme);
-  themeToggleMobileMenu.addEventListener('click', toggleTheme);
+  if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+  if (themeToggleMobile) themeToggleMobile.addEventListener('click', toggleTheme);
 
   // Tampilkan petunjuk setup EmailJS jika belum diatur
   if (EMAILJS_USER_ID === 'YOUR_USER_ID') {
@@ -299,4 +324,146 @@
       showNotification('EmailJS belum dikonfigurasi. Silakan daftar di EmailJS.com dan ganti USER_ID, SERVICE_ID, dan TEMPLATE_ID di kode JavaScript.', 'info');
     }, 2000);
   }
+
+  /* =========================================
+     INTERNATIONALIZATION (i18n)
+  ========================================= */
+  const currentLang = localStorage.getItem('lang') || 'ID';
+  const langToggles = document.querySelectorAll('.lang-toggle');
+
+  const translations = {
+    ID: {
+      loading: "Memuat...",
+      nav_home: "Beranda",
+      nav_about: "Tentang",
+      nav_about_full: "Tentang Saya",
+      nav_projects: "Proyek",
+      nav_contact: "Kontak",
+      hero_title_1: "Membangun ",
+      hero_title_2: "Solusi Digital",
+      hero_title_3: " Masa Depan",
+      hero_desc: "Halo, Saya Lalu Deyndra. Web Developer, Prompt Engineer, dan inovator teknologi yang menciptakan karya terintegrasi dari antarmuka hingga server.",
+      hero_btn: "Lihat Proyek Saya",
+      abt_explore: "Eksplorasi",
+      abt_title: "Tentang Perjalanan Saya",
+      abt_desc_1_pre: "Saya seorang ",
+      abt_desc_1_post: " yang sangat menikmati proses mewujudkan ide menjadi kenyataan. Fokus saya mencakup pengembangan antarmuka (Front-End) yang interaktif, pembuatan API dan sistem server (Back-End) yang tangguh, serta merancang solusi ",
+      abt_desc_1_iot: "IoT terintegrasi",
+      abt_desc_2: "Kualitas kode adalah prioritas utama. Security, scalability, dan clean design adalah fondasi dari setiap aplikasi yang saya bangun.",
+      abt_iot_desc: "Sistem terintegrasi dengan sensor realtime.",
+      abt_ci_title: "Server Auto",
+      abt_ci_desc: "Otomatisasi proses & CI/CD deployment.",
+      tech_tools: "TOOLS & CLOUD",
+      proj_title: "Showcase Eksekusi",
+      proj_arvi_desc: "Platform inovatif \"Bento-style\" directory dan aplikasi IoT untuk memantau ekosistem Kutub Utara. Dilengkapi asisten AI responsif untuk menjelajahi ensiklopedia hewan dan pengolahan data sensor secara real-time.",
+      proj_gacha_desc: "Bot interaktif bertema Gacha untuk meramaikan server Discord dengan berbagai variasi minigames seru.",
+      proj_galeri_desc: "Platform statis elegan untuk menyorot dan mengapresiasi pencapaian prestasi dari individu tersembunyi.",
+      proj_pkl_badge: "App / Team",
+      proj_pkl_desc: "Aplikasi manajemen terintegrasi untuk siswa Praktik Kerja Lapangan. Bertujuan menyederhanakan birokrasi, pemantauan realtime, dan dokumentasi aktivitas siswa.",
+      proj_pkl_btn: "Tinjau Portal",
+      proj_github_btn: "Kunjungi Repositori GitHub Saya",
+      cnt_title_1: "Mari Bangun ",
+      cnt_title_2: "Sesuatu yang Hebat.",
+      cnt_desc: "Saya selalu terbuka untuk diskusi mengenai potensi kolaborasi, pekerjaan baru, atau sekadar bertukar wawasan di bidang teknologi.",
+      cnt_email: "Kirim Email",
+      cnt_phone: "Telepon / WA",
+      form_name: "NAMA LENGKAP",
+      form_name_ph: "John Doe",
+      form_email: "EMAIL",
+      form_email_ph: "john@example.com",
+      form_sub: "SUBJEK",
+      form_sub_ph: "Hal yang ingin didiskusikan",
+      form_msg: "PESAN",
+      form_msg_ph: "Tuliskan pesan Anda...",
+      form_send: "Kirim Pesan",
+      footer_cpy: "&copy; 2025. All Rights Reserved.",
+      footer_badge: "Code with Passion"
+    },
+    EN: {
+      loading: "Loading...",
+      nav_home: "Home",
+      nav_about: "About",
+      nav_about_full: "About Me",
+      nav_projects: "Projects",
+      nav_contact: "Contact",
+      hero_title_1: "Building ",
+      hero_title_2: "Digital Solutions",
+      hero_title_3: " for the Future",
+      hero_desc: "Hi, I am Lalu Deyndra. Web Developer, Prompt Engineer, and technology innovator creating integrated solutions from interface to server.",
+      hero_btn: "View My Projects",
+      abt_explore: "Exploration",
+      abt_title: "About My Journey",
+      abt_desc_1_pre: "I am a ",
+      abt_desc_1_post: " who deeply enjoys the process of turning ideas into reality. My focus includes developing interactive user interfaces (Front-End), building robust APIs and server systems (Back-End), and designing ",
+      abt_desc_1_iot: "integrated IoT",
+      abt_desc_2: "Code quality is my top priority. Security, scalability, and clean design are the foundations of every application I build.",
+      abt_iot_desc: "Integrated systems with real-time sensors.",
+      abt_ci_title: "Auto CI/CD",
+      abt_ci_desc: "Process automation & CI/CD deployment.",
+      tech_tools: "TOOLS & CLOUD",
+      proj_title: "Execution Showcase",
+      proj_arvi_desc: "Innovative \"Bento-style\" directory platform and IoT app for monitoring the Arctic ecosystem. Equipped with a responsive AI assistant for exploring the animal encyclopedia and real-time sensor data processing.",
+      proj_gacha_desc: "Interactive Gacha-themed bot to liven up Discord servers with a variety of fun minigames.",
+      proj_galeri_desc: "Elegant static platform to highlight and appreciate the achievements of hidden individuals.",
+      proj_pkl_badge: "App / Team",
+      proj_pkl_desc: "Integrated management application for Field Work Practice students. Aims to streamline bureaucracy, real-time monitoring, and student activity documentation.",
+      proj_pkl_btn: "Review Portal",
+      proj_github_btn: "Visit My GitHub Repository",
+      cnt_title_1: "Let's Build ",
+      cnt_title_2: "Something Great.",
+      cnt_desc: "I am always open to discussing potential collaborations, new opportunities, or simply exchanging insights in technology.",
+      cnt_email: "Send Email",
+      cnt_phone: "Phone / WA",
+      form_name: "FULL NAME",
+      form_name_ph: "John Doe",
+      form_email: "EMAIL",
+      form_email_ph: "john@example.com",
+      form_sub: "SUBJECT",
+      form_sub_ph: "What you want to discuss",
+      form_msg: "MESSAGE",
+      form_msg_ph: "Write your message here...",
+      form_send: "Send Message",
+      footer_cpy: "&copy; 2025. All Rights Reserved.",
+      footer_badge: "Code with Passion"
+    }
+  };
+
+  function applyLanguage(lang) {
+    // Update button texts
+    langToggles.forEach(btn => {
+      btn.textContent = lang === 'ID' ? 'EN' : 'ID';
+    });
+
+    document.documentElement.lang = lang.toLowerCase();
+
+    // Update translatable static texts
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      if (translations[lang] && translations[lang][key]) {
+        el.innerHTML = translations[lang][key]; 
+      }
+    });
+
+    // Update translatable attributes (like placeholders)
+    document.querySelectorAll('[data-i18n-attr="placeholder"]').forEach(el => {
+      const key = el.getAttribute('data-i18n-placeholder');
+      if (translations[lang] && translations[lang][key]) {
+        el.placeholder = translations[lang][key];
+      }
+    });
+  }
+
+  function toggleLanguage() {
+    const newLang = localStorage.getItem('lang') === 'EN' ? 'ID' : 'EN';
+    localStorage.setItem('lang', newLang);
+    applyLanguage(newLang);
+  }
+
+  // Initial apply
+  applyLanguage(currentLang);
+
+  // Event listeners
+  langToggles.forEach(btn => {
+    btn.addEventListener('click', toggleLanguage);
+  });
 })();

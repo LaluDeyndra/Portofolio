@@ -1,625 +1,505 @@
-<!DOCTYPE html>
-<html lang="id">
+<!doctype html>
+<html lang="id" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Portofolio Lalu Deyndra - Web Developer, Back-End Specialist, Prompt Engineer, dan Enthusiast" />
     <link rel="icon" href="assets/img/logo 2.png" type="image/png" />
-    <title>Portofolio Lalu Deyndra</title>
+    <title>Lalu Deyndra | Portofolio</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Konfigurasi Tailwind untuk warna glassmorphism & Bento -->
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['Outfit', 'sans-serif'],
+            },
+            colors: {
+              glassWhite: 'rgba(255, 255, 255, 0.05)',
+              glassWhiteBorder: 'rgba(255, 255, 255, 0.1)',
+              glassDark: 'rgba(17, 24, 39, 0.4)',
+              glassDarkBorder: 'rgba(255, 255, 255, 0.05)',
+            },
+          },
+        },
+      };
+    </script>
     <link rel="stylesheet" href="style.css" />
+    <!-- Google Fonts: Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
     <!-- Font Awesome untuk ikon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
     <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   </head>
-  <body class="bg-gray-900 text-white font-sans loading">
+  <body class="text-white font-sans loading antialiased bg-gray-950">
+    <!-- Animated Gradient Background -->
+    <div class="animated-bg">
+      <div class="blob-c blob-1"></div>
+      <div class="blob-c blob-2"></div>
+      <div class="blob-c blob-3"></div>
+      <div class="noise-overlay"></div>
+    </div>
+
     <!-- Preloader -->
-    <div id="preloader">
-      <div class="loading-container">
-        <div class="loading-logo">PORTOFOLIO</div>
+    <div id="preloader" class="glass-panel z-[9999] fixed inset-0 flex flex-col justify-center items-center backdrop-blur-2xl bg-gray-900/80">
+      <div class="loading-container text-center">
+        <div class="loading-logo text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-500 mb-8 tracking-wider">DEYNDRA</div>
         <div class="loading-spinner">
-          <div class="spinner-ring"></div>
-          <div class="spinner-ring"></div>
-          <div class="spinner-ring"></div>
-          <div class="spinner-dot"></div>
+          <div class="spinner-ring border-blue-500"></div>
+          <div class="spinner-ring border-indigo-400"></div>
+          <div class="spinner-ring border-purple-400"></div>
+          <div class="spinner-dot bg-blue-400 shadow-[0_0_15px_#60a5fa]"></div>
         </div>
-        <div class="progress-bar">
-          <div class="progress-fill" id="progress-fill"></div>
+        <div class="progress-bar w-48 h-1.5 bg-white/10 rounded-full overflow-hidden mt-8 mx-auto">
+          <div class="progress-fill h-full bg-gradient-to-r from-blue-400 to-purple-500 w-0 transition-all duration-300"></div>
         </div>
-        <div class="loading-text" id="loading-text">Memuat...</div>
+        <div class="loading-text mt-4 text-blue-100 font-medium" data-i18n="loading">Memuat...</div>
       </div>
     </div>
 
     <!-- Notification -->
-    <div id="notification" class="notification hidden">
+    <div id="notification" class="notification hidden fixed top-6 right-6 px-6 py-4 rounded-2xl text-white font-medium z-[10000] glass-card flex items-center gap-4 transition-all duration-300 transform translate-x-full shadow-2xl">
       <span id="notification-message"></span>
-      <button id="notification-close" class="close-btn">&times;</button>
+      <button id="notification-close" class="close-btn hover:text-red-400 transition-colors">&times;</button>
     </div>
 
-    <!-- Header -->
-    <header class="fixed top-0 w-full bg-gray-800 bg-opacity-90 backdrop-blur-md z-50">
-      <nav class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
-        <h1 class="text-xl sm:text-2xl font-bold text-blue-400">Lalu Deyndra</h1>
+    <!-- Header / Navbar (Glassmorphism) -->
+    <header class="fixed top-4 left-1/2 -translate-x-1/2 w-[95%] max-w-6xl glass-nav rounded-2xl z-50 transition-all duration-300">
+      <nav class="px-6 py-3 flex justify-between items-center">
+        <h1 class="text-xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400 tracking-tight">Lalu Deyndra</h1>
 
         <!-- Desktop Navigation -->
-        <div class="hidden md:flex items-center space-x-6">
-          <ul class="flex space-x-6">
-            <li><a href="#hero" class="hover:text-blue-400 transition duration-200">Beranda</a></li>
-            <li><a href="#about" class="hover:text-blue-400 transition duration-200">Tentang Saya</a></li>
-            <li><a href="#projects" class="hover:text-blue-400 transition duration-200">Proyek</a></li>
-            <li><a href="#contact" class="hover:text-blue-400 transition duration-200">Kontak</a></li>
+        <div class="hidden md:flex items-center space-x-8">
+          <ul class="flex space-x-6 text-sm font-medium">
+            <li><a href="#hero" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_home">Beranda</a></li>
+            <li><a href="#about" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_about">Tentang</a></li>
+            <li><a href="#projects" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_projects">Proyek</a></li>
+            <li><a href="#contact" class="text-gray-300 hover:text-white transition-colors duration-200" data-i18n="nav_contact">Kontak</a></li>
           </ul>
-          <!-- Theme Toggle -->
-          <div class="theme-toggle ml-4" id="themeToggle">
-            <div class="theme-toggle-handle">
-              <i class="fas fa-moon text-gray-700"></i>
-            </div>
+          
+          <div class="flex items-center space-x-4 border-l border-white/10 pl-4">
+            <!-- Language Toggle -->
+            <button class="lang-toggle text-sm font-bold w-10 text-gray-300 hover:text-blue-400 focus:outline-none transition-colors" id="langToggle">
+               EN
+            </button>
+            <!-- Theme Toggle -->
+            <button class="theme-toggle p-2 rounded-full glass-btn text-yellow-400 focus:outline-none transition-transform hover:scale-110" id="themeToggle">
+              <i class="fas fa-moon"></i>
+            </button>
           </div>
         </div>
 
         <!-- Mobile Menu Button -->
-        <div class="flex items-center md:hidden">
-          <!-- Theme Toggle for Mobile -->
-          <div class="theme-toggle mr-4" id="themeToggleMobile">
-            <div class="theme-toggle-handle">
-              <i class="fas fa-moon text-gray-700"></i>
-            </div>
-          </div>
-          <button id="mobileMenuButton" class="text-white focus:outline-none p-2 rounded-lg transition hover:bg-gray-700">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-            </svg>
+        <div class="flex items-center md:hidden gap-4">
+          <button class="lang-toggle text-sm font-bold text-gray-300 focus:outline-none" id="langToggleMobile">
+            EN
+          </button>
+          <button class="theme-toggle p-2 rounded-full glass-btn text-yellow-400 focus:outline-none" id="themeToggleMobile">
+            <i class="fas fa-moon"></i>
+          </button>
+          <button id="mobileMenuButton" class="text-white p-2 rounded-lg glass-btn focus:outline-none">
+            <i class="fas fa-bars"></i>
           </button>
         </div>
       </nav>
     </header>
 
-    <!-- Mobile Menu -->
-    <div id="mobileMenu" class="fixed inset-0 z-50 hidden md:hidden">
-      <div id="menuOverlay" class="fixed inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
-      <div class="relative ml-auto w-full max-w-xs h-full bg-gray-800 shadow-xl transform transition-transform duration-300 ease-in-out translate-x-full">
-        <div class="flex flex-col h-full">
-          <!-- Header Menu -->
-          <div class="flex items-center justify-between p-4 border-b border-gray-700">
-            <h2 class="text-lg font-semibold text-white">Menu</h2>
-            <button id="closeMobileMenu" class="p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 transition-colors">
-              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-              </svg>
-            </button>
-          </div>
-
-          <!-- Navigation Links -->
-          <div class="flex-1 px-4 py-6 space-y-2">
-            <a href="#hero" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
-              <i class="fas fa-home mr-3 w-5 text-center"></i>
-              Beranda
-            </a>
-            <a href="#about" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
-              <i class="fas fa-user mr-3 w-5 text-center"></i>
-              Tentang Saya
-            </a>
-            <a href="#projects" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
-              <i class="fas fa-code mr-3 w-5 text-center"></i>
-              Proyek
-            </a>
-            <a href="#contact" class="block px-4 py-3 text-lg text-gray-300 hover:text-blue-400 hover:bg-gray-700 rounded-lg transition-all duration-200">
-              <i class="fas fa-envelope mr-3 w-5 text-center"></i>
-              Kontak
-            </a>
-          </div>
-
-          <!-- Theme Toggle Section -->
-          <div class="p-4 border-t border-gray-700">
-            <p class="text-gray-400 mb-3 text-sm font-medium">Tema</p>
-            <div class="flex items-center justify-between">
-              <span class="text-gray-300">Gelap</span>
-              <div class="theme-toggle" id="themeToggleMobileMenu">
-                <div class="theme-toggle-handle">
-                  <i class="fas fa-moon text-gray-700"></i>
-                </div>
-              </div>
-              <span class="text-gray-300">Terang</span>
-            </div>
-          </div>
-
-          <!-- Footer -->
-          <div class="p-4 border-t border-gray-700">
-            <p class="text-gray-400 text-sm text-center">&copy; 2025 Lalu Deyndra</p>
-          </div>
+    <!-- Mobile Menu Overlay -->
+    <div id="mobileMenu" class="fixed inset-0 z-50 hidden">
+      <div id="menuOverlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"></div>
+      <div class="relative ml-auto w-3/4 max-w-xs h-full glass-card border-l border-white/10 p-6 flex flex-col transform transition-transform duration-300 ease-in-out translate-x-full">
+        <div class="flex justify-end mb-8">
+          <button id="closeMobileMenu" class="p-2 glass-btn rounded-xl text-gray-300 hover:text-white">
+            <i class="fas fa-times text-xl"></i>
+          </button>
+        </div>
+        <div class="flex flex-col space-y-4 text-lg font-medium">
+          <a href="#hero" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-home w-8 text-blue-400"></i> <span data-i18n="nav_home">Beranda</span></a>
+          <a href="#about" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-user w-8 text-purple-400"></i> <span data-i18n="nav_about_full">Tentang Saya</span></a>
+          <a href="#projects" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-code w-8 text-green-400"></i> <span data-i18n="nav_projects">Proyek</span></a>
+          <a href="#contact" class="px-4 py-3 glass-btn rounded-xl text-gray-200 hover:text-white transition-all"><i class="fas fa-envelope w-8 text-red-400"></i> <span data-i18n="nav_contact">Kontak</span></a>
         </div>
       </div>
     </div>
 
-    <!-- Hero Section -->
-    <section id="hero" class="h-screen flex items-center justify-center fade-in bg-linear-to-r from-gray-800 to-gray-900">
-      <div class="text-center px-4">
-        <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">Halo, Saya Lalu Deyndra</h2>
-        <p class="text-lg sm:text-xl md:text-2xl mb-8">Web Developer | Back-End Specialist | Prompt Engineer | Enthusiast</p>
-        <a href="#projects" class="inline-block bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg text-lg transition hero-button">Lihat Proyek Saya</a>
-      </div>
-    </section>
+    <!-- Main Content -->
+    <main class="relative z-10 pt-32 pb-20 container mx-auto px-4 max-w-7xl flex flex-col gap-24">
+      <!-- HERO Section (Bento Style Profile) -->
+      <section id="hero" class="fade-in scroll-mt-32">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Large Welcome Card -->
+          <div class="md:col-span-2 glass-card rounded-[2rem] p-8 md:p-12 flex flex-col justify-center relative overflow-hidden group">
+            <div class="absolute top-0 right-0 -m-8 w-40 h-40 bg-blue-500/30 rounded-full blur-3xl group-hover:bg-blue-400/40 transition-colors duration-700"></div>
+            <h2 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight"><span data-i18n="hero_title_1">Membangun </span><span class="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-400" data-i18n="hero_title_2">Solusi Digital</span><span data-i18n="hero_title_3"> Masa Depan</span></h2>
+            <p class="text-gray-300 text-lg md:text-xl font-light max-w-xl mb-8" data-i18n="hero_desc">Halo, Saya Lalu Deyndra. Web Developer, Prompt Engineer, dan inovator teknologi yang menciptakan karya terintegrasi dari antarmuka hingga server.</p>
+            <div class="flex gap-4">
+              <a href="#projects" class="bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-xl font-medium transition-all shadow-lg shadow-blue-500/25 flex items-center gap-2 w-max group-hover:scale-105">
+                <span data-i18n="hero_btn">Lihat Proyek Saya</span> <i class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+              </a>
+            </div>
+          </div>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 fade-in bg-gradient-to-br from-gray-800 to-gray-900">
-      <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Tentang <span class="text-blue-400">Saya</span></h3>
-        <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
-
-        <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
-          <!-- Profile Image & Tech Stack -->
-          <div class="lg:w-2/5 flex flex-col items-center">
-            <div class="relative mb-8">
-              <div class="w-48 sm:w-64 h-48 sm:h-64 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 p-1">
-                <div class="w-full h-full rounded-full bg-gray-800 flex items-center justify-center">
-                  <i class="fas fa-user-tie text-4xl sm:text-6xl text-blue-400"></i>
+          <!-- Profile Badge Card -->
+          <div class="glass-card rounded-[2rem] p-8 flex flex-col items-center justify-center text-center relative overflow-hidden">
+            <div class="absolute bottom-0 text-[10rem] opacity-5 right-0 rotate-12"><i class="fas fa-code"></i></div>
+            <div class="relative mb-6">
+              <div class="w-32 h-32 rounded-full p-1 bg-gradient-to-tr from-blue-500 via-indigo-500 to-purple-500 shadow-xl shadow-blue-500/20">
+                <div class="w-full h-full rounded-full glass-card flex items-center justify-center bg-gray-900 overflow-hidden">
+                  <i class="fas fa-user-tie text-5xl text-gray-300"></i>
                 </div>
               </div>
-              <div class="absolute -bottom-2 -right-2 bg-blue-500 text-white px-4 py-2 rounded-full font-medium text-sm sm:text-base">Back-End Developer</div>
+              <div class="absolute -bottom-2 -right-4 bg-white/10 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-lg">
+                <i class="fas fa-check-circle text-blue-400 mr-1"></i> Available
+              </div>
             </div>
+            <h3 class="text-xl font-bold mb-1">Lalu Deyndra</h3>
+            <p class="text-blue-400 font-medium text-sm mb-4">Web Developer</p>
+            <div class="flex gap-3">
+              <a href="https://github.com/LaluDeyndra" class="w-10 h-10 rounded-full glass-btn flex items-center justify-center hover:text-blue-400 hover:scale-110 transition-all"><i class="fab fa-github"></i></a>
+              <a href="https://www.instagram.com/laludeyndrafavian" class="w-10 h-10 rounded-full glass-btn flex items-center justify-center hover:text-pink-400 hover:scale-110 transition-all"><i class="fab fa-instagram"></i></a>
+            </div>
+          </div>
+        </div>
+      </section>
 
-            <div class="bg-gray-800 rounded-xl p-6 w-full max-w-md">
-              <h4 class="text-xl font-bold mb-4 text-center">Tech Stack</h4>
-              <div class="flex flex-wrap justify-center gap-3 sm:gap-4">
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
-                  <i class="fab fa-laravel text-red-500 text-xl sm:text-2xl mb-2"></i>
-                  <span class="text-xs">Laravel</span>
-                </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
-                  <i class="fas fa-database text-blue-400 text-xl sm:text-2xl mb-2"></i>
-                  <span class="text-xs">MySQL</span>
-                </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
-                  <i class="fab fa-js-square text-yellow-400 text-xl sm:text-2xl mb-2"></i>
-                  <span class="text-xs">JavaScript</span>
-                </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
-                  <i class="fab fa-github text-gray-300 text-xl sm:text-2xl mb-2"></i>
-                  <span class="text-xs">GitHub</span>
-                </div>
-                <div class="tech-icon bg-gray-700 p-3 rounded-lg flex flex-col items-center w-16 sm:w-20">
-                  <i class="fas fa-rocket text-green-500 text-xl sm:text-2xl mb-2"></i>
-                  <span class="text-xs">Vercel</span>
-                </div>
+      <!-- ABOUT Section (Bento Grid) -->
+      <section id="about" class="fade-in scroll-mt-32">
+        <div class="flex items-center gap-4 mb-10">
+          <h3 class="text-3xl font-bold"><i class="fas fa-compass text-blue-500 mr-2"></i> <span data-i18n="abt_explore">Eksplorasi</span></h3>
+          <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+          <!-- About Description -->
+          <div class="md:col-span-2 md:row-span-2 glass-card rounded-[2rem] p-8 relative overflow-hidden group">
+            <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <h4 class="text-2xl font-bold mb-4 text-white" data-i18n="abt_title">Tentang Perjalanan Saya</h4>
+            <p class="text-gray-300 leading-relaxed mb-6 font-light">
+              <span data-i18n="abt_desc_1_pre">Saya seorang </span><span class="text-blue-400 font-medium">Web Developer</span><span data-i18n="abt_desc_1_post"> yang sangat menikmati proses mewujudkan ide menjadi kenyataan. Fokus saya mencakup pengembangan antarmuka (Front-End) yang interaktif, pembuatan API dan
+              sistem server (Back-End) yang tangguh, serta merancang solusi </span><span class="text-purple-400 font-medium" data-i18n="abt_desc_1_iot">IoT terintegrasi</span>.
+            </p>
+            <p class="text-gray-300 leading-relaxed font-light mb-8" data-i18n="abt_desc_2">Kualitas kode adalah prioritas utama. Security, scalability, dan clean design adalah fondasi dari setiap aplikasi yang saya bangun.</p>
+
+            <!-- Skill Bars -->
+            <div class="space-y-4">
+              <div>
+                <div class="flex justify-between text-sm mb-1 font-medium text-gray-200"><span>Back-End & API</span><span>90%</span></div>
+                <div class="h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5"><div class="h-full bg-gradient-to-r from-red-500 to-orange-500 w-[90%] rounded-full shadow-[0_0_10px_rgba(239,68,68,0.5)]"></div></div>
+              </div>
+              <div>
+                <div class="flex justify-between text-sm mb-1 font-medium text-gray-200"><span>Front-End & UI Design</span><span>85%</span></div>
+                <div class="h-2 w-full bg-black/40 rounded-full overflow-hidden border border-white/5"><div class="h-full bg-gradient-to-r from-blue-500 to-cyan-500 w-[85%] rounded-full shadow-[0_0_10px_rgba(59,130,246,0.5)]"></div></div>
               </div>
             </div>
           </div>
 
-          <!-- About Content -->
-          <div class="lg:w-3/5">
-            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover">
-              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Profil</h4>
-              <p class="text-base sm:text-lg mb-6 leading-relaxed">
-                Saya seorang <span class="text-blue-400 font-medium">Back-End Developer</span> yang bersemangat dalam menciptakan solusi <span class="text-purple-400 font-medium">IoT yang cerdas</span>,
-                <span class="text-green-400 font-medium">API yang powerful</span>, dan <span class="text-yellow-400 font-medium">sistem otomatisasi server</span> yang efisien.
+          <!-- Mini Stats/Focus Cards -->
+          <div class="glass-card rounded-[2rem] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform">
+            <div class="w-12 h-12 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-xl mb-4 border border-blue-500/30">
+              <i class="fas fa-microchip"></i>
+            </div>
+            <div>
+              <h5 class="font-bold mb-1">IoT Solutions</h5>
+              <p class="text-sm text-gray-400" data-i18n="abt_iot_desc">Sistem terintegrasi dengan sensor realtime.</p>
+            </div>
+          </div>
+
+          <div class="glass-card rounded-[2rem] p-6 flex flex-col justify-between hover:-translate-y-1 transition-transform">
+            <div class="w-12 h-12 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-xl mb-4 border border-purple-500/30">
+              <i class="fas fa-server"></i>
+            </div>
+            <div>
+              <h5 class="font-bold mb-1" data-i18n="abt_ci_title">Server Auto</h5>
+              <p class="text-sm text-gray-400" data-i18n="abt_ci_desc">Otomatisasi proses & CI/CD deployment.</p>
+            </div>
+          </div>
+
+          <!-- Tech Stack Categories -->
+          <div class="md:col-span-2 glass-card rounded-[2rem] p-6 md:p-8 flex flex-col justify-center overflow-hidden">
+            <h5 class="font-medium text-gray-300 mb-6 text-sm uppercase tracking-wider text-center md:text-left">Tech Stack</h5>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 w-full">
+              <!-- Front-End -->
+              <div class="flex flex-col gap-3">
+                <span class="text-xs font-bold text-blue-400 border-b border-white/10 pb-2 mb-1">FRONT-END</span>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-js text-yellow-400 w-5"></i> JavaScript</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-wind text-cyan-400 w-5"></i> Tailwind CSS</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-html5 text-orange-500 w-5"></i> HTML/CSS</div>
+              </div>
+
+              <!-- Back-End -->
+              <div class="flex flex-col gap-3">
+                <span class="text-xs font-bold text-red-400 border-b border-white/10 pb-2 mb-1">BACK-END</span>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-laravel text-red-500 w-5"></i> Laravel</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-node-js text-green-500 w-5"></i> Node.js</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-php text-indigo-400 w-5"></i> PHP</div>
+              </div>
+
+              <!-- Database -->
+              <div class="flex flex-col gap-3">
+                <span class="text-xs font-bold text-purple-400 border-b border-white/10 pb-2 mb-1">DATABASE</span>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-database text-blue-400 w-5"></i> MySQL</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-envira text-green-400 w-5"></i> MongoDB</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-server text-purple-400 w-5"></i> REST API</div>
+              </div>
+
+              <!-- Tools -->
+              <div class="flex flex-col gap-3">
+                <span class="text-xs font-bold text-orange-400 border-b border-white/10 pb-2 mb-1" data-i18n="tech_tools">TOOLS & CLOUD</span>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-git-alt text-orange-600 w-5"></i> Git & GitHub</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fab fa-cloudflare text-orange-400 w-5"></i> Cloudflare</div>
+                <div class="flex items-center gap-2 text-gray-300 text-sm hover:text-white transition-colors"><i class="fas fa-terminal text-gray-400 w-5"></i> Linux / Bash</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROJECTS Section (Bento Grid) -->
+      <section id="projects" class="fade-in scroll-mt-32">
+        <div class="flex items-center gap-4 mb-10">
+          <h3 class="text-3xl font-bold"><i class="fas fa-layer-group text-purple-500 mr-2"></i> <span data-i18n="proj_title">Showcase Eksekusi</span></h3>
+          <div class="h-px bg-white/10 flex-1"></div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- PROJECT 1: Arctic Vision (NEW) -->
+          <div class="md:col-span-2 lg:col-span-2 glass-card rounded-[2rem] overflow-hidden group">
+            <div class="h-64 sm:h-80 w-full relative overflow-hidden bg-gray-900 border-b border-white/5">
+              <img src="assets/img/arctic-vision.png" onerror="this.src = 'https://images.unsplash.com/photo-1518104593124-ac2ea3c9edd9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80'" alt="Arctic Vision" class="w-full h-full object-cover opacity-80 group-hover:scale-105 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-transparent to-transparent"></div>
+
+              <div class="absolute bottom-6 left-6 right-6 flex justify-between items-end">
+                <div>
+                  <div class="flex items-center gap-2 mb-2">
+                    <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md"><i class="fas fa-snowflake mr-1"></i> Arctic Guide AI</span>
+                    <span class="bg-indigo-500/20 text-indigo-300 border border-indigo-500/30 px-3 py-1 rounded-full text-xs font-bold backdrop-blur-md">IoT Platform</span>
+                  </div>
+                  <h4 class="text-3xl font-extrabold text-white drop-shadow-md">Arctic Vision</h4>
+                </div>
+                <a href="https://www.arvi.life" class="w-12 h-12 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:-rotate-45 transition-all shadow-xl">
+                  <i class="fas fa-arrow-right"></i>
+                </a>
+              </div>
+            </div>
+            <div class="p-6 md:p-8">
+              <p class="text-gray-300 font-light mb-6 text-sm md:text-base leading-relaxed" data-i18n="proj_arvi_desc">
+                Platform inovatif "Bento-style" directory dan aplikasi IoT untuk memantau ekosistem Kutub Utara. Dilengkapi asisten AI responsif untuk menjelajahi ensiklopedia hewan dan pengolahan data sensor secara real-time.
               </p>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-8">
-                <div class="bg-gray-700 p-4 rounded-lg">
-                  <div class="flex items-center mb-2">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-blue-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-microchip text-blue-400 text-sm sm:text-base"></i>
-                    </div>
-                    <h5 class="font-bold text-sm sm:text-base">IoT Solutions</h5>
-                  </div>
-                  <p class="text-xs sm:text-sm text-gray-300">Membangun sistem IoT terintegrasi dengan backend yang scalable.</p>
-                </div>
-
-                <div class="bg-gray-700 p-4 rounded-lg">
-                  <div class="flex items-center mb-2">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-green-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-code text-green-400 text-sm sm:text-base"></i>
-                    </div>
-                    <h5 class="font-bold text-sm sm:text-base">API Development</h5>
-                  </div>
-                  <p class="text-xs sm:text-sm text-gray-300">Membuat RESTful API yang robust dan well-documented.</p>
-                </div>
-
-                <div class="bg-gray-700 p-4 rounded-lg">
-                  <div class="flex items-center mb-2">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-purple-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-server text-purple-400 text-sm sm:text-base"></i>
-                    </div>
-                    <h5 class="font-bold text-sm sm:text-base">Server Automation</h5>
-                  </div>
-                  <p class="text-xs sm:text-sm text-gray-300">Mengotomatisasi proses server untuk efisiensi maksimal.</p>
-                </div>
-
-                <div class="bg-gray-700 p-4 rounded-lg">
-                  <div class="flex items-center mb-2">
-                    <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-yellow-900 flex items-center justify-center mr-3">
-                      <i class="fas fa-tachometer-alt text-yellow-400 text-sm sm:text-base"></i>
-                    </div>
-                    <h5 class="font-bold text-sm sm:text-base">Dashboard Monitoring</h5>
-                  </div>
-                  <p class="text-xs sm:text-sm text-gray-300">Membangun dashboard real-time untuk monitoring sistem.</p>
-                </div>
-              </div>
-
-              <div class="mb-6">
-                <h5 class="font-bold text-lg mb-4">Fokus Utama:</h5>
-                <div class="flex flex-wrap gap-2 mb-4">
-                  <span class="bg-blue-900 text-blue-300 px-3 py-1 rounded-full text-xs sm:text-sm">Clean Code</span>
-                  <span class="bg-green-900 text-green-300 px-3 py-1 rounded-full text-xs sm:text-sm">Security Best Practices</span>
-                  <span class="bg-purple-900 text-purple-300 px-3 py-1 rounded-full text-xs sm:text-sm">Performance Optimization</span>
-                  <span class="bg-yellow-900 text-yellow-300 px-3 py-1 rounded-full text-xs sm:text-sm">Scalable Architecture</span>
-                </div>
-              </div>
-
-              <div class="border-t border-gray-700 pt-6">
-                <p class="text-base sm:text-lg">Setiap line code tersimpan rapi di <span class="text-blue-400">GitHub</span> dan siap di-deploy via <span class="text-green-400">Vercel</span> untuk delivery yang cepat dan reliable.</p>
+              <div class="flex gap-2 flex-wrap">
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Tailwind CSS</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Laravel / Back-End</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">IoT Framework</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">AI Integration</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Node.js</span>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Skills Section -->
-        <div class="mt-16">
-          <h4 class="text-2xl font-bold mb-8 text-center">Keahlian Teknis</h4>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
-            <div class="bg-gray-800 rounded-xl p-6 card-hover">
-              <h5 class="text-xl font-bold mb-4 text-blue-400">Backend Development</h5>
-              <div class="space-y-4">
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>Laravel Framework</span>
-                    <span>90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-blue-500" style="width: 90%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>RESTful API</span>
-                    <span>80%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-green-500" style="width: 80%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>Database Design</span>
-                    <span>50%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-purple-500" style="width: 50%"></div>
-                  </div>
-                </div>
-              </div>
+          <!-- PROJECT 2: Gacha Bot -->
+          <div class="glass-card rounded-[2rem] overflow-hidden group flex flex-col">
+            <div class="h-48 w-full relative bg-gray-900 border-b border-white/5 overflow-hidden">
+              <img src="assets/img/waifuGacha.png" alt="Discord Gacha Bot" class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent mix-blend-multiply opacity-50"></div>
             </div>
-
-            <div class="bg-gray-800 rounded-xl p-6 card-hover">
-              <h5 class="text-xl font-bold mb-4 text-blue-400">Tools & Deployment</h5>
-              <div class="space-y-4">
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>Git & GitHub</span>
-                    <span>90%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-red-500" style="width: 90%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>Vercel Deployment</span>
-                    <span>82%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-yellow-500" style="width: 82%"></div>
-                  </div>
-                </div>
-                <div>
-                  <div class="flex justify-between mb-1">
-                    <span>Server Management</span>
-                    <span>50%</span>
-                  </div>
-                  <div class="skill-bar">
-                    <div class="skill-progress bg-indigo-500" style="width: 50%"></div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects" class="py-20 fade-in bg-gradient-to-br from-gray-900 to-gray-800">
-      <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Proyek <span class="text-blue-400">Saya</span></h3>
-        <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-          <!-- Proyek 1 -->
-          <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
-            <div class="project-image">
-              <div class="w-full h-48 bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center">
-                <i class="fas fa-laptop-code text-white text-6xl"></i>
-              </div>
-              <div class="project-overlay">
-                <div class="flex space-x-4">
-                  <a href="https://pkl.senvada.id/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
-                </div>
-              </div>
-            </div>
-            <div class="p-6">
+            <div class="p-6 flex-1 flex flex-col">
               <div class="flex justify-between items-start mb-3">
-                <h4 class="text-xl font-bold">Website PKL</h4>
-                <span class="bg-blue-900 text-blue-300 px-2 py-1 rounded-full text-xs">Laravel</span>
+                <h4 class="text-xl font-bold">Discord Gacha Bot</h4>
+                <span class="bg-green-500/20 text-green-300 border border-green-500/30 px-2 py-1 rounded-md text-xs font-bold">BOT</span>
               </div>
-              <p class="text-gray-300 mb-4">Team based Project, yang berfokus untuk mengatasi masalah yang biasanya terjadi kepada siswa-siswa yang ingin PKL.</p>
-              <div class="mb-4">
-                <span class="project-tech">Laravel</span>
-                <span class="project-tech">MySQL</span>
-                <span class="project-tech">JWT</span>
-                <span class="project-tech">Tailwind</span>
-              </div>
-              <div class="flex justify-between text-sm text-gray-400">
-                <span><i class="far fa-calendar mr-1"></i> Mar 2025</span>
-                <span><i class="far fa-clock mr-1"></i> 3 bulan</span>
+              <p class="text-sm text-gray-400 font-light mb-6 flex-1" data-i18n="proj_gacha_desc">Bot interaktif bertema Gacha untuk meramaikan server Discord dengan berbagai variasi minigames seru.</p>
+              <div class="flex justify-between items-center mt-auto">
+                <div class="flex gap-2">
+                  <span class="text-xs text-gray-400"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
+                  <span class="text-xs text-gray-400"><i class="fab fa-node-js text-green-500"></i> Node.js</span>
+                  <span class="text-xs text-gray-400"><i class="fab fa-discord text-blue-500"></i> Discord.js</span>
+                </div>
+                <div class="flex gap-2">
+                  <a href="https://laludeyndra.github.io/PageInviteGachaBot/" class="text-xs bg-white/10 hover:bg-white hover:text-black border border-white/10 px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-play mr-1"></i> Demo</a>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Proyek 2 -->
-          <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
-            <div class="project-image">
-              <div class="w-full h-48 bg-gradient-to-r from-green-500 to-blue-600 flex items-center justify-center">
-                <i class="fab fa-discord text-white text-6xl"></i>
-              </div>
-              <div class="project-overlay">
-                <div class="flex space-x-4">
-                  <a href="https://laludeyndra.github.io/PageInviteGachaBot/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
-                  <a href="https://github.com/LaluDeyndra/DiscordBot" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">GitHub</a>
-                </div>
-              </div>
+          <!-- PROJECT 3: Galeri Prestasi -->
+          <div class="glass-card rounded-[2rem] overflow-hidden group flex flex-col">
+            <div class="h-48 w-full relative bg-gray-900 border-b border-white/5 overflow-hidden">
+              <img src="assets/img/GaleriPrestasi.png" alt="Galeri Prestasi" class="w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-950 to-transparent mix-blend-multiply opacity-50"></div>
             </div>
-            <div class="p-6">
-              <div class="flex justify-between items-start mb-3">
-                <h4 class="text-xl font-bold">Gacha Bot</h4>
-                <span class="bg-green-900 text-green-300 px-2 py-1 rounded-full text-xs">BOT</span>
-              </div>
-              <p class="text-gray-300 mb-4">BOT untuk membuat server Discord menjadi tidak bosan dan ada banyak hiburan. BOT bertema "gacha" yang bervariasi.</p>
-              <div class="mb-4">
-                <span class="project-tech">JavaScript</span>
-                <span class="project-tech">API</span>
-                <span class="project-tech">Ngrok</span>
-                <span class="project-tech">Discord.js</span>
-              </div>
-              <div class="flex justify-between text-sm text-gray-400">
-                <span><i class="far fa-calendar mr-1"></i> Agu 2025</span>
-                <span><i class="far fa-clock mr-1"></i> 1 bulan</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- Proyek 3 -->
-          <div class="project-card bg-gray-800 rounded-2xl overflow-hidden card-hover">
-            <div class="project-image">
-              <div class="w-full h-48 bg-gradient-to-r from-purple-500 to-pink-600 flex items-center justify-center">
-                <i class="fas fa-trophy text-white text-6xl"></i>
-              </div>
-              <div class="project-overlay">
-                <div class="flex space-x-4">
-                  <a href="https://galeri-prestasi.vercel.app/" class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition">Demo</a>
-                  <a href="https://github.com/LaluDeyndra/galeri_prestasi" class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-lg transition">GitHub</a>
-                </div>
-              </div>
-            </div>
-            <div class="p-6">
+            <div class="p-6 flex-1 flex flex-col">
               <div class="flex justify-between items-start mb-3">
                 <h4 class="text-xl font-bold">Galeri Prestasi</h4>
-                <span class="bg-purple-900 text-purple-300 px-2 py-1 rounded-full text-xs">Website</span>
+                <span class="bg-orange-500/20 text-orange-300 border border-orange-500/30 px-2 py-1 rounded-md text-xs font-bold">Web Static</span>
               </div>
-              <p class="text-gray-300 mb-4">Website Statis yang bertujuan untuk menunjukan kepada dunia bahwa banyak orang-orang yang berprestasi meskipun tidak banyak orang mengenalnya.</p>
-              <div class="mb-4">
-                <span class="project-tech">HTML</span>
-                <span class="project-tech">Tailwind CSS</span>
-                <span class="project-tech">JavaScript</span>
+              <p class="text-sm text-gray-400 font-light mb-6 flex-1" data-i18n="proj_galeri_desc">Platform statis elegan untuk menyorot dan mengapresiasi pencapaian prestasi dari individu tersembunyi.</p>
+              <div class="flex justify-between items-center mt-auto">
+                <div class="flex gap-2">
+                  <span class="text-xs text-gray-400"><i class="fab fa-html5 text-orange-500"></i> HTML</span>
+                  <span class="text-xs text-gray-400"><i class="fab fa-css3-alt text-blue-500"></i> CSS</span>
+                  <span class="text-xs text-gray-400"><i class="fab fa-js text-yellow-500"></i> JavaScript</span>
+                </div>
+                <div class="flex gap-2">
+                  <a href="https://galeri-prestasi.vercel.app/" class="text-xs bg-white/10 hover:bg-white hover:text-black border border-white/10 px-3 py-1.5 rounded-lg transition-all"><i class="fas fa-play mr-1"></i> Demo</a>
+                </div>
               </div>
-              <div class="flex justify-between text-sm text-gray-400">
-                <span><i class="far fa-calendar mr-1"></i> Nov 2025</span>
-                <span><i class="far fa-clock mr-1"></i> Working on</span>
+            </div>
+          </div>
+
+          <!-- PROJECT 4: SIM PKL -->
+          <div class="md:col-span-2 glass-card rounded-[2rem] overflow-hidden group relative flex">
+            <div class="w-1/3 bg-gray-900 border-r border-white/5 hidden sm:flex items-center justify-center relative overflow-hidden">
+              <img src="assets/img/senvada.png" alt="Sistem Informasi PKL Senvada" class="absolute inset-0 w-full h-full object-cover group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700 mix-blend-overlay" />
+              <div class="absolute inset-0 bg-gradient-to-r from-gray-950/80 to-transparent mix-blend-multiply"></div>
+            </div>
+            <div class="flex-1 p-6 md:p-8 flex flex-col justify-center">
+              <div class="flex justify-between items-start mb-2">
+                <h4 class="text-xl md:text-2xl font-bold">Sistem Informasi PKL</h4>
+                <span class="bg-blue-500/20 text-blue-300 border border-blue-500/30 px-2 py-1 rounded-md text-xs font-bold truncate ml-2" data-i18n="proj_pkl_badge">App / Team</span>
+              </div>
+              <p class="text-sm md:text-base text-gray-300 font-light mb-4 text-justify" data-i18n="proj_pkl_desc">
+                Aplikasi manajemen terintegrasi untuk siswa Praktik Kerja Lapangan. Bertujuan menyederhanakan birokrasi, pemantauan realtime, dan dokumentasi aktivitas siswa.
+              </p>
+              <div class="flex flex-wrap gap-2 mb-6">
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Laravel</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">MySQL (JWT)</span>
+                <span class="text-xs font-medium text-gray-400 bg-black/30 border border-white/5 px-2 py-1 rounded-md">Tailwind UI</span>
+              </div>
+              <div>
+                <a href="https://pkl.senvada.id/" class="inline-flex items-center gap-2 text-sm bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl transition-all font-medium">
+                  <span data-i18n="proj_pkl_btn">Tinjau Portal</span> <i class="fas fa-external-link-alt text-xs"></i>
+                </a>
               </div>
             </div>
           </div>
         </div>
 
-        <div class="text-center mt-12">
-          <a href="https://github.com/LaluDeyndra?tab=repositories" class="inline-flex items-center bg-blue-500 hover:bg-blue-600 px-6 py-3 rounded-lg transition">
-            <span>Lihat Semua Proyek</span>
-            <i class="fas fa-arrow-right ml-2"></i>
+        <div class="text-center mt-10">
+          <a href="https://github.com/LaluDeyndra?tab=repositories" class="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card border border-white/10 hover:bg-white hover:text-black transition-all font-medium text-sm group">
+            <i class="fab fa-github text-lg"></i> <span data-i18n="proj_github_btn">Kunjungi Repositori GitHub Saya</span> <i class="fas fa-arrow-right opacity-0 group-hover:opacity-100 -translate-x-4 group-hover:translate-x-0 transition-all"></i>
           </a>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-20 fade-in bg-gradient-to-br from-gray-800 to-gray-900">
-      <div class="container mx-auto px-4 sm:px-6">
-        <h3 class="text-3xl sm:text-4xl font-bold mb-4 text-center">Hubungi <span class="text-blue-400">Saya</span></h3>
-        <div class="w-24 h-1 bg-blue-500 mx-auto mb-12 rounded"></div>
+      <!-- CONTACT Section (Bento Form) -->
+      <section id="contact" class="fade-in scroll-mt-32">
+        <div class="glass-card rounded-[2rem] p-6 md:p-10 relative overflow-hidden">
+          <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-purple-500/20 rounded-full blur-3xl"></div>
 
-        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
-          <!-- Contact Info -->
-          <div class="lg:w-2/5">
-            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover h-full">
-              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Mari Berkolaborasi!</h4>
-              <p class="text-base sm:text-lg mb-8">Saya terbuka untuk peluang baru dan proyek menarik. Jangan ragu untuk menghubungi saya!</p>
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+            <div class="flex flex-col justify-center">
+              <h3 class="text-4xl font-extrabold mb-4"><span data-i18n="cnt_title_1">Mari Bangun </span><br /><span class="text-blue-400" data-i18n="cnt_title_2">Sesuatu yang Hebat.</span></h3>
+              <p class="text-gray-300 font-light mb-8 max-w-md" data-i18n="cnt_desc">Saya selalu terbuka untuk diskusi mengenai potensi kolaborasi, pekerjaan baru, atau sekadar bertukar wawasan di bidang teknologi.</p>
 
-              <div class="space-y-6">
-                <div class="flex items-center">
-                  <div class="contact-icon bg-blue-900 text-blue-400">
-                    <i class="fas fa-envelope"></i>
+              <div class="space-y-4">
+                <a href="mailto:laludeyndrafavian@gmail.com" class="flex items-center gap-4 glass-btn p-4 rounded-xl hover:-translate-y-1 transition-transform w-[max-content] pr-6">
+                  <div class="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400 border border-blue-500/30"><i class="fas fa-envelope"></i></div>
+                  <div>
+                    <p class="text-xs text-gray-400 mb-0.5" data-i18n="cnt_email">Kirim Email</p>
+                    <p class="text-sm font-medium">laludeyndrafavian@gmail.com</p>
                   </div>
-                  <div class="ml-4">
-                    <h5 class="font-bold">Email</h5>
-                    <p class="text-gray-300">laludeyndrafavian@gmail.com</p>
+                </a>
+                <div class="flex items-center gap-4 glass-btn p-4 rounded-xl w-[max-content] pr-6">
+                  <div class="w-10 h-10 rounded-full bg-green-500/20 flex items-center justify-center text-green-400 border border-green-500/30"><i class="fab fa-whatsapp"></i></div>
+                  <div>
+                    <p class="text-xs text-gray-400 mb-0.5" data-i18n="cnt_phone">Telepon / WA</p>
+                    <p class="text-sm font-medium">+62 813-5910-8149</p>
                   </div>
-                </div>
-
-                <div class="flex items-center">
-                  <div class="contact-icon bg-green-900 text-green-400">
-                    <i class="fas fa-phone"></i>
-                  </div>
-                  <div class="ml-4">
-                    <h5 class="font-bold">Telepon</h5>
-                    <p class="text-gray-300">+62 813-5910-8149</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center">
-                  <div class="contact-icon bg-purple-900 text-purple-400">
-                    <i class="fas fa-map-marker-alt"></i>
-                  </div>
-                  <div class="ml-4">
-                    <h5 class="font-bold">Lokasi</h5>
-                    <p class="text-gray-300">Malang, Indonesia</p>
-                  </div>
-                </div>
-              </div>
-
-              <div class="mt-8 pt-6 border-t border-gray-700">
-                <h5 class="font-bold mb-4">Ikuti Saya</h5>
-                <div class="flex space-x-4">
-                  <a href="https://github.com/LaluDeyndra" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-500 transition">
-                    <i class="fab fa-github"></i>
-                  </a>
-                  <a href="https://www.youtube.com/@apeoplewhohaveacoolname/featured" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-red-500 transition">
-                    <i class="fab fa-youtube"></i>
-                  </a>
-                  <a href="https://www.instagram.com/laludeyndrafavian" class="w-10 h-10 rounded-full bg-gray-700 flex items-center justify-center hover:bg-red-500 transition">
-                    <i class="fab fa-instagram"></i>
-                  </a>
                 </div>
               </div>
             </div>
-          </div>
 
-          <!-- Contact Form -->
-          <div class="lg:w-3/5">
-            <div class="bg-gray-800 rounded-2xl p-6 sm:p-8 card-hover h-full">
-              <h4 class="text-xl sm:text-2xl font-bold mb-6 text-blue-400">Kirim Pesan</h4>
-              <form id="contact-form" class="space-y-6">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
-                  <div>
-                    <label for="name" class="block mb-2 font-medium">Nama Lengkap</label>
-                    <input type="text" id="name" name="name" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Masukkan nama Anda" required />
+            <!-- Form -->
+            <div class="bg-gray-900/60 backdrop-blur-md rounded-2xl p-6 border border-white/5 shadow-2xl">
+              <form id="contact-form" class="space-y-5">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_name">NAMA LENGKAP</label>
+                    <input
+                      type="text"
+                      id="name"
+                      class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                      placeholder="John Doe"
+                      data-i18n-attr="placeholder"
+                      data-i18n-placeholder="form_name_ph"
+                      required
+                    />
                   </div>
-                  <div>
-                    <label for="email" class="block mb-2 font-medium">Alamat Email</label>
-                    <input type="email" id="email" name="email" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="email@example.com" required />
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_email">EMAIL</label>
+                    <input
+                      type="email"
+                      id="email"
+                      class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                      placeholder="john@example.com"
+                      data-i18n-attr="placeholder"
+                      data-i18n-placeholder="form_email_ph"
+                      required
+                    />
                   </div>
                 </div>
-
-                <div>
-                  <label for="subject" class="block mb-2 font-medium">Perihal</label>
-                  <input type="text" id="subject" name="subject" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Subjek pesan Anda" required />
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_sub">SUBJEK</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600"
+                    placeholder="Hal yang ingin didiskusikan"
+                    data-i18n-attr="placeholder"
+                    data-i18n-placeholder="form_sub_ph"
+                    required
+                  />
                 </div>
-
-                <div>
-                  <label for="message" class="block mb-2 font-medium">Pesan</label>
-                  <textarea id="message" name="message" rows="5" class="w-full p-3 bg-gray-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 transition" placeholder="Tulis pesan Anda di sini..." required></textarea>
+                <div class="space-y-1.5">
+                  <label class="text-xs font-medium pl-1 text-gray-400" data-i18n="form_msg">PESAN</label>
+                  <textarea
+                    id="message"
+                    rows="4"
+                    class="w-full bg-black/40 border border-white/10 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all text-white placeholder:text-gray-600 resize-none"
+                    placeholder="Tuliskan pesan Anda..."
+                    data-i18n-attr="placeholder"
+                    data-i18n-placeholder="form_msg_ph"
+                    required
+                  ></textarea>
                 </div>
-
-                <button type="submit" id="submit-btn" class="w-full bg-blue-500 hover:bg-blue-600 py-3 rounded-lg font-medium transition flex items-center justify-center">
-                  <i class="fas fa-paper-plane mr-2"></i>
-                  <span id="submit-text">Kirim Pesan</span>
-                  <i id="loading-icon" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                <button
+                  type="submit"
+                  id="submit-btn"
+                  class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium py-3.5 rounded-xl transition-all shadow-lg flex justify-center items-center gap-2 group"
+                >
+                  <span id="submit-text" data-i18n="form_send">Kirim Pesan</span>
+                  <i class="fas fa-paper-plane text-sm group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform"></i>
+                  <i id="loading-icon" class="fas fa-spinner fa-spin hidden"></i>
                 </button>
               </form>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- Footer -->
-    <footer class="py-16 fade-in bg-gradient-to-br from-gray-900 to-gray-800">
-      <div class="container mx-auto px-4 sm:px-6">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12">
-          <!-- Brand & Description -->
-          <div class="lg:col-span-2">
-            <h3 class="text-2xl font-bold text-blue-400 mb-4">Lalu Deyndra</h3>
-            <p class="text-gray-300 mb-6 max-w-md">Back-End Developer yang bersemangat dalam menciptakan solusi IoT yang cerdas, API yang powerful, dan sistem otomatisasi server yang efisien.</p>
-            <div class="flex space-x-4">
-              <a href="https://github.com/LaluDeyndra" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-blue-500 transition-all duration-300">
-                <i class="fab fa-github"></i>
-              </a>
-              <a href="https://www.youtube.com/@apeoplewhohaveacoolname/featured" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-red-500 transition-all duration-300">
-                <i class="fab fa-youtube"></i>
-              </a>
-              <a href="https://www.instagram.com/laludeyndrafavian" class="social-icon w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gray-700 flex items-center justify-center hover:bg-pink-500 transition-all duration-300">
-                <i class="fab fa-instagram"></i>
-              </a>
-            </div>
+    <!-- Semantic Footer -->
+    <footer class="relative z-10 border-t border-white/5 bg-gray-950/80 backdrop-blur-xl mt-10">
+      <div class="container mx-auto px-6 py-8">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div class="text-center md:text-left">
+            <h5 class="font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400 text-lg mb-1">Deyndra.</h5>
+            <p class="text-xs text-gray-500" data-i18n="footer_cpy">&copy; 2025. All Rights Reserved.</p>
           </div>
-
-          <!-- Quick Links -->
-          <div>
-            <h4 class="text-lg font-bold mb-4 text-blue-400">Navigasi</h4>
-            <ul class="space-y-3">
-              <li>
-                <a href="#hero" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Beranda</a>
-              </li>
-              <li>
-                <a href="#about" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Tentang Saya</a>
-              </li>
-              <li>
-                <a href="#projects" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Proyek</a>
-              </li>
-              <li>
-                <a href="#contact" class="text-gray-300 hover:text-blue-400 transition-all duration-300 block">Kontak</a>
-              </li>
-            </ul>
-          </div>
-
-          <!-- Contact Info -->
-          <div>
-            <h4 class="text-lg font-bold mb-4 text-blue-400">Kontak</h4>
-            <ul class="space-y-3">
-              <li class="flex items-start">
-                <i class="fas fa-envelope text-blue-400 mt-1 mr-3"></i>
-                <span class="text-gray-300">laludeyndrafavian@gmail.com</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-phone text-green-400 mt-1 mr-3"></i>
-                <span class="text-gray-300">+62 813-5910-8149</span>
-              </li>
-              <li class="flex items-start">
-                <i class="fas fa-map-marker-alt text-purple-400 mt-1 mr-3"></i>
-                <span class="text-gray-300">Malang, Indonesia</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-
-        <!-- Copyright & Tech Stack -->
-        <div class="pt-8 border-t border-gray-700">
-          <div class="flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-400 mb-4 md:mb-0 text-sm sm:text-base">&copy; 2025 Lalu Deyndra. Semua hak dilindungi.</p>
-            <div class="flex items-center space-x-2">
-              <span class="text-gray-400 text-sm">Dibuat dengan:</span>
-              <div class="flex space-x-2">
-                <i class="fab fa-html5 text-orange-500"></i>
-                <i class="fab fa-css3-alt text-blue-500"></i>
-                <i class="fab fa-js-square text-yellow-400"></i>
-                <i class="fab fa-github text-gray-300"></i>
-                <i class="fas fa-rocket text-green-500"></i>
-              </div>
+          <div class="flex gap-4">
+            <div class="text-xs font-medium text-gray-400 border border-white/5 bg-white/5 rounded-full px-3 py-1 flex items-center gap-2">
+              <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+              <span data-i18n="footer_badge">Code with Passion</span>
             </div>
           </div>
         </div>
       </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- JavaScript Base & i18n -->
     <script src="script.js"></script>
   </body>
 </html>
