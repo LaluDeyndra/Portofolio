@@ -158,6 +158,7 @@
     const savedTheme = localStorage.getItem('theme') || 'dark';
     const isLight = savedTheme === 'light';
 
+    document.documentElement.classList.toggle('light', isLight);
     document.documentElement.classList.toggle('dark', !isLight);
     document.body.classList.toggle('light', isLight);
 

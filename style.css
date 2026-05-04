@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap');
 
-:root {
+:root,
+html.dark {
   color-scheme: dark;
   --bg: #09090b;
   --panel: rgba(24, 24, 27, 0.76);
@@ -10,6 +11,18 @@
   --soft: #71717a;
   --text: #fafafa;
   --inverse: #09090b;
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #f5f5f5;
+  --panel: rgba(255, 255, 255, 0.78);
+  --panel-strong: rgba(255, 255, 255, 0.94);
+  --line: rgba(9, 9, 11, 0.12);
+  --muted: #52525b;
+  --soft: #71717a;
+  --text: #09090b;
+  --inverse: #fafafa;
 }
 
 html {
@@ -29,6 +42,24 @@ body.loading {
 
 body.loading > *:not(#preloader) {
   display: none;
+}
+
+#preloader {
+  background: var(--bg) !important;
+  color: var(--text) !important;
+}
+
+#preloader .text-zinc-300,
+#preloader .text-zinc-500 {
+  color: var(--text) !important;
+}
+
+#progress-fill {
+  background: var(--text) !important;
+}
+
+#preloader .bg-white\/10 {
+  background: color-mix(in srgb, var(--text) 12%, transparent) !important;
 }
 
 .font-display {
@@ -116,8 +147,8 @@ nav,
   height: 2.35rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #e4e4e7;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: color-mix(in srgb, var(--text) 86%, transparent);
   font-size: 0.85rem;
   font-weight: 800;
   transition: transform 180ms ease, background 180ms ease, border-color 180ms ease;
@@ -125,8 +156,8 @@ nav,
 
 .icon-btn:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.22);
-  background: rgba(255, 255, 255, 0.09);
+  border-color: color-mix(in srgb, var(--text) 22%, transparent);
+  background: color-mix(in srgb, var(--text) 9%, transparent);
 }
 
 .primary-btn,
@@ -143,9 +174,9 @@ nav,
 }
 
 .primary-btn {
-  background: #fafafa;
-  color: #09090b;
-  border: 1px solid #fafafa;
+  background: var(--text);
+  color: var(--inverse);
+  border: 1px solid var(--text);
 }
 
 .primary-btn:hover,
@@ -154,14 +185,14 @@ nav,
 }
 
 .secondary-btn {
-  background: rgba(255, 255, 255, 0.04);
-  color: #fafafa;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--text);
   border: 1px solid var(--line);
 }
 
 .secondary-btn:hover {
-  border-color: rgba(255, 255, 255, 0.24);
-  background: rgba(255, 255, 255, 0.08);
+  border-color: color-mix(in srgb, var(--text) 24%, transparent);
+  background: color-mix(in srgb, var(--text) 8%, transparent);
 }
 
 .primary-btn.small {
@@ -390,20 +421,20 @@ nav,
   justify-content: center;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
-  color: #fafafa;
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+  color: var(--text);
   font-size: 1.05rem;
 }
 
 .tech-category h3 {
-  color: #fafafa;
+  color: var(--text);
   font-size: 1.05rem;
   font-weight: 850;
 }
 
 .tech-category p {
   margin-top: 0.25rem;
-  color: #a1a1aa;
+  color: var(--muted);
   font-size: 0.86rem;
   line-height: 1.5;
 }
@@ -421,8 +452,8 @@ nav,
   gap: 0.42rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #d4d4d8;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: color-mix(in srgb, var(--text) 82%, transparent);
   padding: 0.42rem 0.62rem;
   font-size: 0.76rem;
   font-weight: 800;
@@ -622,8 +653,8 @@ nav,
   gap: 0.45rem;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.04);
-  color: #a1a1aa;
+  background: color-mix(in srgb, var(--text) 4%, transparent);
+  color: var(--muted);
   padding: 0.62rem 0.78rem;
   font-size: 0.82rem;
   font-weight: 800;
@@ -632,14 +663,14 @@ nav,
 
 .filter-pill:hover {
   transform: translateY(-1px);
-  border-color: rgba(255, 255, 255, 0.22);
-  color: #fafafa;
+  border-color: color-mix(in srgb, var(--text) 22%, transparent);
+  color: var(--text);
 }
 
 .filter-pill.active {
-  border-color: #fafafa;
-  background: #fafafa;
-  color: #09090b;
+  border-color: var(--text);
+  background: var(--text);
+  color: var(--inverse);
 }
 
 .project-card {
@@ -931,6 +962,7 @@ nav,
   transform: translateY(0);
 }
 
+html.light body,
 body.light {
   --bg: #f5f5f5;
   --panel: rgba(255, 255, 255, 0.78);
@@ -943,22 +975,38 @@ body.light {
   color: #18181b;
 }
 
+html.light body .site-shell,
 body.light .site-shell {
   background:
     radial-gradient(circle at 50% 0%, rgba(9, 9, 11, 0.08), transparent 32rem),
     linear-gradient(180deg, #fafafa 0%, #f4f4f5 48%, #fafafa 100%);
 }
 
+html.light body .grid-layer,
 body.light .grid-layer {
   background-image:
     linear-gradient(rgba(9, 9, 11, 0.06) 1px, transparent 1px),
     linear-gradient(90deg, rgba(9, 9, 11, 0.06) 1px, transparent 1px);
 }
 
+html.light body .light-rim,
 body.light .light-rim {
   background: linear-gradient(90deg, transparent, rgba(20, 184, 166, 0.12), rgba(59, 130, 246, 0.08), transparent);
 }
 
+html.light body nav,
+html.light body .terminal-card,
+html.light body .profile-panel,
+html.light body .stat-strip,
+html.light body .stack-card,
+html.light body .tech-item,
+html.light body .tech-category,
+html.light body .project-card,
+html.light body .contact-layout,
+html.light body .contact-form,
+html.light body .contact-link,
+html.light body .mobile-panel,
+html.light body .notification,
 body.light nav,
 body.light .terminal-card,
 body.light .profile-panel,
@@ -977,6 +1025,16 @@ body.light .notification {
   box-shadow: 0 22px 60px rgba(24, 24, 27, 0.08);
 }
 
+html.light body .section-title,
+html.light body .project-body h3,
+html.light body .stack-card h3,
+html.light body .tech-item h3,
+html.light body .tech-category h3,
+html.light body .profile-panel p,
+html.light body .stat-strip strong,
+html.light body .terminal-card,
+html.light body .nav-link:hover,
+html.light body .footer-link:hover,
 body.light .section-title,
 body.light .project-body h3,
 body.light .stack-card h3,
@@ -990,12 +1048,21 @@ body.light .footer-link:hover {
   color: #09090b;
 }
 
+html.light body .text-white,
+html.light body .text-zinc-100,
+html.light body .text-zinc-300,
 body.light .text-white,
 body.light .text-zinc-100,
 body.light .text-zinc-300 {
   color: #09090b;
 }
 
+html.light body .text-zinc-400,
+html.light body .project-body p,
+html.light body .stack-card p,
+html.light body .tech-item p,
+html.light body .tech-category p,
+html.light body .profile-panel span,
 body.light .text-zinc-400,
 body.light .project-body p,
 body.light .stack-card p,
@@ -1005,6 +1072,10 @@ body.light .profile-panel span {
   color: #52525b;
 }
 
+html.light body .secondary-btn,
+html.light body .icon-btn,
+html.light body .mobile-link,
+html.light body .contact-link,
 body.light .secondary-btn,
 body.light .icon-btn,
 body.light .mobile-link,
@@ -1013,17 +1084,22 @@ body.light .contact-link {
   background: rgba(255, 255, 255, 0.7);
 }
 
+html.light body .primary-btn,
 body.light .primary-btn {
   border-color: #18181b;
   background: #18181b;
   color: #fafafa;
 }
 
+html.light body .secondary-btn,
 body.light .secondary-btn {
   border-color: rgba(9, 9, 11, 0.16);
   background: rgba(255, 255, 255, 0.86);
 }
 
+html.light body .secondary-btn:hover,
+html.light body .icon-btn:hover,
+html.light body .footer-socials .footer-link:hover,
 body.light .secondary-btn:hover,
 body.light .icon-btn:hover,
 body.light .footer-socials .footer-link:hover {
@@ -1031,96 +1107,120 @@ body.light .footer-socials .footer-link:hover {
   background: #ffffff;
 }
 
+html.light body .tech-item i,
+html.light body .tech-logo,
+html.light body .tech-category-head > i,
 body.light .tech-item i,
 body.light .tech-logo,
 body.light .tech-category-head > i {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(9, 9, 11, 0.04);
+  color: #18181b;
 }
 
+html.light body .ts-logo,
 body.light .ts-logo {
   background: rgba(37, 99, 235, 0.12);
   color: #2563eb;
 }
 
+html.light body .tech-chip,
 body.light .tech-chip {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(9, 9, 11, 0.045);
   color: #27272a;
 }
 
+html.light body .github-icon,
+html.light body .terminal-icon,
 body.light .github-icon,
 body.light .terminal-icon {
   color: #27272a;
 }
 
+html.light body .project-meta,
 body.light .project-meta {
   color: #52525b;
 }
 
+html.light body .project-meta a,
 body.light .project-meta a {
   border-color: rgba(9, 9, 11, 0.14);
   background: rgba(255, 255, 255, 0.8);
   color: #18181b;
 }
 
+html.light body .project-meta a:hover,
 body.light .project-meta a:hover {
   background: #18181b;
   color: #fafafa;
 }
 
+html.light body .filter-pill,
 body.light .filter-pill {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(255, 255, 255, 0.78);
   color: #52525b;
 }
 
+html.light body .filter-pill:hover,
 body.light .filter-pill:hover {
   border-color: rgba(9, 9, 11, 0.24);
   background: #ffffff;
   color: #18181b;
 }
 
+html.light body .filter-pill.active,
 body.light .filter-pill.active {
   border-color: #18181b;
   background: #18181b;
   color: #fafafa;
 }
 
+html.light body .tags span,
 body.light .tags span {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(9, 9, 11, 0.045);
   color: #27272a;
 }
 
+html.light body .footer-socials .footer-link,
 body.light .footer-socials .footer-link {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(255, 255, 255, 0.78);
   color: #27272a;
 }
 
+html.light body .reader-badge,
 body.light .reader-badge {
   border-color: rgba(9, 9, 11, 0.12);
   background: rgba(255, 255, 255, 0.82);
   color: #18181b;
 }
 
+html.light body .contact-form label,
+html.light body .section-kicker,
+html.light body .project-meta,
 body.light .contact-form label,
 body.light .section-kicker,
 body.light .project-meta {
   color: #52525b;
 }
 
+html.light body .terminal-card pre,
 body.light .terminal-card pre {
   color: #27272a;
 }
 
+html.light body .contact-form input,
+html.light body .contact-form textarea,
 body.light .contact-form input,
 body.light .contact-form textarea {
   background: rgba(255, 255, 255, 0.78);
   color: #18181b;
 }
 
+html.light body .project-media,
 body.light .project-media {
   background: #e4e4e7;
 }
