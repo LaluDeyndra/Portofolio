@@ -289,8 +289,11 @@
 
       <section id="projects" class="reveal scroll-mt-28">
         <div class="section-kicker">03 / <span data-i18n="projects_kicker">Selected Work</span></div>
-        <div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-          <h2 class="section-title max-w-3xl" data-i18n="projects_title">Project pilihan dengan karakter produk yang beda-beda.</h2>
+        <div class="projects-heading mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-end">
+          <div>
+            <div class="project-board-label"><span class="board-pulse"></span><span data-i18n="board_label">PROJECT STATUS</span><span class="board-index">/ 05</span><span id="status-checked-at" class="status-checked-at" data-i18n="status_checking">MEMERIKSA...</span></div>
+            <h2 class="section-title max-w-3xl" data-i18n="projects_title">Project pilihan dengan karakter produk yang beda-beda.</h2>
+          </div>
           <a href="https://github.com/LaluDeyndra?tab=repositories" class="secondary-btn self-start md:self-auto">
             <i class="fa-brands fa-github"></i>
             <span data-i18n="projects_github">Repositori</span>
@@ -321,7 +324,7 @@
         </div>
 
         <div class="project-grid">
-          <article class="project-card featured" data-project-category="reader web">
+          <article class="project-card featured" data-project-id="readnime" data-project-category="reader web" data-project-status="down">
             <a href="https://comic.readnime.site" class="project-media comic-preview" aria-label="Open ReadNime">
               <img src="./assets/img/readnime.png" alt="ReadNime website preview" onerror="this.closest('.project-media').classList.add('show-mockup'); this.remove();" />
               <div class="readnime-mockup" aria-hidden="true">
@@ -348,7 +351,7 @@
             <div class="project-body">
               <div class="project-meta">
                 <span>Manga / Comic Reader</span>
-                <a href="https://comic.readnime.site" aria-label="Open ReadNime"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <span class="project-status status-down" role="status"><i class="fa-solid fa-circle"></i><span data-i18n="status_down">DOWN</span></span>
               </div>
               <h3>ReadNime</h3>
               <p data-i18n="proj_comic_desc">
@@ -360,14 +363,14 @@
             </div>
           </article>
 
-          <article class="project-card" data-project-category="web ai">
+          <article class="project-card" data-project-id="arctic-vision" data-project-category="web ai" data-project-status="down">
             <a href="https://www.arvi.life" class="project-media" aria-label="Open Arctic Vision">
               <img src="./assets/img/arctic-vision.png" alt="Arctic Vision" />
             </a>
             <div class="project-body">
               <div class="project-meta">
                 <span>IoT / AI Platform</span>
-                <a href="https://www.arvi.life" aria-label="Open Arctic Vision"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <span class="project-status status-down" role="status"><i class="fa-solid fa-circle"></i><span data-i18n="status_down">DOWN</span></span>
               </div>
               <h3>Arctic Vision</h3>
               <p data-i18n="proj_arvi_desc">
@@ -377,14 +380,14 @@
             </div>
           </article>
 
-          <article class="project-card" data-project-category="bot">
+          <article class="project-card" data-project-id="gacha-bot" data-project-category="bot" data-project-status="unknown">
             <a href="https://laludeyndra.github.io/PageInviteGachaBot/" class="project-media" aria-label="Open Discord Gacha Bot">
               <img src="./assets/img/waifuGacha.png" alt="Discord Gacha Bot" />
             </a>
             <div class="project-body">
               <div class="project-meta">
                 <span>Discord Bot</span>
-                <a href="https://laludeyndra.github.io/PageInviteGachaBot/" aria-label="Open Discord Gacha Bot"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <span class="project-status status-unknown" role="status"><i class="fa-solid fa-circle-question"></i><span data-i18n="status_unknown">BELUM DICEK</span></span>
               </div>
               <h3>Discord Gacha Bot</h3>
               <p data-i18n="proj_gacha_desc">Bot interaktif bertema gacha untuk server Discord dengan minigames, koleksi karakter, dan command yang seru.</p>
@@ -392,14 +395,14 @@
             </div>
           </article>
 
-          <article class="project-card" data-project-category="web">
+          <article class="project-card" data-project-id="galeri-prestasi" data-project-category="web" data-project-status="unknown">
             <a href="https://galeri-prestasi.vercel.app/" class="project-media" aria-label="Open Galeri Prestasi">
               <img src="./assets/img/GaleriPrestasi.png" alt="Galeri Prestasi" />
             </a>
             <div class="project-body">
               <div class="project-meta">
                 <span>Static Site</span>
-                <a href="https://galeri-prestasi.vercel.app/" aria-label="Open Galeri Prestasi"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <span class="project-status status-unknown" role="status"><i class="fa-solid fa-circle-question"></i><span data-i18n="status_unknown">BELUM DICEK</span></span>
               </div>
               <h3>Galeri Prestasi</h3>
               <p data-i18n="proj_galeri_desc">Website statis untuk menyorot pencapaian dan profil berprestasi dengan layout visual yang bersih.</p>
@@ -407,14 +410,14 @@
             </div>
           </article>
 
-          <article class="project-card wide" data-project-category="web app">
+          <article class="project-card wide" data-project-id="sistem-pkl" data-project-category="web app" data-project-status="unknown">
             <a href="https://pkl.senvada.id/" class="project-media" aria-label="Open Sistem Informasi PKL">
               <img src="./assets/img/senvada.png" alt="Sistem Informasi PKL" />
             </a>
             <div class="project-body">
               <div class="project-meta">
                 <span>Management App</span>
-                <a href="https://pkl.senvada.id/" aria-label="Open Sistem Informasi PKL"><i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+                <span class="project-status status-unknown" role="status"><i class="fa-solid fa-circle-question"></i><span data-i18n="status_unknown">BELUM DICEK</span></span>
               </div>
               <h3>Sistem Informasi PKL</h3>
               <p data-i18n="proj_pkl_desc">

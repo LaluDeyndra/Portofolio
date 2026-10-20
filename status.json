@@ -1,0 +1,10 @@
+{
+  "checked_at": null,
+  "projects": {
+    "readnime": { "status": "down" },
+    "arctic-vision": { "status": "down" },
+    "gacha-bot": { "status": "unknown" },
+    "galeri-prestasi": { "status": "unknown" },
+    "sistem-pkl": { "status": "unknown" }
+  }
+}

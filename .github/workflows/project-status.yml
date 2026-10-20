@@ -1,0 +1,76 @@
+name: Check portfolio project links
+
+on:
+  schedule:
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out portfolio
+        uses: actions/checkout@v4
+
+      - name: Check project endpoints
+        run: |
+          python - <<'PY'
+          import json
+          from datetime import datetime, timezone
+          from urllib.error import HTTPError, URLError
+          from urllib.request import Request, urlopen
+
+          urls = {
+              "readnime": "https://comic.readnime.site",
+              "arctic-vision": "https://www.arvi.life",
+              "gacha-bot": "https://laludeyndra.github.io/PageInviteGachaBot/",
+              "galeri-prestasi": "https://galeri-prestasi.vercel.app/",
+              "sistem-pkl": "https://pkl.senvada.id/",
+          }
+
+          def check(url):
+              for method in ("HEAD", "GET"):
+                  request = Request(url, method=method, headers={"User-Agent": "PortfolioProjectStatus/1.0"})
+                  try:
+                      with urlopen(request, timeout=12) as response:
+                          return "up" if response.status < 400 else "down"
+                  except HTTPError as error:
+                      if method == "HEAD" and error.code == 405:
+                          continue
+                      return "down"
+                  except (URLError, TimeoutError, OSError):
+                      return "down"
+              return "down"
+
+          projects = {name: {"status": check(url)} for name, url in urls.items()}
+          try:
+              with open("status.json", encoding="utf-8") as previous_file:
+                  previous = json.load(previous_file)
+          except (OSError, json.JSONDecodeError):
+              previous = {}
+
+          status = {
+              "checked_at": previous.get("checked_at"),
+              "projects": projects,
+          }
+          if previous.get("projects") != projects or not status["checked_at"]:
+              status["checked_at"] = datetime.now(timezone.utc).isoformat()
+          with open("status.json", "w", encoding="utf-8") as output:
+              json.dump(status, output, indent=2)
+              output.write("\n")
+          PY
+
+      - name: Publish status changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add status.json
+          if git diff --cached --quiet; then
+            echo "Project statuses have not changed."
+            exit 0
+          fi
+          git commit -m "Update portfolio project statuses"
+          git push

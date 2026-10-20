@@ -26,9 +26,15 @@
       stack_title: 'Bahasa dan teknologi yang sering saya pakai.',
       stack_cta: 'Mulai diskusi',
       projects_kicker: 'Selected Work',
+      board_label: 'STATUS PROJECT / 05',
       projects_title: 'Project pilihan dengan karakter produk yang beda-beda.',
       projects_github: 'Repositori',
       filter_all: 'Semua',
+      status_down: 'DOWN · SERVER OFF',
+      status_unknown: 'BELUM DICEK',
+      status_up: 'ONLINE',
+      status_checking: 'MEMERIKSA...',
+      status_checked: 'PERUBAHAN TERAKHIR',
       proj_comic_desc: 'Website baca manga dan comic dengan tampilan ringan, daftar judul yang mudah dicari, dan halaman baca yang nyaman untuk mobile maupun desktop.',
       proj_arvi_desc: 'Platform direktori ekosistem Kutub Utara dengan asisten AI dan integrasi data sensor realtime untuk pemantauan lingkungan.',
       proj_gacha_desc: 'Bot interaktif bertema gacha untuk server Discord dengan minigames, koleksi karakter, dan command yang seru.',
@@ -68,9 +74,15 @@
       stack_title: 'Languages and technologies I use often.',
       stack_cta: 'Start a discussion',
       projects_kicker: 'Selected Work',
+      board_label: 'PROJECT STATUS / 05',
       projects_title: 'Selected projects with different product personalities.',
       projects_github: 'Repositories',
       filter_all: 'All',
+      status_down: 'DOWN · SERVER OFF',
+      status_unknown: 'NOT CHECKED',
+      status_up: 'ONLINE',
+      status_checking: 'CHECKING...',
+      status_checked: 'LAST CHANGE',
       proj_comic_desc: 'A manga and comic reading website with a light interface, searchable title lists, and comfortable reading pages for mobile and desktop.',
       proj_arvi_desc: 'An Arctic ecosystem directory platform with an AI assistant and realtime sensor data integration for environment monitoring.',
       proj_gacha_desc: 'An interactive gacha-themed Discord bot with minigames, character collection, and fun commands.',
@@ -152,6 +164,18 @@
         element.placeholder = translations[lang][key];
       }
     });
+
+    $$('.project-card[data-project-id]').forEach((card) => {
+      const label = card.dataset.projectStatus === 'up' ? 'status_up' : card.dataset.projectStatus === 'down' ? 'status_down' : 'status_unknown';
+      const statusText = card.querySelector('.project-status span');
+      if (statusText) statusText.textContent = translations[lang][label];
+    });
+
+    const checkedAt = $('#status-checked-at');
+    if (checkedAt?.dataset.checkedAt) {
+      const date = new Date(checkedAt.dataset.checkedAt);
+      checkedAt.textContent = `${translations[lang].status_checked} ${date.toLocaleString(lang === 'EN' ? 'en-GB' : 'id-ID', { dateStyle: 'short', timeStyle: 'short' })}`;
+    }
   }
 
   function initTheme() {
@@ -228,6 +252,36 @@
         });
       });
     });
+  }
+
+  async function initProjectStatus() {
+    const checkedAt = $('#status-checked-at');
+
+    try {
+      const response = await fetch(`./status.json?t=${Date.now()}`, { cache: 'no-store' });
+      if (!response.ok) throw new Error('Status feed unavailable');
+      const statusFeed = await response.json();
+
+      $$('.project-card[data-project-id]').forEach((card) => {
+        const status = statusFeed.projects?.[card.dataset.projectId]?.status;
+        const badge = card.querySelector('.project-status');
+        if (!badge || !['up', 'down'].includes(status)) return;
+
+        card.dataset.projectStatus = status;
+        badge.classList.toggle('status-down', status === 'down');
+        badge.classList.toggle('status-up', status === 'up');
+        badge.classList.remove('status-unknown');
+        badge.innerHTML = `<i class="fa-solid ${status === 'up' ? 'fa-circle-check' : 'fa-circle'}"></i><span>${translations[activeLang][status === 'up' ? 'status_up' : 'status_down']}</span>`;
+      });
+
+      if (checkedAt && statusFeed.checked_at) {
+        const date = new Date(statusFeed.checked_at);
+        checkedAt.textContent = `${translations[activeLang].status_checked} ${date.toLocaleString(activeLang === 'EN' ? 'en-GB' : 'id-ID', { dateStyle: 'short', timeStyle: 'short' })}`;
+        checkedAt.dataset.checkedAt = statusFeed.checked_at;
+      }
+    } catch (error) {
+      if (checkedAt) checkedAt.textContent = activeLang === 'EN' ? 'STATUS FEED OFFLINE' : 'FEED STATUS OFFLINE';
+    }
   }
 
   function dismissPreloader() {
@@ -358,6 +412,7 @@
     initMobileMenu();
     initReveal();
     initProjectFilters();
+    initProjectStatus();
     initEmail();
     initPreloader();
 
