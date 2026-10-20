@@ -1,6 +1,7 @@
 name: Check portfolio project links
 
 on:
+  push:
   schedule:
     - cron: '*/15 * * * *'
   workflow_dispatch:
