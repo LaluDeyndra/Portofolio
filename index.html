@@ -62,10 +62,11 @@
 
     <!-- Canvas for Matrix digital rain easter egg -->
     <canvas id="matrixCanvas" class="fixed inset-0 z-[90] hidden cursor-pointer"></canvas>
-    <div id="matrixHint" class="fixed top-5 left-1/2 -translate-x-1/2 z-[95] hidden max-w-[94vw] px-4 py-2 rounded-full border border-lime-400/50 bg-zinc-950/95 text-lime-400 text-xs font-mono shadow-2xl items-center gap-3 backdrop-blur-md">
+    <div id="matrixHint" class="matrix-hint fixed top-5 left-1/2 -translate-x-1/2 z-[95] hidden max-w-[94vw] px-4 py-2 rounded-full border border-lime-400/50 bg-zinc-950/95 text-lime-400 text-xs font-mono shadow-2xl items-center gap-3 backdrop-blur-md">
       <span class="inline-block w-2 h-2 rounded-full bg-lime-400 animate-pulse"></span>
       <span id="matrixHintText" data-i18n="easter_egg_matrix">MATRIX MODE AKTIF</span>
-      <span class="text-zinc-500 hidden sm:inline" data-i18n="easter_egg_matrix_sub">• Tekan ESC untuk keluar</span>
+      <span class="matrix-hint-mobile text-zinc-500 md:hidden" data-i18n="easter_egg_matrix_mobile">Ketuk Keluar untuk berhenti</span>
+      <span class="text-zinc-500 hidden md:inline" data-i18n="easter_egg_matrix_sub">• Tekan ESC untuk keluar</span>
       <button id="exitMatrixBtn" type="button" class="ml-auto px-3 py-1 rounded-full bg-lime-400 text-zinc-950 font-bold text-xs hover:bg-lime-300 transition active:scale-95 cursor-pointer shadow">
         <span data-i18n="exit_matrix_btn">Keluar ✕</span>
       </button>
@@ -133,7 +134,7 @@
           <!-- Command Palette Trigger Button -->
           <button id="cmdPaletteBtn" class="cmd-trigger-btn flex items-center gap-2 border border-white/10 bg-white/5 hover:bg-white/10 px-2.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-300 hover:text-white transition" type="button" aria-label="Open Command Palette" title="Command Palette (Ctrl+K)">
             <span data-i18n="cmd_palette">Menu</span>
-            <kbd class="hidden sm:inline-block px-1.5 py-0.5 text-[10px] bg-white/10 rounded font-mono text-zinc-400 border border-white/10">Ctrl+K</kbd>
+            <kbd class="hidden md:inline-block px-1.5 py-0.5 text-[10px] bg-white/10 rounded font-mono text-zinc-400 border border-white/10">Ctrl+K</kbd>
           </button>
 
           <!-- Sound FX Toggle Button -->
@@ -255,7 +256,7 @@
             </a>
             <button id="heroQuickActionBtn" type="button" class="secondary-btn magnetic-btn" title="Open Quick Actions">
               <span data-i18n="cmd_palette">Menu Cepat</span>
-              <kbd class="hidden sm:inline-block ml-1 text-[10px] px-1.5 py-0.5 rounded bg-white/10 font-mono text-zinc-400">Ctrl+K</kbd>
+              <kbd class="hidden md:inline-block ml-1 text-[10px] px-1.5 py-0.5 rounded bg-white/10 font-mono text-zinc-400">Ctrl+K</kbd>
             </button>
           </div>
         </div>
@@ -898,15 +899,15 @@
             autocomplete="off"
             spellcheck="false"
           />
-          <kbd class="hidden sm:inline-block text-[10px] px-1.5 py-0.5 rounded bg-white/10 font-mono text-zinc-400 border border-white/10 shrink-0">ESC</kbd>
-          <button id="cmdCloseBtnMobile" type="button" class="sm:hidden p-1 text-zinc-400 hover:text-white text-sm shrink-0" aria-label="Close Command Palette">
+          <kbd class="hidden md:inline-block text-[10px] px-1.5 py-0.5 rounded bg-white/10 font-mono text-zinc-400 border border-white/10 shrink-0">ESC</kbd>
+          <button id="cmdCloseBtnMobile" type="button" class="md:hidden p-1 text-zinc-400 hover:text-white text-sm shrink-0" aria-label="Close Command Palette">
             <i class="fa-solid fa-xmark"></i>
           </button>
         </div>
         <div id="cmdResultsList" class="p-2 max-h-80 overflow-y-auto space-y-1 text-sm"></div>
         <div class="px-4 py-2 border-t border-white/10 bg-white/5 text-[11px] text-zinc-500 flex items-center justify-between">
-          <span class="hidden sm:inline" data-i18n="cmd_footer_hint">Gunakan <kbd class="px-1 bg-white/10 rounded">↑</kbd> <kbd class="px-1 bg-white/10 rounded">↓</kbd> untuk navigasi, <kbd class="px-1 bg-white/10 rounded">↵</kbd> jalankan</span>
-          <span class="sm:hidden" data-i18n="cmd_footer_hint_mobile">Ketuk perintah untuk menjalankan</span>
+          <span class="hidden md:inline" data-i18n="cmd_footer_hint">Gunakan <kbd class="px-1 bg-white/10 rounded">↑</kbd> <kbd class="px-1 bg-white/10 rounded">↓</kbd> untuk navigasi, <kbd class="px-1 bg-white/10 rounded">↵</kbd> jalankan</span>
+          <span class="md:hidden" data-i18n="cmd_footer_hint_mobile">Ketuk perintah untuk menjalankan</span>
           <span class="font-mono text-lime-400">COMMANDS</span>
         </div>
       </div>

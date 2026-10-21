@@ -707,8 +707,8 @@ body.loading > *:not(#preloader) {
 }
 
 .project-card.highlight-dimmed {
-  opacity: 0.45;
-  filter: grayscale(40%);
+  opacity: 1;
+  filter: none;
 }
 
 .project-media {
@@ -1343,5 +1343,49 @@ body.light .stat-strip strong {
   .filter-pill {
     padding: 0.45rem 0.65rem;
     font-size: 0.76rem;
+  }
+}
+
+/* Keep the Matrix controls readable on narrow screens. */
+@media (max-width: 767px) {
+  #matrixHint.flex {
+    display: grid !important;
+    grid-template-columns: 0.5rem minmax(0, 1fr) auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+    column-gap: 0.55rem;
+    row-gap: 0.2rem;
+    width: max-content;
+    max-width: calc(100vw - 1rem);
+    padding: 0.6rem 0.7rem;
+    border-radius: 1rem;
+  }
+
+  #matrixHint > span:first-child {
+    grid-column: 1;
+    grid-row: 1 / span 2;
+  }
+
+  #matrixHint #matrixHintText {
+    grid-column: 2;
+    grid-row: 1;
+    white-space: nowrap;
+    font-size: 0.6rem;
+    letter-spacing: 0.06em;
+  }
+
+  #matrixHint .matrix-hint-mobile {
+    grid-column: 2;
+    grid-row: 2;
+    font-size: 0.58rem;
+    line-height: 1.2;
+  }
+
+  #matrixHint #exitMatrixBtn {
+    grid-column: 3;
+    grid-row: 1 / span 2;
+    margin-left: 0;
+    padding: 0.45rem 0.6rem;
+    white-space: nowrap;
   }
 }

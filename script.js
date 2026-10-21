@@ -29,10 +29,27 @@
       about_title: 'Developer yang suka membuat produk terasa sederhana, walau mesinnya serius.',
       about_desc_1: 'Fokus saya ada di pengembangan web end-to-end: tampilan yang rapi, backend yang jelas, database yang tertata, dan fitur yang nyaman dipakai.',
       about_desc_2: 'Saya terbiasa memakai HTML, CSS, JavaScript, TypeScript, PHP, Laravel, Node.js, Tailwind CSS, dan MySQL untuk membuat website maupun aplikasi web.',
+      // Bento cards
+      bento_tag_1: '01 / ARSITEKTUR',
+      bento_title_1: 'Pengembangan End-to-End',
+      bento_desc_1: 'Mulai dari perancangan arsitektur database, REST API, hingga implementasi antarmuka yang cepat dan siap pakai.',
+      bento_tag_2: '02 / INTERAKSI',
+      bento_title_2: 'UI Bersih & Kemudahan Pakai',
+      bento_desc_2: 'Tampilan rapi, responsif di mobile maupun desktop, dan pengalaman pengguna yang nyaman tanpa elemen berlebihan.',
+      bento_tag_3: '03 / PERFORMA',
+      bento_title_3: 'Kecepatan & Keandalan',
+      bento_desc_3: 'Memastikan website ringan dibuka, kode terstruktur, dan penanganan data yang efisien dan stabil.',
+      // Tech stack descriptions
       stack_kicker: 'Languages',
       stack_title: 'Bahasa dan teknologi yang sering saya pakai.',
       stack_cta: 'Mulai diskusi',
       skills_highlight_hint: 'Klik teknologi apa saja untuk menyorot project terkait di bawah.',
+      stack_front_desc: 'Tampilan dan interaksi antarmuka web.',
+      stack_back_desc: 'Server, REST API, dan logika aplikasi.',
+      stack_db_desc: 'Penyimpanan data dan perancangan relasi.',
+      stack_tools_desc: 'Alat pengembangan dan alur kerja harian.',
+      stack_other_desc: 'Eksperimen, Linux environment, dan integrasi.',
+      // Projects
       projects_kicker: 'Selected Work',
       board_label: 'STATUS PROJECT',
       projects_title: 'Project pilihan dengan karakter produk yang beda-beda.',
@@ -48,11 +65,24 @@
       modal_close: 'Tutup',
       modal_tech_used: 'Teknologi yang Digunakan',
       modal_key_features: 'Fitur Utama',
-      easter_egg_matrix: 'MATRIX MODE ACTIVE · Tekan ESC untuk keluar',
+      // Easter egg matrix
+      easter_egg_matrix: 'MATRIX MODE AKTIF',
+      easter_egg_matrix_sub: '• Tekan ESC untuk keluar',
+      easter_egg_matrix_mobile: 'Ketuk tombol Keluar untuk berhenti',
+      exit_matrix_btn: 'Keluar ✕',
+      // Contact
       contact_kicker: 'Contact',
       contact_title: 'Punya ide yang perlu dibangun rapi? Mari bikin versi pertamanya.',
       contact_desc: 'Saya terbuka untuk kolaborasi, freelance project, diskusi produk, atau ngobrol teknis soal website, backend, dan ide aplikasi.',
+      contact_ready_title: 'Terbuka untuk proyek baru',
+      contact_ready_desc: 'Waktu respon: < 24 jam',
+      contact_hire_btn: 'Diskusi Proyek',
       contact_quick_topics: 'Pilih Topik Cepat:',
+      topic_freelance: 'Freelance',
+      topic_webapp: 'Web App',
+      topic_collab: 'Kolaborasi',
+      topic_discussion: 'Diskusi Umum',
+      // Form
       form_name: 'Nama lengkap',
       form_name_ph: 'John Doe',
       form_email_ph: 'john@example.com',
@@ -62,6 +92,16 @@
       form_message_ph: 'Tuliskan kebutuhanmu...',
       form_send: 'Kirim pesan',
       footer_rights: 'All rights reserved.',
+      // Terminal
+      term_welcome_title: 'DEYNDRA-OS [Shell v2.4]',
+      term_welcome_sub: 'Ketik <span class="text-lime-300 font-bold">\'help\'</span> atau klik perintah di bawah:',
+      term_input_ph: 'coba ketik \'projects\', \'skills\', atau \'help\'...',
+      // Command palette footer
+      cmd_footer_hint: 'Gunakan <kbd class="px-1 bg-white/10 rounded">↑</kbd> <kbd class="px-1 bg-white/10 rounded">↓</kbd> untuk navigasi, <kbd class="px-1 bg-white/10 rounded">↵</kbd> jalankan',
+      cmd_footer_hint_mobile: 'Ketuk perintah untuk menjalankan',
+      cmd_no_results: 'Tidak ada perintah yang cocok.',
+      cmd_choose: 'Pilih',
+      // Project descriptions
       proj_comic_desc: 'Website baca manga dan comic dengan tampilan ringan, daftar judul yang mudah dicari, dan halaman baca yang nyaman untuk mobile maupun desktop.',
       proj_arvi_desc: 'Platform direktori ekosistem Kutub Utara dengan asisten cerdas dan integrasi data sensor realtime untuk pemantauan lingkungan.',
       proj_gacha_desc: 'Bot interaktif bertema gacha untuk server Discord dengan minigames, koleksi karakter, dan command yang seru.',
@@ -88,10 +128,27 @@
       about_title: 'A developer who makes products feel simple, even when the engine is serious.',
       about_desc_1: 'My focus is end-to-end web development: clean interfaces, clear backend work, organized databases, and features that feel easy to use.',
       about_desc_2: 'I often use HTML, CSS, JavaScript, TypeScript, PHP, Laravel, Node.js, Tailwind CSS, and MySQL to build websites and web applications.',
+      // Bento cards
+      bento_tag_1: '01 / ARCHITECTURE',
+      bento_title_1: 'End-to-End Build',
+      bento_desc_1: 'From database architecture design, REST APIs, to fast, production-ready interface implementation.',
+      bento_tag_2: '02 / INTERACTION',
+      bento_title_2: 'Clean UI & Usability',
+      bento_desc_2: 'Tidy layouts, responsive on mobile and desktop, and a comfortable user experience without unnecessary elements.',
+      bento_tag_3: '03 / PERFORMANCE',
+      bento_title_3: 'Speed & Reliability',
+      bento_desc_3: 'Ensuring websites load fast, code stays structured, and data handling is efficient and stable.',
+      // Tech stack descriptions
       stack_kicker: 'Languages',
       stack_title: 'Languages and technologies I use often.',
       stack_cta: 'Start a discussion',
       skills_highlight_hint: 'Click any technology to highlight related projects below.',
+      stack_front_desc: 'Web interface visuals and interactions.',
+      stack_back_desc: 'Server, REST APIs, and application logic.',
+      stack_db_desc: 'Data storage and relational design.',
+      stack_tools_desc: 'Development tools and daily workflow.',
+      stack_other_desc: 'Experiments, Linux environment, and integrations.',
+      // Projects
       projects_kicker: 'Selected Work',
       board_label: 'PROJECT STATUS',
       projects_title: 'Selected projects with different product personalities.',
@@ -107,11 +164,24 @@
       modal_close: 'Close',
       modal_tech_used: 'Technologies Used',
       modal_key_features: 'Key Highlights',
-      easter_egg_matrix: 'MATRIX MODE ACTIVE · Press ESC to exit',
+      // Easter egg matrix
+      easter_egg_matrix: 'MATRIX MODE ACTIVE',
+      easter_egg_matrix_sub: '• Press ESC to exit',
+      easter_egg_matrix_mobile: 'Tap the Exit button to stop',
+      exit_matrix_btn: 'Exit ✕',
+      // Contact
       contact_kicker: 'Contact',
       contact_title: 'Have an idea that needs a clean build? Let us make the first version.',
       contact_desc: 'I am open to collaboration, freelance projects, product discussions, or technical chats about websites, backend, and app ideas.',
+      contact_ready_title: 'Ready for new projects',
+      contact_ready_desc: 'Response time: < 24 hours',
+      contact_hire_btn: 'Discuss Project',
       contact_quick_topics: 'Quick Topics:',
+      topic_freelance: 'Freelance',
+      topic_webapp: 'Web App',
+      topic_collab: 'Collaboration',
+      topic_discussion: 'General Discussion',
+      // Form
       form_name: 'Full name',
       form_name_ph: 'John Doe',
       form_email_ph: 'john@example.com',
@@ -121,6 +191,16 @@
       form_message_ph: 'Write your brief...',
       form_send: 'Send message',
       footer_rights: 'All rights reserved.',
+      // Terminal
+      term_welcome_title: 'DEYNDRA-OS [Shell v2.4]',
+      term_welcome_sub: 'Type <span class="text-lime-300 font-bold">\'help\'</span> or click a command below:',
+      term_input_ph: 'try typing \'projects\', \'skills\', or \'help\'...',
+      // Command palette footer
+      cmd_footer_hint: 'Use <kbd class="px-1 bg-white/10 rounded">↑</kbd> <kbd class="px-1 bg-white/10 rounded">↓</kbd> to navigate, <kbd class="px-1 bg-white/10 rounded">↵</kbd> to run',
+      cmd_footer_hint_mobile: 'Tap a command to run',
+      cmd_no_results: 'No matching commands.',
+      cmd_choose: 'Choose',
+      // Project descriptions
       proj_comic_desc: 'A manga and comic reading website with a light interface, searchable title lists, and comfortable reading pages for mobile and desktop.',
       proj_arvi_desc: 'An Arctic ecosystem directory platform with an AI assistant and realtime sensor data integration for environment monitoring.',
       proj_gacha_desc: 'An interactive gacha-themed Discord bot with minigames, character collection, and fun commands.',
@@ -894,7 +974,6 @@
               <p>• Tools: Git, GitHub, VS Code, Cloudflare, Linux / Bash</p>
             </div>
           `, 'success');
-          smoothScrollTo('#stack');
           break;
 
         case 'projects':
@@ -908,7 +987,6 @@
               <p>5. Sistem Informasi PKL — Internship management system (pkl.senvada.id)</p>
             </div>
           `, 'success');
-          smoothScrollTo('#projects');
           break;
 
         case 'whoami':
@@ -917,7 +995,6 @@
             <p><b>Lalu Deyndra Favian</b> — Web Developer berbasis di Malang, Indonesia.</p>
             <p class="text-zinc-400">Fokus membangun web app end-to-end dengan performa kencang, kode terstruktur, dan pengalaman pengguna yang memuaskan.</p>
           `, 'info');
-          smoothScrollTo('#about');
           break;
 
         case 'contact':
@@ -926,7 +1003,6 @@
             <p>Email: <a href="mailto:laludeyndrafavian@gmail.com" class="text-lime-300 underline">laludeyndrafavian@gmail.com</a></p>
             <p>WhatsApp: <a href="https://wa.me/6281359108149" class="text-emerald-300 underline">+62 813-5910-8149</a></p>
           `, 'info');
-          smoothScrollTo('#contact');
           break;
 
         case 'hire':
@@ -934,10 +1010,9 @@
           playSound('success');
           triggerConfetti();
           printOutput(`
-            <p class="text-lime-300 font-bold">Terima kasih. Deyndra siap berkolaborasi untuk proyek baru.</p>
-            <p>Membuka section kontak sekarang...</p>
+            <p class="text-lime-300 font-bold">${activeLang === 'EN' ? 'Thanks. Deyndra is ready to collaborate on a new project.' : 'Terima kasih. Deyndra siap berkolaborasi untuk proyek baru.'}</p>
+            <p>${activeLang === 'EN' ? 'Use the navbar or Quick Menu to open Contact.' : 'Gunakan navbar atau Menu Cepat untuk membuka kontak.'}</p>
           `, 'success');
-          setTimeout(() => smoothScrollTo('#contact'), 600);
           break;
 
         case 'matrix':
@@ -1247,7 +1322,7 @@
       resultsList.innerHTML = '';
 
       if (!filteredCommands.length) {
-        resultsList.innerHTML = `<div class="p-4 text-center text-xs text-zinc-500 font-mono">Tidak ada perintah yang cocok.</div>`;
+        resultsList.innerHTML = `<div class="p-4 text-center text-xs text-zinc-500 font-mono">${translations[activeLang].cmd_no_results}</div>`;
         return;
       }
 
@@ -1258,7 +1333,7 @@
           <div class="flex items-center gap-3">
             <span class="text-xs sm:text-sm font-medium">${activeLang === 'EN' ? cmd.enLabel : cmd.label}</span>
           </div>
-          <span class="text-[10px] font-mono text-zinc-500 uppercase">Pilih</span>
+          <span class="text-[10px] font-mono text-zinc-500 uppercase">${translations[activeLang].cmd_choose}</span>
         `;
 
         item.addEventListener('click', () => {
@@ -1300,6 +1375,7 @@
     });
 
     if (overlay) overlay.addEventListener('click', closePalette);
+    $('#cmdCloseBtnMobile')?.addEventListener('click', closePalette);
 
     if (searchInput) {
       searchInput.addEventListener('input', (e) => {
@@ -1348,10 +1424,36 @@
 
   // --- MATRIX RAIN EASTER EGG ---
   let matrixInterval = null;
+  let matrixExitHandler = null;
+
+  function stopMatrixRain() {
+    const canvas = $('#matrixCanvas');
+    const hint = $('#matrixHint');
+    const exitButton = $('#exitMatrixBtn');
+
+    clearInterval(matrixInterval);
+    matrixInterval = null;
+    canvas?.classList.add('hidden');
+    hint?.classList.add('hidden');
+    hint?.classList.remove('flex');
+
+    if (matrixExitHandler) {
+      document.removeEventListener('keydown', matrixExitHandler);
+      canvas?.removeEventListener('click', matrixExitHandler);
+      exitButton?.removeEventListener('click', stopMatrixRain);
+      matrixExitHandler = null;
+    }
+  }
+
   function toggleMatrixRain() {
     const canvas = $('#matrixCanvas');
     const hint = $('#matrixHint');
     if (!canvas) return;
+
+    if (!canvas.classList.contains('hidden')) {
+      stopMatrixRain();
+      return;
+    }
 
     if (canvas.classList.contains('hidden')) {
       canvas.classList.remove('hidden');
@@ -1389,28 +1491,15 @@
 
       matrixInterval = setInterval(draw, 33);
 
-      const exitHandler = (e) => {
-        if (e.key === 'Escape' || e.type === 'click') {
-          clearInterval(matrixInterval);
-          canvas.classList.add('hidden');
-          if (hint) {
-            hint.classList.add('hidden');
-            hint.classList.remove('flex');
-          }
-          document.removeEventListener('keydown', exitHandler);
-          canvas.removeEventListener('click', exitHandler);
+      matrixExitHandler = (event) => {
+        if (event.key === 'Escape' || event.type === 'click') {
+          stopMatrixRain();
         }
       };
 
-      document.addEventListener('keydown', exitHandler);
-      canvas.addEventListener('click', exitHandler);
-    } else {
-      clearInterval(matrixInterval);
-      canvas.classList.add('hidden');
-      if (hint) {
-        hint.classList.add('hidden');
-        hint.classList.remove('flex');
-      }
+      document.addEventListener('keydown', matrixExitHandler);
+      canvas.addEventListener('click', matrixExitHandler);
+      $('#exitMatrixBtn')?.addEventListener('click', stopMatrixRain);
     }
   }
 
