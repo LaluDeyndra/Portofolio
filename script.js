@@ -17,6 +17,8 @@
       nav_projects: 'Proyek',
       nav_contact: 'Kontak',
       nav_cta: 'Diskusi',
+      theme_maintenance: 'Pergantian tema sedang dalam perbaikan.',
+      theme_maintenance_label: 'Pergantian tema sedang dalam perbaikan',
       hero_badge: 'Available for modern web builds',
       hero_title_1: 'Ship fast.',
       hero_title_2: 'Scale clean.',
@@ -116,6 +118,8 @@
       nav_projects: 'Projects',
       nav_contact: 'Contact',
       nav_cta: 'Talk',
+      theme_maintenance: 'Theme switching is under maintenance.',
+      theme_maintenance_label: 'Theme switching is under maintenance',
       hero_badge: 'Available for modern web builds',
       hero_title_1: 'Ship fast.',
       hero_title_2: 'Scale clean.',
@@ -351,8 +355,8 @@
     return audioCtx;
   }
 
-  function playSound(type = 'click') {
-    if (!soundEnabled) return;
+  function playSound(type = 'click', force = false) {
+    if (!soundEnabled && !force) return;
     try {
       const ctx = getAudioContext();
       if (!ctx) return;
@@ -468,6 +472,11 @@
       button.textContent = lang === 'ID' ? 'EN' : 'ID';
     });
 
+    $$('.theme-toggle').forEach((button) => {
+      button.setAttribute('aria-label', translations[lang].theme_maintenance_label);
+      button.title = translations[lang].theme_maintenance_label;
+    });
+
     $$('[data-i18n]').forEach((element) => {
       const key = element.getAttribute('data-i18n');
       if (translations[lang] && translations[lang][key]) {
@@ -511,11 +520,17 @@
     });
   }
 
-  function toggleTheme() {
-    playSound('chime');
-    const isLight = !document.body.classList.contains('light');
-    localStorage.setItem('theme', isLight ? 'light' : 'dark');
-    initTheme();
+  function toggleTheme(trigger = null) {
+    playSound('blip', true);
+    showNotification(translations[activeLang].theme_maintenance, 'info');
+
+    const button = trigger?.currentTarget || trigger;
+    if (button instanceof HTMLElement) {
+      button.classList.remove('theme-maintenance-wiggle');
+      void button.offsetWidth;
+      button.classList.add('theme-maintenance-wiggle');
+      button.addEventListener('animationend', () => button.classList.remove('theme-maintenance-wiggle'), { once: true });
+    }
   }
 
   // --- MOBILE NAVIGATION ---
@@ -1027,7 +1042,7 @@
 
         case 'theme':
           toggleTheme();
-          printOutput(`<p class="text-cyan-300">Tema berhasil diganti.</p>`, 'info');
+          printOutput(`<p class="text-amber-300">${translations[activeLang].theme_maintenance}</p>`, 'info');
           break;
 
         case 'lang':
@@ -1272,7 +1287,7 @@
       { id: 'stack', icon: 'fa-layer-group', label: 'Tech Stack & Bahasa', enLabel: 'Tech Stack & Languages', action: () => smoothScrollTo('#stack') },
       { id: 'projects', icon: 'fa-code', label: 'Daftar Proyek Pilihan', enLabel: 'Selected Projects', action: () => smoothScrollTo('#projects') },
       { id: 'contact', icon: 'fa-envelope', label: 'Hubungi & Mulai Diskusi', enLabel: 'Contact & Hire Form', action: () => smoothScrollTo('#contact') },
-      { id: 'theme', icon: 'fa-circle-half-stroke', label: 'Ganti Tema (Dark / Light)', enLabel: 'Toggle Dark / Light Theme', action: toggleTheme },
+      { id: 'theme', icon: 'fa-circle-half-stroke', label: 'Tema (Dalam Perbaikan)', enLabel: 'Theme (Under Maintenance)', action: toggleTheme },
       {
         id: 'lang',
         icon: 'fa-language',
@@ -1655,7 +1670,7 @@
     });
 
     // Theme toggle buttons
-    $$('.theme-toggle').forEach((button) => button.addEventListener('click', toggleTheme));
+    $$('.theme-toggle').forEach((button) => button.addEventListener('click', () => toggleTheme(button)));
 
     // Confetti button in contact section
     const confettiBtn = $('#confettiTriggerBtn');
