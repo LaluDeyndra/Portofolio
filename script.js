@@ -411,16 +411,25 @@
     }
   }
 
-  function toggleSound() {
-    soundEnabled = !soundEnabled;
+  function setSoundEnabled(enabled, notify = true) {
+    const changed = soundEnabled !== enabled;
+    soundEnabled = enabled;
     localStorage.setItem('sound_fx', soundEnabled ? 'true' : 'false');
     updateSoundUI();
-    if (soundEnabled) {
-      playSound('chime');
-      showNotification(activeLang === 'EN' ? 'Sound effects enabled' : 'Efek suara aktif', 'info');
-    } else {
-      showNotification(activeLang === 'EN' ? 'Sound effects muted' : 'Efek suara dimatikan', 'info');
+
+    if (soundEnabled && changed) playSound('chime');
+    if (notify) {
+      const message = soundEnabled
+        ? activeLang === 'EN' ? 'Sound effects enabled' : 'Efek suara aktif'
+        : activeLang === 'EN' ? 'Sound effects muted' : 'Efek suara dimatikan';
+      showNotification(message, 'info');
     }
+
+    return changed;
+  }
+
+  function toggleSound() {
+    setSoundEnabled(!soundEnabled);
   }
 
   function updateSoundUI() {
@@ -964,7 +973,7 @@
         case 'help':
           printOutput(`
             <div class="space-y-1">
-              <p class="text-lime-300 font-bold">Perintah Tersedia:</p>
+              <p class="text-lime-300 font-bold">${activeLang === 'EN' ? 'Available Commands:' : 'Perintah Tersedia:'}</p>
               <p><span class="text-lime-400">skills</span> — Bahasa & teknologi</p>
               <p><span class="text-lime-400">projects</span> — Daftar proyek pilihan</p>
               <p><span class="text-lime-400">whoami</span> — Profil developer</p>
@@ -974,6 +983,8 @@
               <p><span class="text-lime-400">theme</span> — Ganti tema dark / light</p>
               <p><span class="text-lime-400">lang</span> — Ganti bahasa ID / EN</p>
               <p><span class="text-lime-400">clear</span> — Bersihkan layar terminal</p>
+              <p><span class="text-lime-400">mute</span>: ${activeLang === 'EN' ? 'Mute sound effects' : 'Matikan efek suara'}</p>
+              <p><span class="text-lime-400">unmute</span>: ${activeLang === 'EN' ? 'Enable sound effects' : 'Aktifkan efek suara'}</p>
             </div>
           `, 'info');
           break;
@@ -1039,6 +1050,22 @@
         case 'cls':
           if (termOutput) termOutput.innerHTML = '';
           break;
+
+        case 'mute': {
+          const changed = setSoundEnabled(false, false);
+          printOutput(`<p class="text-cyan-300">${activeLang === 'EN'
+            ? changed ? 'Sound effects muted.' : 'Sound effects are already muted.'
+            : changed ? 'Efek suara dimatikan.' : 'Efek suara sudah dimatikan.'}</p>`, 'info');
+          break;
+        }
+
+        case 'unmute': {
+          const changed = setSoundEnabled(true, false);
+          printOutput(`<p class="text-cyan-300">${activeLang === 'EN'
+            ? changed ? 'Sound effects enabled.' : 'Sound effects are already enabled.'
+            : changed ? 'Efek suara diaktifkan.' : 'Efek suara sudah aktif.'}</p>`, 'info');
+          break;
+        }
 
         case 'theme':
           toggleTheme();
