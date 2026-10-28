@@ -1,10 +1,20 @@
 {
-  "checked_at": null,
+  "checked_at": "2026-10-28T07:12:28.692983+00:00",
   "projects": {
-    "readnime": { "status": "down" },
-    "arctic-vision": { "status": "down" },
-    "gacha-bot": { "status": "unknown" },
-    "galeri-prestasi": { "status": "unknown" },
-    "sistem-pkl": { "status": "unknown" }
+    "readnime": {
+      "status": "down"
+    },
+    "arctic-vision": {
+      "status": "down"
+    },
+    "gacha-bot": {
+      "status": "up"
+    },
+    "galeri-prestasi": {
+      "status": "up"
+    },
+    "sistem-pkl": {
+      "status": "down"
+    }
   }
 }
