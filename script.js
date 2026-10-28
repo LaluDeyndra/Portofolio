@@ -19,6 +19,7 @@
       nav_cta: 'Diskusi',
       theme_maintenance: 'Pergantian tema sedang dalam perbaikan.',
       theme_maintenance_label: 'Pergantian tema sedang dalam perbaikan',
+      lang_switched: 'Bahasa berhasil diubah ke Bahasa Indonesia.',
       hero_badge: 'Available for modern web builds',
       hero_title_1: 'Ship fast.',
       hero_title_2: 'Scale clean.',
@@ -120,6 +121,7 @@
       nav_cta: 'Talk',
       theme_maintenance: 'Theme switching is under maintenance.',
       theme_maintenance_label: 'Theme switching is under maintenance',
+      lang_switched: 'Language switched to English.',
       hero_badge: 'Available for modern web builds',
       hero_title_1: 'Ship fast.',
       hero_title_2: 'Scale clean.',
@@ -443,37 +445,154 @@
   }
 
   // --- NOTIFICATION TOAST ---
+  let notificationTimer = null;
+  let notificationListenersAttached = false;
+
   function showNotification(message, type = 'info') {
     const notification = $('#notification');
     const notificationMessage = $('#notification-message');
-    const notificationClose = $('#notification-close');
+    const notificationIcon = $('#notification-icon');
 
     if (!notification || !notificationMessage) return;
 
-    notification.classList.remove('success', 'error', 'info', 'hidden');
+    clearTimeout(notificationTimer);
+
+    notification.classList.remove('success', 'error', 'info', 'hidden', 'dismissing', 'swiping');
+    notification.style.transform = '';
+    notification.style.opacity = '';
     notification.classList.add(type);
     notificationMessage.textContent = message;
 
+    if (notificationIcon) {
+      if (type === 'success') {
+        notificationIcon.className = 'fa-solid fa-circle-check text-emerald-400 mr-2.5 text-sm shrink-0';
+      } else if (type === 'error') {
+        notificationIcon.className = 'fa-solid fa-triangle-exclamation text-rose-400 mr-2.5 text-sm shrink-0';
+      } else {
+        notificationIcon.className = 'fa-solid fa-circle-info text-sky-400 mr-2.5 text-sm shrink-0';
+      }
+    }
+
+    notification.classList.remove('hidden');
     requestAnimationFrame(() => notification.classList.add('show'));
 
-    const timer = setTimeout(hideNotification, 4500);
-    if (notificationClose) {
-      notificationClose.onclick = () => {
-        clearTimeout(timer);
-        hideNotification();
-      };
+    notificationTimer = setTimeout(hideNotification, 4000);
+
+    if (!notificationListenersAttached) {
+      notificationListenersAttached = true;
+      initNotificationInteractions();
     }
   }
 
   function hideNotification() {
     const notification = $('#notification');
-    if (!notification) return;
+    if (!notification || notification.classList.contains('hidden')) return;
+
+    clearTimeout(notificationTimer);
+
     notification.classList.remove('show');
-    setTimeout(() => notification.classList.add('hidden'), 240);
+    notification.classList.add('dismissing');
+
+    setTimeout(() => {
+      notification.classList.add('hidden');
+      notification.classList.remove('dismissing', 'swiping');
+      notification.style.transform = '';
+      notification.style.opacity = '';
+    }, 220);
+  }
+
+  function initNotificationInteractions() {
+    const notification = $('#notification');
+    const closeBtn = $('#notification-close');
+    if (!notification) return;
+
+    // 1. Click on close button
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        hideNotification();
+      });
+    }
+
+    // 2. Click anywhere on the notification to dismiss
+    notification.addEventListener('click', () => {
+      hideNotification();
+    });
+
+    // 3. Pause auto-dismiss timer on mouse hover (Desktop)
+    notification.addEventListener('mouseenter', () => {
+      clearTimeout(notificationTimer);
+    });
+
+    notification.addEventListener('mouseleave', () => {
+      notificationTimer = setTimeout(hideNotification, 2000);
+    });
+
+    // 4. Swipe-to-dismiss on touch devices (Mobile)
+    let startX = 0;
+    let startY = 0;
+    let currentX = 0;
+    let isSwiping = false;
+
+    notification.addEventListener(
+      'touchstart',
+      (e) => {
+        if (!e.touches || e.touches.length !== 1) return;
+        startX = e.touches[0].clientX;
+        startY = e.touches[0].clientY;
+        currentX = startX;
+        isSwiping = true;
+        clearTimeout(notificationTimer);
+      },
+      { passive: true }
+    );
+
+    notification.addEventListener(
+      'touchmove',
+      (e) => {
+        if (!isSwiping || !e.touches || e.touches.length !== 1) return;
+        currentX = e.touches[0].clientX;
+        const diffX = currentX - startX;
+        const diffY = e.touches[0].clientY - startY;
+
+        // If swiping right or up
+        if (diffX > 0) {
+          notification.classList.add('swiping');
+          const opacity = Math.max(0.2, 1 - diffX / 180);
+          notification.style.transform = `translate3d(${diffX}px, 0, 0)`;
+          notification.style.opacity = `${opacity}`;
+        } else if (diffY < -10) {
+          notification.classList.add('swiping');
+          const opacity = Math.max(0.2, 1 - Math.abs(diffY) / 100);
+          notification.style.transform = `translate3d(0, ${diffY}px, 0)`;
+          notification.style.opacity = `${opacity}`;
+        }
+      },
+      { passive: true }
+    );
+
+    notification.addEventListener(
+      'touchend',
+      () => {
+        if (!isSwiping) return;
+        isSwiping = false;
+        notification.classList.remove('swiping');
+        const diffX = currentX - startX;
+
+        if (diffX > 50) {
+          hideNotification();
+        } else {
+          notification.style.transform = '';
+          notification.style.opacity = '';
+          notificationTimer = setTimeout(hideNotification, 3000);
+        }
+      },
+      { passive: true }
+    );
   }
 
   // --- LANGUAGE SWITCHING ---
-  function applyLanguage(lang) {
+  function applyLanguage(lang, showToast = false) {
     activeLang = lang;
     document.documentElement.lang = lang.toLowerCase();
 
@@ -512,6 +631,10 @@
     if (checkedAt?.dataset.checkedAt) {
       const date = new Date(checkedAt.dataset.checkedAt);
       checkedAt.textContent = `${translations[lang].status_checked} ${date.toLocaleString(lang === 'EN' ? 'en-GB' : 'id-ID', { dateStyle: 'short', timeStyle: 'short' })}`;
+    }
+
+    if (showToast && translations[lang] && translations[lang].lang_switched) {
+      showNotification(translations[lang].lang_switched, 'success');
     }
   }
 
@@ -832,16 +955,16 @@
     if (!typewriterEl) return;
 
     const phrasesID = [
-      'Web app dan dashboard responsif.',
-      'REST API dan arsitektur backend.',
+      'Web app & dashboard responsif.',
+      'REST API & arsitektur backend.',
       'Sistem database terstruktur.',
-      'Antarmuka bersih dan cepat.',
+      'Antarmuka bersih & cepat.',
     ];
     const phrasesEN = [
-      'High-performance web applications.',
-      'Clean REST APIs and backend architectures.',
-      'Structured relational databases.',
-      'Responsive, polished user interfaces.',
+      'Modern web applications.',
+      'Clean REST APIs & backends.',
+      'Structured database systems.',
+      'Polished user interfaces.',
     ];
 
     let phraseIndex = 0;
@@ -1075,8 +1198,8 @@
         case 'lang':
           const nextLang = activeLang === 'EN' ? 'ID' : 'EN';
           localStorage.setItem('lang', nextLang);
-          applyLanguage(nextLang);
-          printOutput(`<p class="text-cyan-300">Language switched to ${nextLang}.</p>`, 'info');
+          applyLanguage(nextLang, true);
+          printOutput(`<p class="text-cyan-300">${translations[nextLang].lang_switched}</p>`, 'info');
           break;
 
         case 'status':
@@ -1364,7 +1487,7 @@
         action: () => {
           const next = activeLang === 'EN' ? 'ID' : 'EN';
           localStorage.setItem('lang', next);
-          applyLanguage(next);
+          applyLanguage(next, true);
         },
       },
       { id: 'sound', icon: 'fa-volume-high', label: 'Efek Suara (SFX)', enLabel: 'Toggle Audio SFX', action: toggleSound },
@@ -1747,7 +1870,7 @@
         playSound('click');
         const nextLang = activeLang === 'EN' ? 'ID' : 'EN';
         localStorage.setItem('lang', nextLang);
-        applyLanguage(nextLang);
+        applyLanguage(nextLang, true);
       });
     });
 

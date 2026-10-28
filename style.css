@@ -222,6 +222,37 @@ body.loading > *:not(#preloader) {
   will-change: transform;
 }
 
+/* HERO TYPEWRITER STABILITY (PREVENTS VERTICAL LAYOUT JUMPING) */
+.hero-typewriter-box {
+  line-height: 1.55;
+  min-height: 3.25rem;
+  align-content: flex-start;
+}
+
+#typewriter-text {
+  display: inline;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.typewriter-cursor {
+  display: inline-block;
+  user-select: none;
+  margin-left: 1px;
+}
+
+@media (min-width: 641px) {
+  .hero-typewriter-box {
+    min-height: 2.4rem;
+  }
+}
+
+@media (max-width: 380px) {
+  .hero-typewriter-box {
+    min-height: 3.6rem;
+  }
+}
+
 /* HERO SECTION VISUALS */
 .hero-visual {
   position: relative;
@@ -1051,11 +1082,22 @@ body.loading > *:not(#preloader) {
   display: flex;
   align-items: center;
   transform: translateX(calc(100% + 2rem));
-  transition: transform 220ms ease;
+  transition: transform 220ms ease, opacity 200ms ease;
+  will-change: transform;
 }
 
 .notification.show {
   transform: translateX(0);
+}
+
+.notification.swiping {
+  transition: none !important;
+}
+
+.notification.dismissing {
+  opacity: 0 !important;
+  transform: translateX(calc(100% + 2rem)) !important;
+  transition: opacity 180ms ease, transform 220ms ease !important;
 }
 
 .notification.success { border-color: rgba(34, 197, 94, 0.5); }
