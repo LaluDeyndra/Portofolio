@@ -1079,11 +1079,66 @@ body.loading > *:not(#preloader) {
 
 /* NOTIFICATION */
 .notification {
-  display: flex;
-  align-items: center;
+  display: block;
+  box-sizing: border-box;
+  width: min(24rem, calc(100vw - 2rem));
+  right: 1rem !important;
+  top: max(1rem, env(safe-area-inset-top)) !important;
   transform: translateX(calc(100% + 2rem));
   transition: transform 220ms ease, opacity 200ms ease;
   will-change: transform;
+  border-radius: 0.7rem !important;
+  border-color: rgba(255, 255, 255, 0.13) !important;
+  background: rgba(24, 24, 27, 0.97) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4), 0 2px 10px rgba(0, 0, 0, 0.22) !important;
+}
+
+.notification-content {
+  min-width: 0;
+  gap: 0;
+}
+
+.notification-message {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.notification-timer-track {
+  height: 2px;
+  width: calc(100% - 1rem);
+  margin: 0 0.5rem 0.5rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+#notification-progress {
+  width: 100%;
+  height: 100%;
+  transform: scaleX(1);
+  transform-origin: left center;
+  border-radius: inherit;
+}
+
+@keyframes notification-countdown {
+  to { transform: scaleX(0); }
+}
+
+.notification-swipe-hint { display: none; }
+
+.notification.hidden { display: none; }
+
+.notification.show { display: block; }
+
+@media (max-width: 639px) {
+  .notification {
+    width: calc(100vw - 1.5rem);
+    right: 0.75rem !important;
+  }
+
+  .notification-content { padding: 0.75rem; }
+  .notification-swipe-hint { display: inline; margin-left: 0.5rem !important; font-size: 0.58rem !important; }
+  #notification-close { margin-left: 0.5rem !important; }
 }
 
 .notification.show {

@@ -447,11 +447,34 @@
   // --- NOTIFICATION TOAST ---
   let notificationTimer = null;
   let notificationListenersAttached = false;
+  const NOTIFICATION_DURATION = 4000;
+
+  function startNotificationTimer(duration = NOTIFICATION_DURATION) {
+    const progress = $('#notification-progress');
+    clearTimeout(notificationTimer);
+
+    if (progress) {
+      progress.style.animation = 'none';
+      progress.style.transform = 'scaleX(1)';
+      progress.offsetWidth;
+      progress.style.animation = `notification-countdown ${duration}ms linear forwards`;
+      progress.style.animationPlayState = 'running';
+    }
+
+    notificationTimer = setTimeout(hideNotification, duration);
+  }
+
+  function pauseNotificationTimer() {
+    clearTimeout(notificationTimer);
+    const progress = $('#notification-progress');
+    if (progress) progress.style.animationPlayState = 'paused';
+  }
 
   function showNotification(message, type = 'info') {
     const notification = $('#notification');
     const notificationMessage = $('#notification-message');
     const notificationIcon = $('#notification-icon');
+    const swipeHint = $('#notification-swipe-hint');
 
     if (!notification || !notificationMessage) return;
 
@@ -462,6 +485,7 @@
     notification.style.opacity = '';
     notification.classList.add(type);
     notificationMessage.textContent = message;
+    if (swipeHint) swipeHint.textContent = activeLang === 'EN' ? 'Swipe →' : 'Geser →';
 
     if (notificationIcon) {
       if (type === 'success') {
@@ -476,7 +500,7 @@
     notification.classList.remove('hidden');
     requestAnimationFrame(() => notification.classList.add('show'));
 
-    notificationTimer = setTimeout(hideNotification, 4000);
+    startNotificationTimer();
 
     if (!notificationListenersAttached) {
       notificationListenersAttached = true;
@@ -521,11 +545,11 @@
 
     // 3. Pause auto-dismiss timer on mouse hover (Desktop)
     notification.addEventListener('mouseenter', () => {
-      clearTimeout(notificationTimer);
+      pauseNotificationTimer();
     });
 
     notification.addEventListener('mouseleave', () => {
-      notificationTimer = setTimeout(hideNotification, 2000);
+      startNotificationTimer(2000);
     });
 
     // 4. Swipe-to-dismiss on touch devices (Mobile)
@@ -542,7 +566,7 @@
         startY = e.touches[0].clientY;
         currentX = startX;
         isSwiping = true;
-        clearTimeout(notificationTimer);
+        pauseNotificationTimer();
       },
       { passive: true }
     );
@@ -584,7 +608,7 @@
         } else {
           notification.style.transform = '';
           notification.style.opacity = '';
-          notificationTimer = setTimeout(hideNotification, 3000);
+          startNotificationTimer(3000);
         }
       },
       { passive: true }
@@ -595,6 +619,8 @@
   function applyLanguage(lang, showToast = false) {
     activeLang = lang;
     document.documentElement.lang = lang.toLowerCase();
+    const swipeHint = $('#notification-swipe-hint');
+    if (swipeHint) swipeHint.textContent = lang === 'EN' ? 'Swipe →' : 'Geser →';
 
     $$('.lang-toggle').forEach((button) => {
       button.textContent = lang === 'ID' ? 'EN' : 'ID';

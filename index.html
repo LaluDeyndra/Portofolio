@@ -95,12 +95,18 @@
     </div>
 
     <!-- Notification Toast -->
-    <div id="notification" class="notification hidden fixed right-5 top-5 z-[10000] max-w-sm rounded-lg border border-white/10 bg-zinc-900/95 backdrop-blur-xl px-4 py-3 text-sm text-white shadow-2xl cursor-pointer select-none">
-      <i id="notification-icon" class="fa-solid fa-circle-info text-sky-400 mr-2.5 text-sm shrink-0"></i>
-      <span id="notification-message" class="flex-1"></span>
-      <button id="notification-close" class="ml-3 p-1 text-zinc-400 transition hover:text-white" aria-label="Close notification">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
+    <div id="notification" class="notification hidden fixed right-5 top-5 z-[10000] max-w-sm border border-white/10 bg-zinc-900/95 backdrop-blur-xl text-sm text-white shadow-2xl cursor-pointer select-none">
+      <div class="notification-content flex items-center px-4 py-3">
+        <i id="notification-icon" class="fa-solid fa-circle-info text-sky-400 mr-2.5 text-sm shrink-0"></i>
+        <span id="notification-message" class="notification-message flex-1"></span>
+        <span id="notification-swipe-hint" class="notification-swipe-hint text-[10px] text-zinc-500 font-mono ml-3 shrink-0 whitespace-nowrap" aria-hidden="true">Geser →</span>
+        <button id="notification-close" class="ml-3 p-1 text-zinc-400 transition hover:text-white" aria-label="Close notification">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+      <div class="notification-timer-track">
+        <div id="notification-progress" class="h-full w-full transition-none" style="background:var(--notif-bar-color, #38bdf8)"></div>
+      </div>
     </div>
 
     <!-- Header Navigation -->
