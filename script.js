@@ -46,7 +46,7 @@
       stack_kicker: 'Languages',
       stack_title: 'Bahasa dan teknologi yang sering saya pakai.',
       stack_cta: 'Mulai diskusi',
-      skills_highlight_hint: 'Klik teknologi apa saja untuk menyorot project terkait di bawah.',
+      skills_highlight_hint: 'Ketuk atau klik teknologi di bawah untuk menyorot proyek yang terkait. Fitur ini masih beta, jadi hasilnya mungkin belum selalu akurat—maaf ya!',
       stack_front_desc: 'Tampilan dan interaksi antarmuka web.',
       stack_back_desc: 'Server, REST API, dan logika aplikasi.',
       stack_db_desc: 'Penyimpanan data dan perancangan relasi.',
@@ -66,7 +66,7 @@
       project_inspect_btn: 'Lihat Detail',
       project_visit_btn: 'Kunjungi Web',
       modal_close: 'Tutup',
-      modal_tech_used: 'Teknologi yang Digunakan',
+      modal_tech_used: 'Teknologi & Tools',
       modal_key_features: 'Fitur Utama',
       // Easter egg matrix
       easter_egg_matrix: 'MATRIX MODE AKTIF',
@@ -148,7 +148,7 @@
       stack_kicker: 'Languages',
       stack_title: 'Languages and technologies I use often.',
       stack_cta: 'Start a discussion',
-      skills_highlight_hint: 'Click any technology to highlight related projects below.',
+      skills_highlight_hint: 'Tap or click a technology below to highlight related projects. This feature is in beta, so matches may not always be accurate—sorry!',
       stack_front_desc: 'Web interface visuals and interactions.',
       stack_back_desc: 'Server, REST APIs, and application logic.',
       stack_db_desc: 'Data storage and relational design.',
@@ -168,7 +168,7 @@
       project_inspect_btn: 'Quick View',
       project_visit_btn: 'Visit Live Site',
       modal_close: 'Close',
-      modal_tech_used: 'Technologies Used',
+      modal_tech_used: 'Tech Stack & Tools',
       modal_key_features: 'Key Highlights',
       // Easter egg matrix
       easter_egg_matrix: 'MATRIX MODE ACTIVE',
@@ -220,6 +220,7 @@
     readnime: {
       title: 'ReadNime',
       category: 'Manga & Comic Reader Platform',
+      category_id: 'Platform Baca Manga & Komik',
       url: 'https://comic.readnime.site',
       images: [
         './assets/img/readnime.png',
@@ -248,6 +249,7 @@
     'arctic-vision': {
       title: 'Arctic Vision',
       category: 'IoT & Environmental Platform',
+      category_id: 'Platform IoT & Lingkungan',
       url: 'https://www.arvi.life',
       images: ['./assets/img/arctic-vision.png'],
       desc_id:
@@ -271,6 +273,7 @@
     'gacha-bot': {
       title: 'Discord Gacha Bot',
       category: 'Interactive Discord Gaming Bot',
+      category_id: 'Bot Game Interaktif Discord',
       url: 'https://laludeyndra.github.io/PageInviteGachaBot/',
       images: ['./assets/img/waifuGacha.png'],
       desc_id:
@@ -294,6 +297,7 @@
     'galeri-prestasi': {
       title: 'Galeri Prestasi',
       category: 'Static Showcase Web Application',
+      category_id: 'Website Galeri Statis',
       url: 'https://galeri-prestasi.vercel.app/',
       images: ['./assets/img/GaleriPrestasi.png'],
       desc_id:
@@ -315,6 +319,7 @@
     'sistem-pkl': {
       title: 'Sistem Informasi PKL',
       category: 'Enterprise School Management App',
+      category_id: 'Aplikasi Manajemen PKL',
       url: 'https://pkl.senvada.id/',
       images: ['./assets/img/senvada.png'],
       desc_id:
@@ -337,9 +342,38 @@
     },
   };
 
+  const projectTools = [
+    { key: 'vscode', label: 'VS Code' },
+    { key: 'antigravity', label: 'Antigravity' },
+    { key: 'codex', label: 'Codex' },
+    { key: 'cursor', label: 'Cursor' },
+    { key: 'github', label: 'GitHub' },
+  ];
+
   // --- UTILITY SELECTORS ---
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => document.querySelectorAll(selector);
+
+  function renderProjectTags(card, lang = activeLang) {
+    const data = projectsData[card.dataset.projectId];
+    const tagsContainer = card.querySelector('.tags');
+    if (!data || !tagsContainer) return;
+
+    const topic = lang === 'EN' ? data.category : data.category_id || data.category;
+    const tags = [
+      { label: topic, isTopic: true },
+      ...data.tech.map((label) => ({ label, isTopic: false })),
+      ...projectTools.map(({ label }) => ({ label, isTool: true })),
+    ];
+
+    tagsContainer.replaceChildren(...tags.map(({ label, isTopic, isTool }) => {
+      const tag = document.createElement('span');
+      tag.textContent = label;
+      if (isTopic) tag.classList.add('tag-topic');
+      if (isTool) tag.classList.add('tag-tool');
+      return tag;
+    }));
+  }
 
   let activeLang = localStorage.getItem('lang') || 'ID';
   let soundEnabled = localStorage.getItem('sound_fx') === 'true';
@@ -666,6 +700,7 @@
 
     // Update project cards status translation
     $$('.project-card[data-project-id]').forEach((card) => {
+      renderProjectTags(card, lang);
       const status = card.dataset.projectStatus || 'unknown';
       const labelKey = status === 'up' ? 'status_up' : status === 'down' ? 'status_down' : 'status_unknown';
       const statusText = card.querySelector('.project-status span');
@@ -1372,7 +1407,7 @@
           let matchedCount = 0;
 
           projectCards.forEach((card) => {
-            const projectTechs = (card.dataset.tech || '').toLowerCase();
+            const projectTechs = `${card.dataset.tech || ''} ${projectTools.map(({ key }) => key).join(' ')}`.toLowerCase();
             if (projectTechs.includes(techKey)) {
               card.classList.add('highlight-pulse');
               matchedCount++;
@@ -1386,6 +1421,13 @@
               activeLang === 'EN'
                 ? `Highlighted ${matchedCount} project(s) built with ${chip.textContent.trim()}`
                 : `Menyorot ${matchedCount} project yang memakai ${chip.textContent.trim()}`,
+              'info'
+            );
+          } else {
+            showNotification(
+              activeLang === 'EN'
+                ? `No projects use ${chip.textContent.trim()} yet. Maybe a future project will!`
+                : `Belum ada proyek yang memakai ${chip.textContent.trim()}. Siapa tahu, proyek berikutnya akan memakainya!`,
               'info'
             );
           }
@@ -1419,7 +1461,7 @@
       playSound('blip');
 
       if (modalTitle) modalTitle.textContent = data.title;
-      if (modalCategory) modalCategory.textContent = data.category;
+      if (modalCategory) modalCategory.textContent = activeLang === 'EN' ? data.category : data.category_id || data.category;
       if (modalDesc) modalDesc.textContent = activeLang === 'EN' ? data.desc_en : data.desc_id;
       if (modalVisitLink) modalVisitLink.href = data.url;
 
@@ -1464,7 +1506,7 @@
 
       if (modalTechChips) {
         modalTechChips.innerHTML = '';
-        data.tech.forEach((t) => {
+        [...data.tech, ...projectTools.map(({ label }) => label)].forEach((t) => {
           const span = document.createElement('span');
           span.className = 'text-xs px-2 py-1 rounded bg-white/5 border border-white/10 font-mono text-zinc-300';
           span.textContent = t;
