@@ -58,9 +58,9 @@
       projects_title: 'Project pilihan dengan karakter produk yang beda-beda.',
       projects_github: 'Repositori',
       filter_all: 'Semua',
-      status_down: 'DOWN · SERVER OFF',
+      status_down: 'WEB NONAKTIF',
       status_unknown: 'BELUM DICEK',
-      status_up: 'ONLINE',
+      status_up: 'AKTIF',
       status_checking: 'MEMERIKSA...',
       status_checked: 'PERUBAHAN TERAKHIR',
       project_inspect_btn: 'Lihat Detail',
@@ -160,7 +160,7 @@
       projects_title: 'Selected projects with different product personalities.',
       projects_github: 'Repositories',
       filter_all: 'All',
-      status_down: 'DOWN · SERVER OFF',
+      status_down: 'SITE OFFLINE',
       status_unknown: 'NOT CHECKED',
       status_up: 'ONLINE',
       status_checking: 'CHECKING...',
@@ -448,26 +448,43 @@
   let notificationTimer = null;
   let notificationListenersAttached = false;
   const NOTIFICATION_DURATION = 4000;
+  let notificationDeadline = 0;
+  let notificationRemaining = NOTIFICATION_DURATION;
 
   function startNotificationTimer(duration = NOTIFICATION_DURATION) {
     const progress = $('#notification-progress');
     clearTimeout(notificationTimer);
+    notificationRemaining = duration;
+    notificationDeadline = Date.now() + duration;
 
     if (progress) {
       progress.style.animation = 'none';
       progress.style.transform = 'scaleX(1)';
       progress.offsetWidth;
-      progress.style.animation = `notification-countdown ${duration}ms linear forwards`;
+      progress.style.animation = `notification-countdown ${notificationRemaining}ms linear forwards`;
       progress.style.animationPlayState = 'running';
     }
 
-    notificationTimer = setTimeout(hideNotification, duration);
+    notificationTimer = setTimeout(hideNotification, notificationRemaining);
   }
 
   function pauseNotificationTimer() {
     clearTimeout(notificationTimer);
+    notificationRemaining = Math.max(0, notificationDeadline - Date.now());
     const progress = $('#notification-progress');
     if (progress) progress.style.animationPlayState = 'paused';
+  }
+
+  function resumeNotificationTimer() {
+    if (notificationRemaining <= 0) {
+      hideNotification();
+      return;
+    }
+
+    notificationDeadline = Date.now() + notificationRemaining;
+    const progress = $('#notification-progress');
+    if (progress) progress.style.animationPlayState = 'running';
+    notificationTimer = setTimeout(hideNotification, notificationRemaining);
   }
 
   function showNotification(message, type = 'info') {
@@ -513,6 +530,8 @@
     if (!notification || notification.classList.contains('hidden')) return;
 
     clearTimeout(notificationTimer);
+    notificationDeadline = 0;
+    notificationRemaining = 0;
 
     notification.classList.remove('show');
     notification.classList.add('dismissing');
@@ -549,7 +568,7 @@
     });
 
     notification.addEventListener('mouseleave', () => {
-      startNotificationTimer(2000);
+      resumeNotificationTimer();
     });
 
     // 4. Swipe-to-dismiss on touch devices (Mobile)
@@ -608,7 +627,7 @@
         } else {
           notification.style.transform = '';
           notification.style.opacity = '';
-          startNotificationTimer(3000);
+          resumeNotificationTimer();
         }
       },
       { passive: true }
