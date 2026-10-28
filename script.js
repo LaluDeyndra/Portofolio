@@ -515,22 +515,21 @@
     }
   }
 
-  // --- THEME SWITCHING ---
+  // --- THEME SWITCHING (MAINTENANCE MODE) ---
   function initTheme() {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    const isLight = savedTheme === 'light';
+    // Theme switching is under maintenance; enforce clean dark theme
+    document.documentElement.classList.remove('light');
+    document.documentElement.classList.add('dark');
+    document.body.classList.remove('light');
+    document.body.classList.add('dark');
 
-    document.documentElement.classList.toggle('light', isLight);
-    document.documentElement.classList.toggle('dark', !isLight);
-    document.body.classList.toggle('light', isLight);
-
-    $$('.theme-toggle i').forEach((icon) => {
-      icon.className = isLight ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    $$('.theme-toggle .theme-main-icon').forEach((icon) => {
+      icon.className = 'theme-main-icon fa-solid fa-moon';
     });
   }
 
   function toggleTheme(trigger = null) {
-    playSound('blip', true);
+    playSound('blip');
     showNotification(translations[activeLang].theme_maintenance, 'info');
 
     const button = trigger?.currentTarget || trigger;
@@ -576,6 +575,7 @@
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
             const counters = entry.target.querySelectorAll('.stat-num');
             counters.forEach(animateCounter);
           }
@@ -648,7 +648,7 @@
         badge.classList.toggle('status-down', status === 'down');
         badge.classList.toggle('status-up', status === 'up');
         badge.classList.remove('status-unknown');
-        badge.innerHTML = `<i class="fa-solid ${status === 'up' ? 'fa-circle-check' : 'fa-circle'}"></i><span>${translations[activeLang][status === 'up' ? 'status_up' : 'status_down']}</span>`;
+        badge.innerHTML = `<i class="fa-solid ${status === 'up' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i><span>${translations[activeLang][status === 'up' ? 'status_up' : 'status_down']}</span>`;
       });
 
       if (checkedAt && statusFeed.checked_at) {
@@ -1107,39 +1107,80 @@
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   }
 
-  // --- 3D PERSPECTIVE TILT & MOUSE GLOW ---
+  // --- 3D PERSPECTIVE TILT & MOUSE GLOW (OPTIMIZED) ---
   function initCardTiltAndGlow() {
     const glowEl = $('#mouseGlow');
     const tiltCards = $$('.card-3d-tilt');
 
-    window.addEventListener('mousemove', (e) => {
-      if (glowEl) {
-        glowEl.style.opacity = '1';
-        glowEl.style.left = `${e.clientX}px`;
-        glowEl.style.top = `${e.clientY}px`;
-      }
-    });
+    // Skip on touch/mobile devices to save battery and performance
+    const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+    if (!canHover) {
+      if (glowEl) glowEl.style.display = 'none';
+      return;
+    }
+
+    let mouseX = 0;
+    let mouseY = 0;
+    let rafGlow = null;
+
+    window.addEventListener(
+      'mousemove',
+      (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+
+        if (!rafGlow && glowEl) {
+          rafGlow = requestAnimationFrame(() => {
+            glowEl.style.opacity = '1';
+            glowEl.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0) translate(-50%, -50%)`;
+            rafGlow = null;
+          });
+        }
+      },
+      { passive: true }
+    );
 
     document.addEventListener('mouseleave', () => {
       if (glowEl) glowEl.style.opacity = '0';
     });
 
     tiltCards.forEach((card) => {
-      card.addEventListener('mousemove', (e) => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
+      let rect = null;
+      let rafTilt = null;
 
-        const rotateX = ((y - centerY) / centerY) * -5;
-        const rotateY = ((x - centerX) / centerX) * 5;
-
-        card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-3px)`;
+      card.addEventListener('mouseenter', () => {
+        rect = card.getBoundingClientRect();
       });
 
+      card.addEventListener(
+        'mousemove',
+        (e) => {
+          if (!rect) rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = ((y - centerY) / centerY) * -5;
+          const rotateY = ((x - centerX) / centerX) * 5;
+
+          if (!rafTilt) {
+            rafTilt = requestAnimationFrame(() => {
+              card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-3px)`;
+              rafTilt = null;
+            });
+          }
+        },
+        { passive: true }
+      );
+
       card.addEventListener('mouseleave', () => {
+        if (rafTilt) {
+          cancelAnimationFrame(rafTilt);
+          rafTilt = null;
+        }
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+        rect = null;
       });
     });
   }
@@ -1611,13 +1652,15 @@
     animate();
   }
 
-  // --- BACK TO TOP & SCROLL PROGRESS ---
+  // --- BACK TO TOP & SCROLL PROGRESS (THROTTLED) ---
   function initBackToTop() {
     const btn = $('#backToTopBtn');
     const circle = $('#progressRingPath');
     if (!btn || !circle) return;
 
-    window.addEventListener('scroll', () => {
+    let ticking = false;
+
+    const onScroll = () => {
       const scrollTop = window.scrollY;
       const docHeight = document.documentElement.scrollHeight - window.innerHeight;
       const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
@@ -1631,7 +1674,19 @@
         btn.classList.add('hidden');
         btn.classList.remove('flex');
       }
-    });
+      ticking = false;
+    };
+
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) {
+          requestAnimationFrame(onScroll);
+          ticking = true;
+        }
+      },
+      { passive: true }
+    );
 
     btn.addEventListener('click', () => {
       playSound('click');
